@@ -21,8 +21,7 @@ app.get("/api", function(request, response){
 	
 });
 
-app.get('*', function (request, response){	
-	console.log(request.url);
+app.get('*', function (request, response){		
 	response.sendFile(path.resolve(__dirname, './frontend/public', 'index.html'))
 });
 
