@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-export default class BusinessListItem extends Component{
+export default class SpotsListItem extends Component{
 	render() {
 		return (
-			<div className="panel panel-default business-list-item">
+			<div className="panel panel-default spots-list-item">
 			  <div className="panel-body">
 			  	<div className='col-xs-4'>
 			  		<a href='#' target='_blank' >

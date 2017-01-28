@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import BusinessListItem from 'BusinessListItem';
+import SpotsListItem from 'SpotsListItem'
 
 export default class BusinessList extends Component{
 	render() {
 		return (
-			<div className='business-list'>
+			<div className='spots-list'>
 				<h2>Search Results for: London</h2>
 				<div>
-					<BusinessListItem />
-					<BusinessListItem />
-					<BusinessListItem />
+					<SpotsListItem />
+					<SpotsListItem />
+					<SpotsListItem />					
 				</div>	
 			</div>
 		);	

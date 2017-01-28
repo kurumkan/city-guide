@@ -1,42 +1,47 @@
-.business-list{
-	padding: 1px;	
-	border-left: 1px solid #ccc;
+@media (min-width: 768px) {
+	.spots-list{		
+		border-left: 1px solid #ccc;
+	}
 }
 
-.business-list h2 {	
+.spots-list{
+	padding: 1px;		
+}
+
+.spots-list h2 {	
 	border-bottom: 1px solid #ccc;
 	padding-bottom: 10px;
 }
 
-.business-list h2, p{
+.spots-list h2, p{
 	padding-left: 40px;
 }
 
-.business-list-item{
+.spots-list-item{
 	margin-left: 20px;
 	margin-right: 10px;	
 }
 
-.business-list-item img{
+.spots-list-item img{
 	transition: all .2s ease-in-out; 
 }
 
-.business-list-item img:hover{
+.spots-list-item img:hover{
 	transform: scale(1.1);
 }
 
-.business-list-item .glyphicon{
+.spots-list-item .glyphicon{
 	color:#aaa;
 	display: inline-block;
 	margin-right: 5px;
 }
 
-.business-list-item h3 {
+.spots-list-item h3 {
 	margin-top: 0px;
 	font-size: 21px;			
 }
 
-.btn-go, .btn-go .glyphicon, .business-list-item a{
+.btn-go, .btn-go .glyphicon, .spots-list-item a{
     color:#ff5a5f;
 }
 

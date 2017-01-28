@@ -67,32 +67,37 @@
 
 	var _reactRouter = __webpack_require__(200);
 
-	var _Reducers = __webpack_require__(261);
+	var _reduxThunk = __webpack_require__(261);
 
-	var _Reducers2 = _interopRequireDefault(_Reducers);
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _Main = __webpack_require__(262);
+	var _RootReducer = __webpack_require__(262);
+
+	var _RootReducer2 = _interopRequireDefault(_RootReducer);
+
+	var _Main = __webpack_require__(265);
 
 	var _Main2 = _interopRequireDefault(_Main);
 
-	var _NotFound = __webpack_require__(267);
+	var _NotFound = __webpack_require__(270);
 
 	var _NotFound2 = _interopRequireDefault(_NotFound);
 
-	var _IndexPage = __webpack_require__(268);
+	var _IndexPage = __webpack_require__(271);
 
 	var _IndexPage2 = _interopRequireDefault(_IndexPage);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// App css
-	__webpack_require__(271);
+	__webpack_require__(275);
 
-	var createStoreWithMiddleware = (0, _redux.applyMiddleware)()(_redux.createStore);
+	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
+	var store = createStoreWithMiddleware(_RootReducer2.default);
 
 	_reactDom2.default.render(_react2.default.createElement(
 		_reactRedux.Provider,
-		{ store: createStoreWithMiddleware(_Reducers2.default) },
+		{ store: store },
 		_react2.default.createElement(
 			_reactRouter.Router,
 			{ history: _reactRouter.browserHistory },
@@ -27376,7 +27381,64 @@
 
 /***/ },
 /* 261 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+
+	exports['default'] = thunk;
+
+/***/ },
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _redux = __webpack_require__(167);
+
+	var _ReducerSpots = __webpack_require__(263);
+
+	var _ReducerSpots2 = _interopRequireDefault(_ReducerSpots);
+
+	var _ErrorReducer = __webpack_require__(264);
+
+	var _ErrorReducer2 = _interopRequireDefault(_ErrorReducer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var RootReducer = (0, _redux.combineReducers)({
+		spots: _ReducerSpots2.default,
+		error: _ErrorReducer2.default
+	});
+
+	exports.default = RootReducer;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -27384,20 +27446,64 @@
 	  value: true
 	});
 
-	var _redux = __webpack_require__(167);
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var rootReducer = (0, _redux.combineReducers)({
-	  state: function state() {
-	    var _state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	exports.default = function () {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
+	  var action = arguments[1];
 
-	    return _state;
+
+	  switch (action.type) {
+	    case 'GET_SPOTS':
+	      return _extends({}, state, {
+	        all: action.payload
+	      });
+
+	    case 'GET_SINGLE_SPOT':
+	      return _extends({}, state, {
+	        spot: action.payload
+	      });
+
+	    default:
+	      return state;
 	  }
-	});
+	};
 
-	exports.default = rootReducer;
+	var INITIAL_STATE = {
+	  all: [],
+	  spot: null
+	};
 
 /***/ },
-/* 262 */
+/* 264 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+		var action = arguments[1];
+
+
+		switch (action.type) {
+
+			case 'SET_ERROR':
+				return action.payload;
+
+			case 'REMOVE_ERROR':
+				return '';
+
+			default:
+				return state;
+		}
+	};
+
+/***/ },
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27412,11 +27518,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Nav = __webpack_require__(263);
+	var _Nav = __webpack_require__(266);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
-	var _Footer = __webpack_require__(266);
+	var _Footer = __webpack_require__(269);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -27456,7 +27562,7 @@
 	exports.default = Main;
 
 /***/ },
-/* 263 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27475,11 +27581,11 @@
 
 	var _reactRouter = __webpack_require__(200);
 
-	var _NavLink = __webpack_require__(264);
+	var _NavLink = __webpack_require__(267);
 
 	var _NavLink2 = _interopRequireDefault(_NavLink);
 
-	var _Searchbar = __webpack_require__(265);
+	var _Searchbar = __webpack_require__(268);
 
 	var _Searchbar2 = _interopRequireDefault(_Searchbar);
 
@@ -27568,7 +27674,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null, null, { pure: false })(Nav);
 
 /***/ },
-/* 264 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27629,7 +27735,7 @@
 	exports.default = NavLink;
 
 /***/ },
-/* 265 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27691,7 +27797,7 @@
 	exports.default = Searchbar;
 
 /***/ },
-/* 266 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27728,8 +27834,19 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					null,
-					'Footer'
+					{ className: 'footer' },
+					'\u24B8 2017 Built by ',
+					_react2.default.createElement(
+						'a',
+						{ href: 'https://github.com/kurumkan', target: '_blank' },
+						'Kurumkan'
+					),
+					' for ',
+					_react2.default.createElement(
+						'a',
+						{ href: 'https://www.freecodecamp.com/challenges/build-a-nightlife-coordination-app', target: '_blank' },
+						'FreeCodeCamp'
+					)
 				);
 			}
 		}]);
@@ -27740,7 +27857,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 267 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27816,7 +27933,7 @@
 	exports.default = NotFound404;
 
 /***/ },
-/* 268 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27831,11 +27948,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _BusinessList = __webpack_require__(269);
+	var _SpotsList = __webpack_require__(279);
 
-	var _BusinessList2 = _interopRequireDefault(_BusinessList);
+	var _SpotsList2 = _interopRequireDefault(_SpotsList);
 
-	var _MapListing = __webpack_require__(270);
+	var _MapListing = __webpack_require__(274);
 
 	var _MapListing2 = _interopRequireDefault(_MapListing);
 
@@ -27870,7 +27987,7 @@
 					_react2.default.createElement(
 						'div',
 						{ className: 'col-sm-8', id: 'right' },
-						_react2.default.createElement(_BusinessList2.default, null)
+						_react2.default.createElement(_SpotsList2.default, null)
 					)
 				);
 			}
@@ -27882,71 +27999,9 @@
 	exports.default = IndexPage;
 
 /***/ },
-/* 269 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _BusinessListItem = __webpack_require__(275);
-
-	var _BusinessListItem2 = _interopRequireDefault(_BusinessListItem);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var BusinessList = function (_Component) {
-		_inherits(BusinessList, _Component);
-
-		function BusinessList() {
-			_classCallCheck(this, BusinessList);
-
-			return _possibleConstructorReturn(this, (BusinessList.__proto__ || Object.getPrototypeOf(BusinessList)).apply(this, arguments));
-		}
-
-		_createClass(BusinessList, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'business-list' },
-					_react2.default.createElement(
-						'h2',
-						null,
-						'Search Results for: London'
-					),
-					_react2.default.createElement(
-						'div',
-						null,
-						_react2.default.createElement(_BusinessListItem2.default, null),
-						_react2.default.createElement(_BusinessListItem2.default, null),
-						_react2.default.createElement(_BusinessListItem2.default, null)
-					)
-				);
-			}
-		}]);
-
-		return BusinessList;
-	}(_react.Component);
-
-	exports.default = BusinessList;
-
-/***/ },
-/* 270 */
+/* 272 */,
+/* 273 */,
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27995,16 +28050,16 @@
 	exports.default = MapListing;
 
 /***/ },
-/* 271 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(272);
+	var content = __webpack_require__(276);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(274)(content, {});
+	var update = __webpack_require__(278)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -28021,21 +28076,21 @@
 	}
 
 /***/ },
-/* 272 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(273)();
+	exports = module.exports = __webpack_require__(277)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 1px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n#right {\n  height: 300px;\n  overflow-y: scroll; }\n\n.business-list {\n  padding: 1px;\n  border-left: 1px solid #ccc; }\n\n.business-list h2 {\n  border-bottom: 1px solid #ccc;\n  padding-bottom: 10px; }\n\n.business-list h2, p {\n  padding-left: 40px; }\n\n.business-list-item {\n  margin-left: 20px;\n  margin-right: 10px; }\n\n.business-list-item img {\n  transition: all .2s ease-in-out; }\n\n.business-list-item img:hover {\n  transform: scale(1.1); }\n\n.business-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.business-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .business-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 1px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll; } }\n\n@media (min-width: 768px) {\n  .spots-list {\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px; }\n\n.spots-list h2 {\n  border-bottom: 1px solid #ccc;\n  padding-bottom: 10px; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item {\n  margin-left: 20px;\n  margin-right: 10px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out; }\n\n.spots-list-item img:hover {\n  transform: scale(1.1); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 1px -15px;\n  border-top: 1px solid #ccc; }\n\n.footer a {\n  color: #ff5a5f; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 273 */
+/* 277 */
 /***/ function(module, exports) {
 
 	/*
@@ -28091,7 +28146,7 @@
 
 
 /***/ },
-/* 274 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -28343,7 +28398,71 @@
 
 
 /***/ },
-/* 275 */
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SpotsListItem = __webpack_require__(280);
+
+	var _SpotsListItem2 = _interopRequireDefault(_SpotsListItem);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BusinessList = function (_Component) {
+		_inherits(BusinessList, _Component);
+
+		function BusinessList() {
+			_classCallCheck(this, BusinessList);
+
+			return _possibleConstructorReturn(this, (BusinessList.__proto__ || Object.getPrototypeOf(BusinessList)).apply(this, arguments));
+		}
+
+		_createClass(BusinessList, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'spots-list' },
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Search Results for: London'
+					),
+					_react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(_SpotsListItem2.default, null),
+						_react2.default.createElement(_SpotsListItem2.default, null),
+						_react2.default.createElement(_SpotsListItem2.default, null)
+					)
+				);
+			}
+		}]);
+
+		return BusinessList;
+	}(_react.Component);
+
+	exports.default = BusinessList;
+
+/***/ },
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28366,21 +28485,21 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var BusinessListItem = function (_Component) {
-		_inherits(BusinessListItem, _Component);
+	var SpotsListItem = function (_Component) {
+		_inherits(SpotsListItem, _Component);
 
-		function BusinessListItem() {
-			_classCallCheck(this, BusinessListItem);
+		function SpotsListItem() {
+			_classCallCheck(this, SpotsListItem);
 
-			return _possibleConstructorReturn(this, (BusinessListItem.__proto__ || Object.getPrototypeOf(BusinessListItem)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (SpotsListItem.__proto__ || Object.getPrototypeOf(SpotsListItem)).apply(this, arguments));
 		}
 
-		_createClass(BusinessListItem, [{
+		_createClass(SpotsListItem, [{
 			key: "render",
 			value: function render() {
 				return _react2.default.createElement(
 					"div",
-					{ className: "panel panel-default business-list-item" },
+					{ className: "panel panel-default spots-list-item" },
 					_react2.default.createElement(
 						"div",
 						{ className: "panel-body" },
@@ -28468,10 +28587,10 @@
 			}
 		}]);
 
-		return BusinessListItem;
+		return SpotsListItem;
 	}(_react.Component);
 
-	exports.default = BusinessListItem;
+	exports.default = SpotsListItem;
 
 /***/ }
 /******/ ]);
