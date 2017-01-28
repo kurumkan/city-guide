@@ -27897,6 +27897,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _BusinessListItem = __webpack_require__(275);
+
+	var _BusinessListItem2 = _interopRequireDefault(_BusinessListItem);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27928,66 +27932,9 @@
 					_react2.default.createElement(
 						'div',
 						null,
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						),
-						_react2.default.createElement(
-							'p',
-							null,
-							'Right contents'
-						)
+						_react2.default.createElement(_BusinessListItem2.default, null),
+						_react2.default.createElement(_BusinessListItem2.default, null),
+						_react2.default.createElement(_BusinessListItem2.default, null)
 					)
 				);
 			}
@@ -28082,7 +28029,7 @@
 
 
 	// module
-	exports.push([module.id, ".alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 1px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n#right {\n  height: 300px;\n  overflow-y: scroll; }\n\n.business-list {\n  padding: 1px;\n  border-left: 1px solid #ccc; }\n\n.business-list h2 {\n  border-bottom: 1px solid #ccc;\n  padding-bottom: 10px; }\n\n.business-list h2, p {\n  padding-left: 40px; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 1px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n#right {\n  height: 300px;\n  overflow-y: scroll; }\n\n.business-list {\n  padding: 1px;\n  border-left: 1px solid #ccc; }\n\n.business-list h2 {\n  border-bottom: 1px solid #ccc;\n  padding-bottom: 10px; }\n\n.business-list h2, p {\n  padding-left: 40px; }\n\n.business-list-item {\n  margin-left: 20px;\n  margin-right: 10px; }\n\n.business-list-item img {\n  transition: all .2s ease-in-out; }\n\n.business-list-item img:hover {\n  transform: scale(1.1); }\n\n.business-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.business-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .business-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n", ""]);
 
 	// exports
 
@@ -28394,6 +28341,137 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BusinessListItem = function (_Component) {
+		_inherits(BusinessListItem, _Component);
+
+		function BusinessListItem() {
+			_classCallCheck(this, BusinessListItem);
+
+			return _possibleConstructorReturn(this, (BusinessListItem.__proto__ || Object.getPrototypeOf(BusinessListItem)).apply(this, arguments));
+		}
+
+		_createClass(BusinessListItem, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{ className: "panel panel-default business-list-item" },
+					_react2.default.createElement(
+						"div",
+						{ className: "panel-body" },
+						_react2.default.createElement(
+							"div",
+							{ className: "col-xs-4" },
+							_react2.default.createElement(
+								"a",
+								{ href: "#", target: "_blank" },
+								_react2.default.createElement("image", { className: "img-responsive", src: "http://demo.templatic.com/images/listing/apartments(2)-350x233.jpg" })
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "col-xs-8" },
+							_react2.default.createElement(
+								"h3",
+								null,
+								"New Globe Walk"
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								_react2.default.createElement("span", { className: "glyphicon glyphicon-earphone", "aria-hidden": "true" }),
+								"+86 10 6538 5537"
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								_react2.default.createElement("span", { className: "glyphicon glyphicon-map-marker", "aria-hidden": "true" }),
+								"31 Rosary Gardens London SW7 4NH UK"
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								_react2.default.createElement("span", { className: "glyphicon glyphicon-time", "aria-hidden": "true" }),
+								"9.00 am to 6 pm every day"
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								_react2.default.createElement(
+									"span",
+									{ className: "stars-container stars-70" },
+									"\u2605\u2605\u2605\u2605\u2605"
+								)
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								_react2.default.createElement(
+									"button",
+									{ className: "btn btn-go" },
+									_react2.default.createElement("span", { className: "glyphicon glyphicon-plus", "aria-hidden": "true" }),
+									"0 going"
+								)
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								_react2.default.createElement(
+									"button",
+									{ className: "btn btn-go" },
+									_react2.default.createElement("span", { className: "glyphicon glyphicon-pushpin", "aria-hidden": "true" }),
+									"Pinpoint"
+								)
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								"This is a listing description section where you can write about your listing. We have provided an editor for entering this information on Submit listing page so your visitors will be able to format their description easily...",
+								_react2.default.createElement(
+									"div",
+									null,
+									_react2.default.createElement(
+										"a",
+										{ href: "#", target: "_blank" },
+										"See 10 more opinions "
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return BusinessListItem;
+	}(_react.Component);
+
+	exports.default = BusinessListItem;
 
 /***/ }
 /******/ ]);
