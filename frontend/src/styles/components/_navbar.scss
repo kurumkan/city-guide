@@ -1,0 +1,28 @@
+.navbar-custom {
+    background-color:#eee;
+    color:#494949;
+    border-radius:0;
+    height: 60px;
+}
+
+.navbar-custom .navbar-nav > li > a {
+    color:#494949;
+    line-height: 30px;
+}
+.navbar-custom .navbar-nav > .active > a, 
+.navbar-nav > .active > a:hover, 
+.navbar-nav > .active > a:focus,
+.nav > li > a:focus, 
+.nav > li > a:hover,
+.nav .open > a, 
+.nav .open > a:focus, 
+.nav .open > a:hover,
+.navbar-toggle,
+.btn-custom-danger {
+    color: #ffffff;
+    background-color:#703771;
+}
+
+.icon-bar{
+	background: #fff;
+}

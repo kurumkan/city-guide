@@ -1,4 +1,20 @@
 @import "components/alert";
+@import "components/navbar";
+@import "components/searchbar";
 
+body{
+	background-color: #eee;
+    font-family: 'Oxygen', sans-serif;
 
+}
 
+.outer{
+	background-color: #fff;
+	box-shadow: 0 0 5px 2px #888;
+	padding-right: 0;
+	padding-left: 0;
+}
+
+h1,h2,h3 {
+    font-family: 'Courgette', cursive;
+}
