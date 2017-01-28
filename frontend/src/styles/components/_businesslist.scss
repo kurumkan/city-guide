@@ -1,8 +1,13 @@
-.buiseness-list{
-	padding: 20px;
+.business-list{
+	padding: 1px;	
+	border-left: 1px solid #ccc;
 }
 
-.buiseness-list h2 {
-	border-bottom: 3px double #ccc;
-	padding-bottom:8px;
+.business-list h2 {	
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+}
+
+.business-list h2, p{
+	padding-left: 40px;
 }

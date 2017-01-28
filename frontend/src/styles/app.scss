@@ -1,12 +1,10 @@
 @import "components/alert";
 @import "components/navbar";
 @import "components/searchbar";
+@import "components/indexpage";
 @import "components/businesslist";
 
 body{
 	font-family: 'Arimo', sans-serif;
-}
-.main{
-	padding-left: 0;
-	padding-right: 0;
+	background-color: #f7f7f7;	
 }

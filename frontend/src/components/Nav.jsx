@@ -12,25 +12,24 @@ class Nav extends Component{
 				<div className="container-fluid">
 
 					<div className="navbar-header">
-						<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-							<span className="sr-only">Toggle navigation</span>
+						<button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#mynavbar">
 							<span className="icon-bar"></span>
 							<span className="icon-bar"></span>
 							<span className="icon-bar"></span>
 						</button>
-						<Link className="navbar-brand" to="#">
+						<IndexLink className="navbar-brand" to="/">
 							<img alt="Brand" src="images/logo.png" />
-						</Link>
+						</IndexLink>
 					</div>
 
-					<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<div className="collapse navbar-collapse" id="mynavbar">
 						<ul className="nav navbar-nav">							
-							<li><a href="#">Home</a></li>							
+							<NavLink to="/">Home</NavLink>												
 						</ul>
 						<Searchbar />
 						<ul className="nav navbar-nav navbar-right">
-							<li><a href="#">Sign In</a></li>
-							<li><a href="#">Sign Up</a></li>
+							<NavLink to="/signin">Sign In</NavLink>							
+							<NavLink to="/signup">Sign Up</NavLink>							
 						</ul>
 					</div>
 				</div>
