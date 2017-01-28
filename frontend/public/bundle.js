@@ -75,18 +75,18 @@
 
 	var _Main2 = _interopRequireDefault(_Main);
 
-	var _NotFound = __webpack_require__(266);
+	var _NotFound = __webpack_require__(267);
 
 	var _NotFound2 = _interopRequireDefault(_NotFound);
 
-	var _IndexPage = __webpack_require__(267);
+	var _IndexPage = __webpack_require__(268);
 
 	var _IndexPage2 = _interopRequireDefault(_IndexPage);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// App css
-	__webpack_require__(268);
+	__webpack_require__(269);
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)()(_redux.createStore);
 
@@ -27416,7 +27416,7 @@
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
-	var _Footer = __webpack_require__(265);
+	var _Footer = __webpack_require__(266);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -27442,7 +27442,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ className: 'container outer' },
+					{ className: 'container-fluid main' },
 					_react2.default.createElement(_Nav2.default, null),
 					this.props.children,
 					_react2.default.createElement(_Footer2.default, null)
@@ -27479,7 +27479,7 @@
 
 	var _NavLink2 = _interopRequireDefault(_NavLink);
 
-	var _Searchbar = __webpack_require__(272);
+	var _Searchbar = __webpack_require__(265);
 
 	var _Searchbar2 = _interopRequireDefault(_Searchbar);
 
@@ -27525,8 +27525,8 @@
 								_react2.default.createElement('span', { className: 'icon-bar' })
 							),
 							_react2.default.createElement(
-								'a',
-								{ className: 'navbar-brand', href: '#' },
+								_reactRouter.Link,
+								{ className: 'navbar-brand', to: '#' },
 								_react2.default.createElement('img', { alt: 'Brand', src: 'images/logo.png' })
 							)
 						),
@@ -27649,6 +27649,65 @@
 /* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Searchbar = function (_Component) {
+		_inherits(Searchbar, _Component);
+
+		function Searchbar() {
+			_classCallCheck(this, Searchbar);
+
+			return _possibleConstructorReturn(this, (Searchbar.__proto__ || Object.getPrototypeOf(Searchbar)).apply(this, arguments));
+		}
+
+		_createClass(Searchbar, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"form",
+					{ className: "navbar-form navbar-left searchbar" },
+					_react2.default.createElement(
+						"div",
+						{ className: "form-group" },
+						_react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "Type a location" })
+					),
+					_react2.default.createElement(
+						"button",
+						{ type: "submit", className: "btn btn-search" },
+						" ",
+						_react2.default.createElement("span", { className: "glyphicon glyphicon-search", "aria-hidden": "true" })
+					)
+				);
+			}
+		}]);
+
+		return Searchbar;
+	}(_react.Component);
+
+	exports.default = Searchbar;
+
+/***/ },
+/* 266 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -27695,7 +27754,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27771,7 +27830,7 @@
 	exports.default = NotFound404;
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27786,7 +27845,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(160);
+	var _BusinessList = __webpack_require__(273);
+
+	var _BusinessList2 = _interopRequireDefault(_BusinessList);
+
+	var _MapListing = __webpack_require__(275);
+
+	var _MapListing2 = _interopRequireDefault(_MapListing);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27808,11 +27873,7 @@
 		_createClass(IndexPage, [{
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					'IndexPage'
-				);
+				return _react2.default.createElement('div', { className: 'index-page' });
 			}
 		}]);
 
@@ -27822,16 +27883,16 @@
 	exports.default = IndexPage;
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(269);
+	var content = __webpack_require__(270);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(271)(content, {});
+	var update = __webpack_require__(272)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27848,21 +27909,21 @@
 	}
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(270)();
+	exports = module.exports = __webpack_require__(271)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf; }\n\n.navbar-custom {\n  background-color: #eee;\n  color: #494949;\n  border-radius: 0;\n  height: 60px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #494949;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ffffff;\n  background-color: #703771; }\n\n.icon-bar {\n  background: #fff; }\n\n.btn-search {\n  background-color: #703771;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #494949; }\n\n.searchbar {\n  margin-top: 12px; }\n\nbody {\n  background-color: #eee;\n  font-family: 'Oxygen', sans-serif; }\n\n.outer {\n  background-color: #fff;\n  box-shadow: 0 0 5px 2px #888;\n  padding-right: 0;\n  padding-left: 0; }\n\nh1, h2, h3 {\n  font-family: 'Courgette', cursive; }\n", ""]);
+	exports.push([module.id, ".alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  height: 60px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #fff; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n.buiseness-list {\n  padding: 20px; }\n\n.buiseness-list h2 {\n  border-bottom: 3px double #ccc;\n  padding-bottom: 8px; }\n\nbody {\n  font-family: 'Arimo', sans-serif; }\n\n.main {\n  padding-left: 0;\n  padding-right: 0; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports) {
 
 	/*
@@ -27918,7 +27979,7 @@
 
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -28170,10 +28231,10 @@
 
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28193,39 +28254,41 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Searchbar = function (_Component) {
-		_inherits(Searchbar, _Component);
+	var BusinessList = function (_Component) {
+		_inherits(BusinessList, _Component);
 
-		function Searchbar() {
-			_classCallCheck(this, Searchbar);
+		function BusinessList() {
+			_classCallCheck(this, BusinessList);
 
-			return _possibleConstructorReturn(this, (Searchbar.__proto__ || Object.getPrototypeOf(Searchbar)).apply(this, arguments));
+			return _possibleConstructorReturn(this, (BusinessList.__proto__ || Object.getPrototypeOf(BusinessList)).apply(this, arguments));
 		}
 
-		_createClass(Searchbar, [{
-			key: "render",
+		_createClass(BusinessList, [{
+			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					"form",
-					{ className: "navbar-form navbar-left searchbar" },
+					'div',
+					{ className: 'buiseness-list' },
 					_react2.default.createElement(
-						"div",
-						{ className: "form-group" },
-						_react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "Type a location" })
-					),
-					_react2.default.createElement(
-						"button",
-						{ type: "submit", className: "btn btn-search" },
-						"Search"
+						'h2',
+						null,
+						'Places Around You'
 					)
 				);
 			}
 		}]);
 
-		return Searchbar;
+		return BusinessList;
 	}(_react.Component);
 
-	exports.default = Searchbar;
+	exports.default = BusinessList;
+
+/***/ },
+/* 274 */,
+/* 275 */
+/***/ function(module, exports) {
+
+	"use strict";
 
 /***/ }
 /******/ ]);

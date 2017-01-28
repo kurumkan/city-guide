@@ -18,9 +18,9 @@ class Nav extends Component{
 							<span className="icon-bar"></span>
 							<span className="icon-bar"></span>
 						</button>
-						<a className="navbar-brand" href="#">
+						<Link className="navbar-brand" to="#">
 							<img alt="Brand" src="images/logo.png" />
-						</a>
+						</Link>
 					</div>
 
 					<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

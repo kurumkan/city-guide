@@ -7,7 +7,7 @@ export default class Searchbar extends Component{
 				<div className="form-group">
 					<input type="text" className="form-control" placeholder="Type a location"/>
 				</div>
-				<button type="submit" className="btn btn-search">Search</button>
+				<button type="submit" className="btn btn-search"> <span className="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 			</form>			
 		);	
 	}

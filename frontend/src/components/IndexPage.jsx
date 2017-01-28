@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
+import BusinessList from 'BusinessList';
+import MapListing from 'MapListing';
 
 export default class IndexPage extends Component{
-	render (){			
-		return(
-			<div>IndexPage</div>
-		);
+	render() {
+		return (
+			<div className='index-page'>
+				
+			</div>
+		);	
 	}
 }
