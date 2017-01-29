@@ -22,14 +22,20 @@ module.exports = {
   },
 
   module: {
-    loaders: [{      
-      loader: 'babel-loader',
-      query: {
-        presets: ['react', 'es2015', 'stage-1']
+    loaders: [
+      {      
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015', 'stage-1']
+        },
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/
       },
-      test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/
-    }]
+      {
+        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.png($|\?)|\.svg($|\?)/,
+        loader: 'url-loader'
+      }
+    ]
   }, 
   devServer: {
     historyApiFallback: true,

@@ -18,13 +18,15 @@ app.use(express.static(__dirname + '/frontend/public'));
 app.get("/api/spots", function(request, response){	
 	var location = request.query.location,
 		offset = request.query.offset,
-		sort = request.query.sort;			
+		sort = request.query.sort,
+		category_filter = request.query.category_filter;			
 
 	var params = {
 		location: location||'London',
-		limit: 6,
+		limit: 10,
 		offset: offset||0,		
-		sort: !sort||sort==0?sort:2
+		sort: !sort||sort==0?sort:2,
+		category_filter: category_filter||'bars'
 	};	
 	//making a request to Yelp api
 	requestYelp(params, function(error, res, body){

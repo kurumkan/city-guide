@@ -1,4 +1,4 @@
-export default function(state={}, action){
+export default function(state={lat:  51.509865, lng: -0.118092}, action){
 	
 	switch(action.type){
 

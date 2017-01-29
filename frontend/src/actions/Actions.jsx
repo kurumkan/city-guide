@@ -4,11 +4,11 @@ import {browserHistory} from 'react-router';
 const ROOT_URL = '/api/spots/';
 
 //get list of polls
-export function getSpots(location='London', offset=0, sort=2){
+export function getSpots(location='London', offset=0, sort=0){
 	return function(dispatch){			
 		dispatch(removeErroMessage());						
-		axios.get(ROOT_URL+'?location='+location+'&offset='+offset+'&sort='+sort)
-			.then((response)=>{									
+		axios.get(ROOT_URL+'?location='+location+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
+			.then((response)=>{				
 				dispatch({
 					type: 'GET_SPOTS',
 					payload: response.data.businesses
@@ -16,7 +16,14 @@ export function getSpots(location='London', offset=0, sort=2){
 				dispatch({
 					type: 'SET_TERM',
 					payload: location
-				});				
+				});
+				dispatch({
+					type: 'SET_LOCATION',
+					payload: {
+						lat: response.data.latitude,
+						lng: response.data.longitude
+					}
+				});					
 			})
 			.catch((error)=>{	
 				var {status} = error.response;

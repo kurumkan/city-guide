@@ -6,6 +6,7 @@
 @import "components/mapcontainer";
 @import "components/footer";
 @import "components/loader";
+@import "components/spot_on_map";
 
 body{
 	font-family: 'Arimo', sans-serif;
@@ -14,4 +15,8 @@ body{
 
 .content{
 	height:100%;
+}
+
+.no-padding{
+	padding: 0;
 }

@@ -10,10 +10,10 @@ export default class IndexPage extends Component{
 		return (
 			<div className='index-page row'>
 				<Alert />				
-				<div className='col-sm-4'>
+				<div className='col-sm-5 no-padding'>
 					<MapContainer />
 				</div>
-				<div className='col-sm-8' id='right'>
+				<div className='col-sm-7 no-padding' id='right'>
 					<SpotsList/>
 				</div>
 			</div>
