@@ -3,11 +3,13 @@ import Nav from 'Nav';
 import Footer from 'Footer';
 
 export default class Main extends Component{
-	render() {
+	render() {		
 		return (
 			<div className='container-fluid main'>
-				<Nav/>						
-				{this.props.children}	
+				<Nav/>	
+				<div className='content'>
+					{this.props.children}	
+				</div>	
 				<Footer/>
 			</div>	
 		);	

@@ -1,8 +1,8 @@
-export default function(state={}, action){
+export default function(state='London', action){
 	
 	switch(action.type){
 
-		case 'SET_LOCATION':	
+		case 'SET_TERM':	
 			return action.payload;
 		
 		default:

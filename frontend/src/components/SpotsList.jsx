@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import {getSpots} from 'Actions';
-import SpotsListItem from 'SpotsListItem'
+import SpotsListItem from 'SpotsListItem';
+import Loader from 'Loader';
+
 
 class SpotsList extends Component{
 
-	componentWillMount() {				
-		var {location} = this.props;
-		this.props.getSpots(location);				
+	componentWillMount() {	
+		var {term, error} = this.props;				
+		this.props.getSpots(term);								
 	}
 
 	renderSpots(spots){
@@ -20,24 +22,34 @@ class SpotsList extends Component{
 	}
 
 	render() {
-		var {spots} = this.props;
+		var {spots, term, error} = this.props;
 		console.log('spots', spots);
-		
-		return (
-			<div className='spots-list'>
-				<h2>Search Results for: London</h2>
-				<div>
-					{this.renderSpots(spots)}		
-				</div>	
-			</div>
-		);	
+
+		if(spots.length===0){
+			return <Loader />;
+		}
+
+		if(error)
+			return (
+				<div className='spots-list'></div>
+			);			
+		else
+			return (
+				<div className='spots-list'>								
+					<h2>Search Results for: {term}</h2>
+					<div>
+						{this.renderSpots(spots)}		
+					</div>	
+				</div>
+			);	
 	}
 }
 
 function mapStateToProps(state) {
 	return {
 		spots: state.spots.all,
-		location: state.location		
+		term: state.term,
+		error: state.error		
 	};
 }
 

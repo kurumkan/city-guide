@@ -21,7 +21,7 @@ app.get("/api/spots", function(request, response){
 		sort = request.query.sort;			
 
 	var params = {
-		location: location||london,
+		location: location||'London',
 		limit: 6,
 		offset: offset||0,		
 		sort: !sort||sort==0?sort:2

@@ -6,12 +6,12 @@ export default class SpotsListItem extends Component{
 		return (
 			<div className="panel panel-default spots-list-item">
 			  <div className="panel-body">
-			  	<div className='col-xs-3'>
+			  	<div className='col-sm-3'>
 			  		<a href={spot.url} target='_blank' >
 			    		<image className='img-responsive' src={spot.image_url} />
 			    	</a>	
 			    </div>	
-			    <div className='col-xs-9'>
+			    <div className='col-sm-9'>
 			    	<h3>					    		
 			    		{spot.name}
 			    	</h3>

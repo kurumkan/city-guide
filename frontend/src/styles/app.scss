@@ -2,10 +2,16 @@
 @import "components/navbar";
 @import "components/searchbar";
 @import "components/indexpage";
-@import "components/businesslist";
+@import "components/spotslist";
+@import "components/mapcontainer";
 @import "components/footer";
+@import "components/loader";
 
 body{
 	font-family: 'Arimo', sans-serif;
 	background-color: #f7f7f7;	
+}
+
+.content{
+	height:100%;
 }

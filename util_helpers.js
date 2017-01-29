@@ -10,11 +10,15 @@ module.exports = {
 	//handle internal errors
 	handleError: function(response, error, type){
 		console.log(error.stack);
-		response.status(500);
-		if(type=='YELP')
-			response.json({error: "error: Yelp API error"});		
-		else
+		
+		if(type=='YELP'){			
+			response.status(400);
+			response.json({error: "error: YELP api error"});						
+		}
+		else{
+			response.status(500);
 			response.json({error: "error: internal server error"});		
+		}
 	},
 	
 	/* make request to Yelp API
