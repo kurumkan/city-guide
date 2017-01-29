@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
 
   switch (action.type) {
-    case 'GET_SPOTS':    
+    case 'GET_SPOTS':       
       return {
         ...state,
         all: action.payload

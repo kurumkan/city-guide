@@ -8,10 +8,13 @@ var configs = require('./yelp.config.js');
 
 module.exports = {	
 	//handle internal errors
-	handle500: function(response, error){
+	handleError: function(response, error, type){
 		console.log(error.stack);
 		response.status(500);
-		response.json({error: "error: internal server error"});		
+		if(type=='YELP')
+			response.json({error: "error: Yelp API error"});		
+		else
+			response.json({error: "error: internal server error"});		
 	},
 	
 	/* make request to Yelp API

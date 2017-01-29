@@ -3,7 +3,7 @@ var app = express();
 var path =require("path");
 
 
-var {handle500} = require("./util_helpers.js");
+var {handleError, requestYelp} = require("./util_helpers.js");
 
 app.use(function(req, res, next){
 	if(req.headers["x-forwarded-proto"] === "https"){		
@@ -15,10 +15,39 @@ app.use(function(req, res, next){
 
 app.use(express.static(__dirname + '/frontend/public'));
 
-app.get("/api", function(request, response){			
+app.get("/api/spots", function(request, response){	
+	var location = request.query.location,
+		offset = request.query.offset,
+		sort = request.query.sort;			
+
+	var params = {
+		location: location||london,
+		limit: 6,
+		offset: offset||0,		
+		sort: sort||2
+	};	
 	
-	response.json({response: 'all is well!'});					
-	
+	//making a request to Yelp api
+	requestYelp(params, function(error, res, body){
+		if(error){
+			handleError(response, error, 'YELP');
+		}else{
+			body = JSON.parse(body);	
+			if(body.error){
+				var error = {
+					stack: body.error
+				}				
+				handleError(response, error, 'YELP');	
+			}else{
+				console.log(body.region, body.businesses, body)
+				response.json({
+					businesses: body.businesses,
+					// latitude: body.region.center.latitude,
+					// longitude: body.region.center.longitude
+				});			
+			}			
+		}
+	});	
 });
 
 app.get('*', function (request, response){		

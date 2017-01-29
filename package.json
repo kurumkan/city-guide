@@ -30,6 +30,7 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "babel-preset-stage-1": "^6.1.18",
     "lodash": "^3.10.1",
     "nonce": "^1.0.4",
