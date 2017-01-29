@@ -28074,7 +28074,14 @@
 			value: function componentWillMount() {
 				var location = this.props.location;
 
-				if (location) this.props.getSpots(location);else this.props.getSpots('london');
+				this.props.getSpots(location);
+			}
+		}, {
+			key: 'renderSpots',
+			value: function renderSpots(spots) {
+				return spots.map(function (spot, i) {
+					return _react2.default.createElement(_SpotsListItem2.default, { spot: spot, key: i });
+				});
 			}
 		}, {
 			key: 'render',
@@ -28082,6 +28089,7 @@
 				var spots = this.props.spots;
 
 				console.log('spots', spots);
+
 				return _react2.default.createElement(
 					'div',
 					{ className: 'spots-list' },
@@ -28093,9 +28101,7 @@
 					_react2.default.createElement(
 						'div',
 						null,
-						_react2.default.createElement(_SpotsListItem2.default, null),
-						_react2.default.createElement(_SpotsListItem2.default, null),
-						_react2.default.createElement(_SpotsListItem2.default, null)
+						this.renderSpots(spots)
 					)
 				);
 			}
@@ -28140,6 +28146,10 @@
 	//get list of polls
 	function getSpots(location, offset, sort) {
 		return function (dispatch) {
+			location = location || 'london';
+			offset = offset || 0;
+			sort = !sort || sort == 0 ? sort : 2;
+
 			_axios2.default.get(ROOT_URL + '?location=' + location + '&offset=' + offset + '&sort=' + sort).then(function (response) {
 				dispatch({
 					type: 'GET_SPOTS',
@@ -29697,6 +29707,8 @@
 		_createClass(SpotsListItem, [{
 			key: "render",
 			value: function render() {
+				var spot = this.props.spot;
+
 				return _react2.default.createElement(
 					"div",
 					{ className: "panel panel-default spots-list-item" },
@@ -29705,47 +29717,32 @@
 						{ className: "panel-body" },
 						_react2.default.createElement(
 							"div",
-							{ className: "col-xs-4" },
+							{ className: "col-xs-3" },
 							_react2.default.createElement(
 								"a",
-								{ href: "#", target: "_blank" },
-								_react2.default.createElement("image", { className: "img-responsive", src: "http://demo.templatic.com/images/listing/apartments(2)-350x233.jpg" })
+								{ href: spot.url, target: "_blank" },
+								_react2.default.createElement("image", { className: "img-responsive", src: spot.image_url })
 							)
 						),
 						_react2.default.createElement(
 							"div",
-							{ className: "col-xs-8" },
+							{ className: "col-xs-9" },
 							_react2.default.createElement(
 								"h3",
 								null,
-								"New Globe Walk"
+								spot.name
 							),
 							_react2.default.createElement(
 								"div",
 								null,
 								_react2.default.createElement("span", { className: "glyphicon glyphicon-earphone", "aria-hidden": "true" }),
-								"+86 10 6538 5537"
+								spot.display_phone
 							),
 							_react2.default.createElement(
 								"div",
 								null,
 								_react2.default.createElement("span", { className: "glyphicon glyphicon-map-marker", "aria-hidden": "true" }),
-								"31 Rosary Gardens London SW7 4NH UK"
-							),
-							_react2.default.createElement(
-								"div",
-								null,
-								_react2.default.createElement("span", { className: "glyphicon glyphicon-time", "aria-hidden": "true" }),
-								"9.00 am to 6 pm every day"
-							),
-							_react2.default.createElement(
-								"div",
-								null,
-								_react2.default.createElement(
-									"span",
-									{ className: "stars-container stars-70" },
-									"\u2605\u2605\u2605\u2605\u2605"
-								)
+								spot.location.address[0]
 							),
 							_react2.default.createElement(
 								"div",
@@ -29770,15 +29767,26 @@
 							_react2.default.createElement(
 								"div",
 								null,
-								"This is a listing description section where you can write about your listing. We have provided an editor for entering this information on Submit listing page so your visitors will be able to format their description easily...",
 								_react2.default.createElement(
-									"div",
-									null,
-									_react2.default.createElement(
-										"a",
-										{ href: "#", target: "_blank" },
-										"See 10 more opinions "
-									)
+									"span",
+									{ className: "stars-container stars-" + Math.round(spot.rating * 20) },
+									"\u2605\u2605\u2605\u2605\u2605"
+								)
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								spot.snippet_text
+							),
+							_react2.default.createElement(
+								"div",
+								null,
+								_react2.default.createElement(
+									"a",
+									{ href: spot.url, target: "_blank" },
+									"See ",
+									spot.review_count,
+									" more feedbacks"
 								)
 							)
 						)
@@ -29876,7 +29884,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 1px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll; } }\n\n@media (min-width: 768px) {\n  .spots-list {\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px; }\n\n.spots-list h2 {\n  border-bottom: 1px solid #ccc;\n  padding-bottom: 10px; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item {\n  margin-left: 20px;\n  margin-right: 10px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out; }\n\n.spots-list-item img:hover {\n  transform: scale(1.1); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 1px -15px;\n  border-top: 1px solid #ccc; }\n\n.footer a {\n  color: #ff5a5f; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 1px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll; } }\n\n@media (min-width: 768px) {\n  .spots-list {\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px; }\n\n.spots-list h2 {\n  border-bottom: 1px solid #ccc;\n  padding-bottom: 10px; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item {\n  margin-left: 20px;\n  margin-right: 10px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 150px;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.1); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 1px -15px;\n  border-top: 1px solid #ccc; }\n\n.footer a {\n  color: #ff5a5f; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n", ""]);
 
 	// exports
 

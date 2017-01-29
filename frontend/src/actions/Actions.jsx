@@ -5,21 +5,24 @@ const ROOT_URL = '/api/spots/';
 
 //get list of polls
 export function getSpots(location, offset, sort){
-	return function(dispatch){		
+	return function(dispatch){	
+		location=location||'london';
+		offset=offset||0;		
+		sort=!sort||sort==0?sort:2;	
+
 		axios.get(ROOT_URL+'?location='+location+'&offset='+offset+'&sort='+sort)
 			.then((response)=>{									
 				dispatch({
 					type: 'GET_SPOTS',
 					payload: response.data.businesses
 				});
-				dispatch(removeErroMessage());
+				dispatch(removeErroMessage());				
 			})
 			.catch(()=>{				
 				dispatch(setErrorMessage('Something went wrong. We are working on it.'));
 			})
 	}	
 }
-
 
 export function setLocation(location){
 	return {

@@ -24,6 +24,8 @@
 
 .spots-list-item img{
 	transition: all .2s ease-in-out; 
+	width:150px; 
+    height: auto;
 }
 
 .spots-list-item img:hover{
@@ -85,4 +87,6 @@
 .stars-80:after { width: 80%; }
 .stars-90:after { width: 90%; }
 .stars-100:after { width: 100; }
+
+
 

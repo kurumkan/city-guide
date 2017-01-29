@@ -24,9 +24,8 @@ app.get("/api/spots", function(request, response){
 		location: location||london,
 		limit: 6,
 		offset: offset||0,		
-		sort: sort||2
+		sort: !sort||sort==0?sort:2
 	};	
-	
 	//making a request to Yelp api
 	requestYelp(params, function(error, res, body){
 		if(error){
@@ -39,11 +38,10 @@ app.get("/api/spots", function(request, response){
 				}				
 				handleError(response, error, 'YELP');	
 			}else{
-				console.log(body.region, body.businesses, body)
 				response.json({
 					businesses: body.businesses,
-					// latitude: body.region.center.latitude,
-					// longitude: body.region.center.longitude
+					latitude: body.region.center.latitude,
+					longitude: body.region.center.longitude
 				});			
 			}			
 		}

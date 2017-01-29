@@ -8,22 +8,26 @@ class SpotsList extends Component{
 
 	componentWillMount() {				
 		var {location} = this.props;
-		if(location)
-			this.props.getSpots(location);		
-		else
-			this.props.getSpots('london');		
+		this.props.getSpots(location);				
+	}
+
+	renderSpots(spots){
+		return spots.map((spot, i)=>{
+			return (
+				<SpotsListItem spot={spot} key={i}/>
+			);
+		})
 	}
 
 	render() {
 		var {spots} = this.props;
 		console.log('spots', spots);
+		
 		return (
 			<div className='spots-list'>
 				<h2>Search Results for: London</h2>
 				<div>
-					<SpotsListItem />
-					<SpotsListItem />
-					<SpotsListItem />					
+					{this.renderSpots(spots)}		
 				</div>	
 			</div>
 		);	
