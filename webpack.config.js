@@ -30,11 +30,7 @@ module.exports = {
         },
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/
-      },
-      {
-        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.png($|\?)|\.svg($|\?)/,
-        loader: 'url-loader'
-      }
+      }      
     ]
   }, 
   devServer: {

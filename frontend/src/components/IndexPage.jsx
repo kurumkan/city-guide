@@ -5,8 +5,7 @@ import MapContainer from 'MapContainer';
 import Alert from 'Alert';
 
 export default class IndexPage extends Component{
-	render() {
-		console.log('indexpage')
+	render() {		
 		return (
 			<div className='index-page row'>
 				<Alert />				

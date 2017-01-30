@@ -11,13 +11,18 @@ export default class SpotOnMap extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   constructor(props) {
-    super(props);
+    super(props);    
   }
 
   render() {
     return (
-      <div className='spot-on-map'>
-        <img src='images/bar_icon.png' className='img-responsive'/>        
+      <div className='spot-on-map'>                        
+        <div className="wrapper">          
+          <img src='images/bar_icon.png'/>                                        
+          <div className="tooltip">
+            {this.props.text}
+          </div>
+        </div>        
       </div>
     );
   }
