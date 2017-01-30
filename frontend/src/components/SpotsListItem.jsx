@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {selectSpot} from 'Actions';
 
-export default class SpotsListItem extends Component{
+class SpotsListItem extends Component{
+
+	handleClick(e){
+		var {spot, selectSpot} = this.props;
+		selectSpot(spot.id);
+	}
+
 	render() {
 		var {spot} = this.props;
 		return (
@@ -30,7 +38,7 @@ export default class SpotsListItem extends Component{
 			    		</button>					    		
 			    	</div>
 			    	<div>
-			    		<button className='btn btn-go'>
+			    		<button className='btn btn-go' onClick={this.handleClick.bind(this)}>
 			    			<span className="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
 			    			Pinpoint
 			    		</button>					    		
@@ -50,3 +58,5 @@ export default class SpotsListItem extends Component{
 		);	
 	}
 }
+
+export default connect(null, {selectSpot})(SpotsListItem);

@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   all: [],
-  spot: null  
+  selectedSpot: null  
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -12,10 +12,10 @@ export default function(state = INITIAL_STATE, action) {
         all: action.payload
       };
 
-    case 'GET_SINGLE_SPOT':    
+    case 'SELECT_SPOT':    
       return {
         ...state,
-        spot: action.payload
+        selectedSpot: action.payload
       };
 
     default:

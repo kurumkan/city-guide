@@ -37,6 +37,14 @@ export function getSpots(location='London', offset=0, sort=0){
 	}	
 }
 
+export function selectSpot(id){
+	console.log('selectsport', id)
+	return {
+		type: 'SELECT_SPOT',
+		payload: id
+	};
+}
+
 export function setErrorMessage(error){
 	return {
 		type: 'SET_ERROR',

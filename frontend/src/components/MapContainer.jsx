@@ -37,13 +37,13 @@ class MapContainer extends Component {
 	_onChildClick = (key, childProps) => {		
 		var center = {lat: childProps.lat, lng: childProps.lng};
 		this.setState({center});		
-		console.log('clicked')
 	}
 
 	renderSpots(){		
-		return this.props.spots.map((spot, i)=>{
+		return this.props.spots.map((spot)=>{
 				var {latitude, longitude} = spot.location.coordinate;
-				return <SpotOnMap text={spot.name} lat={latitude} lng={longitude} key={i} />    
+				var {name, id} = spot;
+				return <SpotOnMap text={name} id={id} key={id} lat={latitude} lng={longitude} />    
 			}
 		);
 	}

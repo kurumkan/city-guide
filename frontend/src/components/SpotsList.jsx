@@ -23,7 +23,7 @@ class SpotsList extends Component{
 
 	render() {
 		var {spots, term, error} = this.props;
-		console.log('spots', spots);
+		//console.log('spots', spots);
 
 		if(spots.length===0){
 			return <Loader />;
