@@ -48,6 +48,20 @@ export function setMapCenter(coords){
 	};	
 }
 
+export function setSort(sort){
+	return {
+		type: 'SET_SORT',
+		payload: sort
+	}
+}
+
+export function setOffset(offset){
+	return {
+		type: 'SET_OFFSET',
+		payload: offset
+	}
+}
+
 
 export function setErrorMessage(error){
 	return {

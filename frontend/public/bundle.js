@@ -27535,6 +27535,14 @@
 				return _extends({}, state, {
 					location: action.payload
 				});
+			case 'SET_SORT':
+				return _extends({}, state, {
+					sort: action.payload
+				});
+			case 'SET_OFFSET':
+				return _extends({}, state, {
+					offset: action.payload
+				});
 
 			default:
 				return state;
@@ -27543,7 +27551,9 @@
 
 	var INITIAL_STATE = {
 		term: 'London',
-		location: { lat: 51.509865, lng: -0.118092 }
+		location: { lat: 51.509865, lng: -0.118092 },
+		offset: 0,
+		sort: 0
 	};
 
 /***/ },
@@ -27884,6 +27894,8 @@
 	exports.getSpots = getSpots;
 	exports.selectSpot = selectSpot;
 	exports.setMapCenter = setMapCenter;
+	exports.setSort = setSort;
+	exports.setOffset = setOffset;
 	exports.setErrorMessage = setErrorMessage;
 	exports.removeErroMessage = removeErroMessage;
 
@@ -27942,6 +27954,20 @@
 		return {
 			type: 'SET_MAP_CENTER',
 			payload: coords
+		};
+	}
+
+	function setSort(sort) {
+		return {
+			type: 'SET_SORT',
+			payload: sort
+		};
+	}
+
+	function setOffset(offset) {
+		return {
+			type: 'SET_OFFSET',
+			payload: offset
 		};
 	}
 
@@ -33282,6 +33308,8 @@
 
 	var _function2 = _interopRequireDefault(_function);
 
+	var _Actions = __webpack_require__(271);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33303,6 +33331,12 @@
 	  }
 
 	  _createClass(SpotOnMap, [{
+	    key: 'onMouseEnterHandler',
+	    value: function onMouseEnterHandler(e) {
+	      //remove tooltip from 'selectedSpot'
+	      this.props.selectSpot(null);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props,
@@ -33312,7 +33346,7 @@
 
 	      return _addons2.default.createElement(
 	        'div',
-	        { className: 'spot-on-map' },
+	        { className: 'spot-on-map', onMouseEnter: this.onMouseEnterHandler.bind(this) },
 	        _addons2.default.createElement(
 	          'div',
 	          { className: 'wrapper' },
@@ -33342,7 +33376,7 @@
 	  };
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(SpotOnMap);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot })(SpotOnMap);
 
 /***/ },
 /* 331 */
@@ -35836,6 +35870,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRedux = __webpack_require__(160);
+
+	var _Actions = __webpack_require__(271);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35853,15 +35891,38 @@
 			var _this = _possibleConstructorReturn(this, (DisplaySelector.__proto__ || Object.getPrototypeOf(DisplaySelector)).call(this, props));
 
 			_this.state = {
-				displayType: 'LIST'
+				displayType: 'LIST',
+				sort: '0'
 			};
 			return _this;
 		}
 
 		_createClass(DisplaySelector, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var sort = this.props.sort;
+
+				this.setState({ sort: sort });
+			}
+		}, {
 			key: 'handleClick',
 			value: function handleClick(displayType) {
 				this.setState({ displayType: displayType });
+			}
+		}, {
+			key: 'handleChange',
+			value: function handleChange(e) {
+				var sort = e.target.value;
+				if (sort !== this.state.sort) {
+					this.setState({ sort: sort });
+					var _props = this.props,
+					    getSpots = _props.getSpots,
+					    setSort = _props.setSort,
+					    term = _props.term;
+
+					setSort(sort);
+					getSpots(term, 0, sort);
+				}
 			}
 		}, {
 			key: 'render',
@@ -35895,20 +35956,20 @@
 							null,
 							_react2.default.createElement(
 								'select',
-								{ className: 'form-control' },
+								{ className: 'form-control', value: this.state.sort, onChange: this.handleChange.bind(this) },
 								_react2.default.createElement(
 									'option',
-									{ defaultValue: true },
+									{ value: 'null' },
 									'Sort By'
 								),
 								_react2.default.createElement(
 									'option',
-									null,
+									{ value: '0' },
 									'Best Matched'
 								),
 								_react2.default.createElement(
 									'option',
-									null,
+									{ value: '2' },
 									'Highest Rated'
 								)
 							)
@@ -35921,7 +35982,15 @@
 		return DisplaySelector;
 	}(_react.Component);
 
-	exports.default = DisplaySelector;
+	function mapStateToProps(state) {
+		var _state$search = state.search,
+		    term = _state$search.term,
+		    sort = _state$search.sort;
+
+		return { term: term, sort: sort };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort })(DisplaySelector);
 
 /***/ }
 /******/ ]);

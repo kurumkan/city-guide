@@ -1,15 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class DisplaySelector extends Component{
+import {getSpots, setSort} from 'Actions';
+
+class DisplaySelector extends Component{
 	constructor(props) {
 		super(props);
 		this.state={
-			displayType: 'LIST'
+			displayType: 'LIST',
+			sort: '0'
 		}
+	}
+
+	componentWillMount() {
+		var {sort} = this.props;
+		this.setState({sort});
 	}
 
 	handleClick(displayType){
 		this.setState({displayType})
+	}
+
+	handleChange(e){		
+		var sort = e.target.value;				
+		if(sort!==this.state.sort){			
+			this.setState({sort});
+			var {getSpots, setSort,term} = this.props;			
+			setSort(sort);			
+			getSpots(term,0,sort);
+		}
 	}
 	
 	render() {	
@@ -30,10 +49,10 @@ export default class DisplaySelector extends Component{
 						<span className='glyphicon glyphicon-th-list' aria-hidden='true'></span>
 					</div>
 					<div>					
-						<select className="form-control">
-							<option defaultValue>Sort By</option>						
-							<option>Best Matched</option>
-							<option>Highest Rated</option>
+						<select className="form-control" value={this.state.sort} onChange={this.handleChange.bind(this)}>
+							<option value='null'>Sort By</option>						
+							<option value='0'>Best Matched</option>
+							<option value='2'>Highest Rated</option>
 						</select>
 					</div>
 				</div>	
@@ -41,3 +60,12 @@ export default class DisplaySelector extends Component{
 		);	
 	}
 }
+
+
+
+function mapStateToProps(state) {
+	var {term, sort} = state.search;
+	return {term, sort};		
+}
+
+export default connect(mapStateToProps, {getSpots, setSort})(DisplaySelector);

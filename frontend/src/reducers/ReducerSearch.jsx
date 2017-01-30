@@ -1,6 +1,8 @@
 const INITIAL_STATE = {
   term: 'London',
-  location: {lat:  51.509865, lng: -0.118092}
+  location: {lat:  51.509865, lng: -0.118092},
+  offset: 0,
+  sort: 0
 };
 
 
@@ -18,6 +20,16 @@ export default function(state=INITIAL_STATE, action){
 				...state,
 				location: action.payload
 			}	
+		case 'SET_SORT':
+			return {
+				...state,
+				sort: action.payload
+			}			
+		case 'SET_OFFSET':
+			return {
+				...state,
+				offset: action.payload
+			}				
 		
 		default:
 			return state;	

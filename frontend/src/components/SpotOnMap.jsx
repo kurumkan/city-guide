@@ -2,6 +2,9 @@ import React, {PropTypes, Component} from 'react/addons';
 import { connect } from 'react-redux';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
+import {selectSpot} from 'Actions';
+
+
 class SpotOnMap extends Component {
   static propTypes = {
     text: PropTypes.string
@@ -15,10 +18,15 @@ class SpotOnMap extends Component {
     super(props);    
   }
 
+  onMouseEnterHandler(e){
+    //remove tooltip from 'selectedSpot'
+    this.props.selectSpot(null);
+  }
+
   render() {
     var {text, id, selectedId} = this.props;
     return (
-      <div className='spot-on-map'>                        
+      <div className='spot-on-map' onMouseEnter={this.onMouseEnterHandler.bind(this)}>                        
         <div className="wrapper">          
           <img src='images/bar_icon.png'/>                                        
           <div className={'tooltip '+(id===selectedId?'selected-spot':'')}>
@@ -30,12 +38,10 @@ class SpotOnMap extends Component {
   }
 }
 
-
-
 function mapStateToProps(state) { 
   return {    
     selectedId: state.spots.selectedSpot
   };
 }
 
-export default connect(mapStateToProps, null)(SpotOnMap);
+export default connect(mapStateToProps, {selectSpot})(SpotOnMap);
