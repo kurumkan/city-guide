@@ -21,6 +21,7 @@ class MapContainer extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		var {center} = nextProps;
+
 	  	this.setState({center});		
 	}
 	
@@ -75,8 +76,8 @@ class MapContainer extends Component {
 function mapStateToProps(state) {	
 	return {
 		spots: state.spots.all,
-		center: state.location,
-		error: state.error
+		center: state.search.location,
+		error: state.error		
 	};
 }
 

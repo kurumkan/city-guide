@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {getSpots} from 'Actions';
 import SpotsListItem from 'SpotsListItem';
 import Loader from 'Loader';
+import DisplaySelector from 'DisplaySelector';
 
 
 class SpotsList extends Component{
@@ -15,7 +16,7 @@ class SpotsList extends Component{
 
 	renderSpots(spots){
 		return spots.map((spot, i)=>{
-			return (
+			return (				
 				<SpotsListItem spot={spot} key={i}/>
 			);
 		})
@@ -23,7 +24,7 @@ class SpotsList extends Component{
 
 	render() {
 		var {spots, term, error} = this.props;
-		//console.log('spots', spots);
+		console.log('spots', spots);
 
 		if(spots.length===0){
 			return <Loader />;
@@ -37,7 +38,8 @@ class SpotsList extends Component{
 			return (
 				<div className='spots-list'>								
 					<h2>Search Results for: {term}</h2>
-					<div>
+					<DisplaySelector />
+					<div className='spots-list-wrapper'>
 						{this.renderSpots(spots)}		
 					</div>	
 				</div>
@@ -48,7 +50,7 @@ class SpotsList extends Component{
 function mapStateToProps(state) {
 	return {
 		spots: state.spots.all,
-		term: state.term,
+		term: state.search.term,
 		error: state.error		
 	};
 }

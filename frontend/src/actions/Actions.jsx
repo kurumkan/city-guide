@@ -16,14 +16,11 @@ export function getSpots(location='London', offset=0, sort=0){
 				dispatch({
 					type: 'SET_TERM',
 					payload: location
-				});
-				dispatch({
-					type: 'SET_LOCATION',
-					payload: {
+				});				
+				dispatch(setMapCenter({
 						lat: response.data.latitude,
 						lng: response.data.longitude
-					}
-				});					
+					}))		
 			})
 			.catch((error)=>{	
 				var {status} = error.response;
@@ -37,13 +34,20 @@ export function getSpots(location='London', offset=0, sort=0){
 	}	
 }
 
-export function selectSpot(id){
-	console.log('selectsport', id)
+export function selectSpot(id){	
 	return {
 		type: 'SELECT_SPOT',
 		payload: id
 	};
 }
+
+export function setMapCenter(coords){
+	return {
+		type: 'SET_MAP_CENTER',
+		payload: coords
+	};	
+}
+
 
 export function setErrorMessage(error){
 	return {

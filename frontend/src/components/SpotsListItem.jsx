@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {selectSpot} from 'Actions';
+import {selectSpot, setMapCenter} from 'Actions';
 
 class SpotsListItem extends Component{
 
 	handleClick(e){
-		var {spot, selectSpot} = this.props;
+		var {spot, selectSpot, setMapCenter} = this.props;
 		selectSpot(spot.id);
+		setMapCenter({
+			lat:spot.location.coordinate.latitude,
+			lng:spot.location.coordinate.longitude
+		});
 	}
 
 	render() {
@@ -59,4 +63,4 @@ class SpotsListItem extends Component{
 	}
 }
 
-export default connect(null, {selectSpot})(SpotsListItem);
+export default connect(null, {selectSpot, setMapCenter})(SpotsListItem);

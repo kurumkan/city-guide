@@ -1,0 +1,43 @@
+.display-selector{
+	text-align: right;	
+	margin-bottom: 20px;
+}
+
+.display-selector .wrapper,  .display-selector div{
+	display: inline-block;
+}
+
+.display-selector .wrapper {
+	margin-right: 10px;	
+}
+
+.selector-button{
+	width: 44px;
+	height: 44px;
+	font-size: 24px;
+	color: #c6c6c6;	
+	text-align: center;	
+	line-height: 45px;
+	border: 1px solid #c6c6c6;	
+	border-radius: 2px;	
+	margin: 0 3px;
+	cursor: pointer;	
+}
+
+.selector-button:hover, .display-selector .active{
+	color: #ff5a5f;
+	border-color: #ff5a5f;
+}
+
+.display-selector select{
+	margin-left: 5px;		
+	width: 200px;
+	padding: 12px 35px 5px 5px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	height: 44px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: url('/images/arrow.png') 96% / 15% no-repeat #fff;
+}
