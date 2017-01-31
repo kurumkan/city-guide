@@ -21,9 +21,10 @@ ReactDOM.render(
 	<Provider store={store}>
 		<Router history={browserHistory}>
 			<Route path="/" component={Main}>
-				<IndexRoute component={IndexPage} />
-			 	<Route path="polls" component={IndexPage} />
-
+				<IndexRoute component={IndexPage} />				
+				<Route path='search' component={IndexPage}>
+					<Route path='?term=:term&page=:page&sort=:sort' component={IndexPage} />					
+				</Route>				
 			 	<Route path='404' component={NotFound404} />
 				<Route path='*' component={NotFound404} />
 			</Route>

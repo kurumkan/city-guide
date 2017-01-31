@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import {getSpots, setSort} from 'Actions';
+import {getSpots} from 'Actions';
 
 class DisplaySelector extends Component{
 	constructor(props) {
@@ -18,16 +18,17 @@ class DisplaySelector extends Component{
 	}
 
 	handleClick(displayType){
-		this.setState({displayType})
+		if(displayType!==this.state.displayType){
+			this.setState({displayType});	
+		}		
 	}
 
 	handleChange(e){		
 		var sort = e.target.value;				
 		if(sort!==this.state.sort){			
-			this.setState({sort});
-			var {getSpots, setSort,term} = this.props;			
-			setSort(sort);			
-			getSpots(term,0,sort);
+			this.setState({sort});						
+			var {term} = this.props;
+			this.props.getSpots(term, 0, sort);							
 		}
 	}
 	
@@ -50,7 +51,7 @@ class DisplaySelector extends Component{
 					</div>
 					<div>					
 						<select className="form-control" value={this.state.sort} onChange={this.handleChange.bind(this)}>
-							<option value='null'>Sort By</option>						
+							<option disabled value='null'>Sort By</option>						
 							<option value='0'>Best Matched</option>
 							<option value='2'>Highest Rated</option>
 						</select>
@@ -61,11 +62,9 @@ class DisplaySelector extends Component{
 	}
 }
 
-
-
 function mapStateToProps(state) {
-	var {term, sort} = state.search;
-	return {term, sort};		
+	var {sort, term} = state.search;
+	return {sort, term};		
 }
 
-export default connect(mapStateToProps, {getSpots, setSort})(DisplaySelector);
+export default connect(mapStateToProps, {getSpots})(DisplaySelector);

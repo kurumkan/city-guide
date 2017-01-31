@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import {getSpots} from 'Actions';
 
 class Searchbar extends Component{
 	constructor(props) {
 		super(props);		
-		this.state={location:''};		
+		this.state={term:''};		
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange(e){
-		this.setState({location: e.target.value});
+		this.setState({term: e.target.value});
 	}
 
 	handleSubmit(e){
 		e.preventDefault();
-		var {location} = this.state;		
-		if(location){
-			this.setState({location: ''});
-			this.props.getSpots(location)
+		var {term} = this.state;		
+		if(term){
+			this.setState({term: ''});			
+			var {sort} = this.props;			
+			this.props.getSpots(term, 0, sort);		
 		}
 	}
 	render() {		
@@ -29,7 +30,7 @@ class Searchbar extends Component{
 				<div className="input-group">
 					<input type="text" className="form-control" placeholder="Type a location" 
 						onChange={this.handleChange}
-						value={this.state.location}
+						value={this.state.term}
 					/>
 					<span className="input-group-btn">
 						<button className="btn btn-search" type="submit">
@@ -42,5 +43,9 @@ class Searchbar extends Component{
 	}
 }
 
+function mapStateToProps(state) {
+	var {term, sort} = state.search;
+	return {term, sort};		
+}
 
-export default connect(null, {getSpots})(Searchbar);
+export default connect(mapStateToProps, {getSpots})(Searchbar);

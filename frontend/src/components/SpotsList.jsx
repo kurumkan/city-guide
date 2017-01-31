@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import {getSpots} from 'Actions';
 import SpotsListItem from 'SpotsListItem';
 import Loader from 'Loader';
 import DisplaySelector from 'DisplaySelector';
-
+import Pagination from 'Pagination';
 
 class SpotsList extends Component{
-
-	componentWillMount() {	
-		var {term, error} = this.props;				
-		this.props.getSpots(term);								
-	}
 
 	renderSpots(spots){
 		return spots.map((spot, i)=>{
@@ -23,10 +17,10 @@ class SpotsList extends Component{
 	}
 
 	render() {
-		var {spots, term, error} = this.props;
-		console.log('spots', spots);
-
-		if(spots.length===0){
+		var {spots, term, error, isLoading} = this.props;
+		console.log('spots', spots);		
+		
+		if(isLoading){
 			return <Loader />;
 		}
 
@@ -42,6 +36,7 @@ class SpotsList extends Component{
 					<div className='spots-list-wrapper'>
 						{this.renderSpots(spots)}		
 					</div>	
+					<Pagination />
 				</div>
 			);	
 	}
@@ -51,8 +46,9 @@ function mapStateToProps(state) {
 	return {
 		spots: state.spots.all,
 		term: state.search.term,
-		error: state.error		
+		error: state.error,
+		isLoading: state.isLoading				
 	};
 }
 
-export default connect(mapStateToProps, {getSpots})(SpotsList);
+export default connect(mapStateToProps, null)(SpotsList);

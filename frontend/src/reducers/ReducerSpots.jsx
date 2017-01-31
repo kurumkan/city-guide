@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
   all: [],
-  selectedSpot: null  
+  selectedSpot: null,
+  spotsCount: 0  
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -17,6 +18,13 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         selectedSpot: action.payload
       };
+      
+    case 'SET_SPOTS_COUNT':   
+      return {
+        ...state,
+        spotsCount: action.payload
+      }                 
+      
 
     default:
       return state;

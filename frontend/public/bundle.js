@@ -90,7 +90,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// App css
-	__webpack_require__(351);
+	__webpack_require__(353);
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
 	var store = createStoreWithMiddleware(_RootReducer2.default);
@@ -105,7 +105,11 @@
 				_reactRouter.Route,
 				{ path: '/', component: _Main2.default },
 				_react2.default.createElement(_reactRouter.IndexRoute, { component: _IndexPage2.default }),
-				_react2.default.createElement(_reactRouter.Route, { path: 'polls', component: _IndexPage2.default }),
+				_react2.default.createElement(
+					_reactRouter.Route,
+					{ path: 'search', component: _IndexPage2.default },
+					_react2.default.createElement(_reactRouter.Route, { path: '?term=:term&page=:page&sort=:sort', component: _IndexPage2.default })
+				),
 				_react2.default.createElement(_reactRouter.Route, { path: '404', component: _NotFound2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
 			)
@@ -27427,16 +27431,21 @@
 
 	var _ErrorReducer2 = _interopRequireDefault(_ErrorReducer);
 
-	var _ReducerSearch = __webpack_require__(266);
+	var _ReducerSearch = __webpack_require__(265);
 
 	var _ReducerSearch2 = _interopRequireDefault(_ReducerSearch);
+
+	var _ReducerLoader = __webpack_require__(266);
+
+	var _ReducerLoader2 = _interopRequireDefault(_ReducerLoader);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var RootReducer = (0, _redux.combineReducers)({
 		spots: _ReducerSpots2.default,
 		error: _ErrorReducer2.default,
-		search: _ReducerSearch2.default
+		search: _ReducerSearch2.default,
+		isLoading: _ReducerLoader2.default
 	});
 
 	exports.default = RootReducer;
@@ -27469,6 +27478,11 @@
 	        selectedSpot: action.payload
 	      });
 
+	    case 'SET_SPOTS_COUNT':
+	      return _extends({}, state, {
+	        spotsCount: action.payload
+	      });
+
 	    default:
 	      return state;
 	  }
@@ -27476,7 +27490,8 @@
 
 	var INITIAL_STATE = {
 	  all: [],
-	  selectedSpot: null
+	  selectedSpot: null,
+	  spotsCount: 0
 	};
 
 /***/ },
@@ -27508,8 +27523,7 @@
 	};
 
 /***/ },
-/* 265 */,
-/* 266 */
+/* 265 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27543,7 +27557,6 @@
 				return _extends({}, state, {
 					offset: action.payload
 				});
-
 			default:
 				return state;
 		}
@@ -27552,8 +27565,33 @@
 	var INITIAL_STATE = {
 		term: 'London',
 		location: { lat: 51.509865, lng: -0.118092 },
-		offset: 0,
-		sort: 0
+		sort: 0,
+		offset: 0
+	};
+
+/***/ },
+/* 266 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+		var action = arguments[1];
+
+
+		switch (action.type) {
+
+			case 'CHANGE_LOADING_STATUS':
+				return !state;
+
+			default:
+				return state;
+		}
 	};
 
 /***/ },
@@ -27828,7 +27866,7 @@
 
 			var _this = _possibleConstructorReturn(this, (Searchbar.__proto__ || Object.getPrototypeOf(Searchbar)).call(this, props));
 
-			_this.state = { location: '' };
+			_this.state = { term: '' };
 			_this.handleChange = _this.handleChange.bind(_this);
 			_this.handleSubmit = _this.handleSubmit.bind(_this);
 			return _this;
@@ -27837,17 +27875,19 @@
 		_createClass(Searchbar, [{
 			key: 'handleChange',
 			value: function handleChange(e) {
-				this.setState({ location: e.target.value });
+				this.setState({ term: e.target.value });
 			}
 		}, {
 			key: 'handleSubmit',
 			value: function handleSubmit(e) {
 				e.preventDefault();
-				var location = this.state.location;
+				var term = this.state.term;
 
-				if (location) {
-					this.setState({ location: '' });
-					this.props.getSpots(location);
+				if (term) {
+					this.setState({ term: '' });
+					var sort = this.props.sort;
+
+					this.props.getSpots(term, 0, sort);
 				}
 			}
 		}, {
@@ -27861,7 +27901,7 @@
 						{ className: 'input-group' },
 						_react2.default.createElement('input', { type: 'text', className: 'form-control', placeholder: 'Type a location',
 							onChange: this.handleChange,
-							value: this.state.location
+							value: this.state.term
 						}),
 						_react2.default.createElement(
 							'span',
@@ -27880,7 +27920,15 @@
 		return Searchbar;
 	}(_react.Component);
 
-	exports.default = (0, _reactRedux.connect)(null, { getSpots: _Actions.getSpots })(Searchbar);
+	function mapStateToProps(state) {
+		var _state$search = state.search,
+		    term = _state$search.term,
+		    sort = _state$search.sort;
+
+		return { term: term, sort: sort };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(Searchbar);
 
 /***/ },
 /* 271 */
@@ -27894,8 +27942,10 @@
 	exports.getSpots = getSpots;
 	exports.selectSpot = selectSpot;
 	exports.setMapCenter = setMapCenter;
+	exports.setTerm = setTerm;
 	exports.setSort = setSort;
 	exports.setOffset = setOffset;
+	exports.changeLoadingStatus = changeLoadingStatus;
 	exports.setErrorMessage = setErrorMessage;
 	exports.removeErroMessage = removeErroMessage;
 
@@ -27910,26 +27960,28 @@
 	var ROOT_URL = '/api/spots/';
 
 	//get list of polls
-	function getSpots() {
-		var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'London';
-		var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-		var sort = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-
+	function getSpots(term, offset, sort) {
 		return function (dispatch) {
 			dispatch(removeErroMessage());
-			_axios2.default.get(ROOT_URL + '?location=' + location + '&offset=' + offset + '&sort=' + sort + '&category_filter=bars').then(function (response) {
+			dispatch(changeLoadingStatus());
+			_axios2.default.get(ROOT_URL + '?location=' + term + '&offset=' + offset + '&sort=' + sort + '&category_filter=bars').then(function (response) {
 				dispatch({
 					type: 'GET_SPOTS',
 					payload: response.data.businesses
-				});
-				dispatch({
-					type: 'SET_TERM',
-					payload: location
 				});
 				dispatch(setMapCenter({
 					lat: response.data.latitude,
 					lng: response.data.longitude
 				}));
+				dispatch({
+					type: 'SET_SPOTS_COUNT',
+					payload: response.data.total
+				});
+				dispatch(changeLoadingStatus());
+				dispatch(setSort(sort));
+				dispatch(setTerm(term));
+				dispatch(setOffset(offset));
+				_reactRouter.browserHistory.push('/search?term=' + term + '&offset=' + offset + '&sort=' + sort);
 			}).catch(function (error) {
 				var status = error.response.status;
 
@@ -27957,6 +28009,13 @@
 		};
 	}
 
+	function setTerm(term) {
+		return {
+			type: 'SET_TERM',
+			payload: term
+		};
+	}
+
 	function setSort(sort) {
 		return {
 			type: 'SET_SORT',
@@ -27968,6 +28027,12 @@
 		return {
 			type: 'SET_OFFSET',
 			payload: offset
+		};
+	}
+
+	function changeLoadingStatus() {
+		return {
+			type: 'CHANGE_LOADING_STATUS'
 		};
 	}
 
@@ -29625,15 +29690,21 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRedux = __webpack_require__(160);
+
+	var _reactRouter = __webpack_require__(200);
+
+	var _Actions = __webpack_require__(271);
+
 	var _SpotsList = __webpack_require__(300);
 
 	var _SpotsList2 = _interopRequireDefault(_SpotsList);
 
-	var _MapContainer = __webpack_require__(303);
+	var _MapContainer = __webpack_require__(305);
 
 	var _MapContainer2 = _interopRequireDefault(_MapContainer);
 
-	var _Alert = __webpack_require__(350);
+	var _Alert = __webpack_require__(352);
 
 	var _Alert2 = _interopRequireDefault(_Alert);
 
@@ -29655,6 +29726,30 @@
 		}
 
 		_createClass(IndexPage, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var _props$location$query = this.props.location.query,
+				    term = _props$location$query.term,
+				    offset = _props$location$query.offset,
+				    sort = _props$location$query.sort;
+				var _props = this.props,
+				    setSort = _props.setSort,
+				    setTerm = _props.setTerm,
+				    setOffset = _props.setOffset,
+				    getSpots = _props.getSpots,
+				    setErrorMessage = _props.setErrorMessage;
+
+
+				if (term && offset && sort) {
+					setTerm(term);
+					setSort(sort);
+					setOffset(offset);
+					getSpots(term, offset, sort);
+				} else {
+					_reactRouter.browserHistory.push('signin');
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -29678,7 +29773,16 @@
 		return IndexPage;
 	}(_react.Component);
 
-	exports.default = IndexPage;
+	function mapStateToProps(state) {
+		var _state$search = state.search,
+		    term = _state$search.term,
+		    sort = _state$search.sort,
+		    offset = _state$search.offset;
+
+		return { term: term, sort: sort, offset: offset };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, setTerm: _Actions.setTerm, setOffset: _Actions.setOffset, setErrorMessage: _Actions.setErrorMessage })(IndexPage);
 
 /***/ },
 /* 300 */
@@ -29698,8 +29802,6 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _Actions = __webpack_require__(271);
-
 	var _SpotsListItem = __webpack_require__(301);
 
 	var _SpotsListItem2 = _interopRequireDefault(_SpotsListItem);
@@ -29708,9 +29810,13 @@
 
 	var _Loader2 = _interopRequireDefault(_Loader);
 
-	var _DisplaySelector = __webpack_require__(355);
+	var _DisplaySelector = __webpack_require__(303);
 
 	var _DisplaySelector2 = _interopRequireDefault(_DisplaySelector);
+
+	var _Pagination = __webpack_require__(304);
+
+	var _Pagination2 = _interopRequireDefault(_Pagination);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29730,15 +29836,6 @@
 		}
 
 		_createClass(SpotsList, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
-				var _props = this.props,
-				    term = _props.term,
-				    error = _props.error;
-
-				this.props.getSpots(term);
-			}
-		}, {
 			key: 'renderSpots',
 			value: function renderSpots(spots) {
 				return spots.map(function (spot, i) {
@@ -29748,14 +29845,15 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var _props2 = this.props,
-				    spots = _props2.spots,
-				    term = _props2.term,
-				    error = _props2.error;
+				var _props = this.props,
+				    spots = _props.spots,
+				    term = _props.term,
+				    error = _props.error,
+				    isLoading = _props.isLoading;
 
 				console.log('spots', spots);
 
-				if (spots.length === 0) {
+				if (isLoading) {
 					return _react2.default.createElement(_Loader2.default, null);
 				}
 
@@ -29773,7 +29871,8 @@
 						'div',
 						{ className: 'spots-list-wrapper' },
 						this.renderSpots(spots)
-					)
+					),
+					_react2.default.createElement(_Pagination2.default, null)
 				);
 			}
 		}]);
@@ -29785,11 +29884,12 @@
 		return {
 			spots: state.spots.all,
 			term: state.search.term,
-			error: state.error
+			error: state.error,
+			isLoading: state.isLoading
 		};
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(SpotsList);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(SpotsList);
 
 /***/ },
 /* 301 */
@@ -30012,15 +30112,316 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _function = __webpack_require__(304);
+	var _Actions = __webpack_require__(271);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DisplaySelector = function (_Component) {
+		_inherits(DisplaySelector, _Component);
+
+		function DisplaySelector(props) {
+			_classCallCheck(this, DisplaySelector);
+
+			var _this = _possibleConstructorReturn(this, (DisplaySelector.__proto__ || Object.getPrototypeOf(DisplaySelector)).call(this, props));
+
+			_this.state = {
+				displayType: 'LIST',
+				sort: '0'
+			};
+			return _this;
+		}
+
+		_createClass(DisplaySelector, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var sort = this.props.sort;
+
+				this.setState({ sort: sort });
+			}
+		}, {
+			key: 'handleClick',
+			value: function handleClick(displayType) {
+				if (displayType !== this.state.displayType) {
+					this.setState({ displayType: displayType });
+				}
+			}
+		}, {
+			key: 'handleChange',
+			value: function handleChange(e) {
+				var sort = e.target.value;
+				if (sort !== this.state.sort) {
+					this.setState({ sort: sort });
+					var term = this.props.term;
+
+					this.props.getSpots(term, 0, sort);
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var displayType = this.state.displayType;
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'display-selector' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'wrapper' },
+						_react2.default.createElement(
+							'div',
+							{
+								className: 'selector-button ' + (displayType == 'GRID' ? 'active' : ''),
+								onClick: this.handleClick.bind(this, 'GRID')
+							},
+							_react2.default.createElement('span', { className: 'glyphicon glyphicon-th', 'aria-hidden': 'true' })
+						),
+						_react2.default.createElement(
+							'div',
+							{
+								className: 'selector-button ' + (displayType == 'LIST' ? 'active' : ''),
+								onClick: this.handleClick.bind(this, 'LIST')
+							},
+							_react2.default.createElement('span', { className: 'glyphicon glyphicon-th-list', 'aria-hidden': 'true' })
+						),
+						_react2.default.createElement(
+							'div',
+							null,
+							_react2.default.createElement(
+								'select',
+								{ className: 'form-control', value: this.state.sort, onChange: this.handleChange.bind(this) },
+								_react2.default.createElement(
+									'option',
+									{ disabled: true, value: 'null' },
+									'Sort By'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: '0' },
+									'Best Matched'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: '2' },
+									'Highest Rated'
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return DisplaySelector;
+	}(_react.Component);
+
+	function mapStateToProps(state) {
+		var _state$search = state.search,
+		    sort = _state$search.sort,
+		    term = _state$search.term;
+
+		return { sort: sort, term: term };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(DisplaySelector);
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(160);
+
+	var _reactRouter = __webpack_require__(200);
+
+	var _Actions = __webpack_require__(271);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Pagination = function (_Component) {
+		_inherits(Pagination, _Component);
+
+		function Pagination() {
+			_classCallCheck(this, Pagination);
+
+			return _possibleConstructorReturn(this, (Pagination.__proto__ || Object.getPrototypeOf(Pagination)).apply(this, arguments));
+		}
+
+		_createClass(Pagination, [{
+			key: 'range',
+			value: function range(end) {
+				var result = [];
+				var start = end > 4 ? end - 4 : 1;
+				for (var i = start; i <= end; i++) {
+					result.push(i);
+				}
+				return result;
+			}
+		}, {
+			key: 'handleClick',
+			value: function handleClick(newOffset) {
+				var _props = this.props,
+				    term = _props.term,
+				    sort = _props.sort,
+				    getSpots = _props.getSpots;
+
+				this.props.getSpots(term, newOffset, sort);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				var _props2 = this.props,
+				    spotsCount = _props2.spotsCount,
+				    term = _props2.term,
+				    sort = _props2.sort,
+				    offset = _props2.offset;
+
+
+				var pageNumber = Math.floor(offset / 10) + 1;
+				var total = Math.ceil(spotsCount / 10);
+				total = total <= 100 ? total : 100;
+
+				var n = total;
+				if (total > 5) {
+					if (pageNumber + 2 <= total) {
+						n = pageNumber + 2 < 5 ? 5 : pageNumber + 2;
+					}
+				}
+
+				var baseUrl = '/search?term=' + term + '&sort=' + sort + '&offset=';
+				var renderPageLinks = this.range(n).map(function (n) {
+					var newOffset = (n - 1) * 10;
+					return _react2.default.createElement(
+						'li',
+						{ key: n, onClick: _this2.handleClick.bind(_this2, newOffset), className: pageNumber === n ? 'active' : '' },
+						_react2.default.createElement(
+							_reactRouter.Link,
+							{ to: baseUrl + newOffset },
+							n
+						)
+					);
+				});
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'pagination-wrapper' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-xs-5 pagination-info' },
+						'Page ',
+						pageNumber,
+						' of ',
+						total
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-xs-7 text-right' },
+						_react2.default.createElement(
+							'nav',
+							{ 'aria-label': 'Page navigation', className: 'navigator' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'pagination pagination-custom' },
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: '#', 'aria-label': 'Previous' },
+										_react2.default.createElement(
+											'span',
+											{ 'aria-hidden': 'true' },
+											'\xAB'
+										)
+									)
+								),
+								renderPageLinks,
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										_reactRouter.Link,
+										{ to: '#', 'aria-label': 'Next' },
+										_react2.default.createElement(
+											'span',
+											{ 'aria-hidden': 'true' },
+											'\xBB'
+										)
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return Pagination;
+	}(_react.Component);
+
+	function mapStateToProps(state) {
+		var _state$search = state.search,
+		    term = _state$search.term,
+		    sort = _state$search.sort,
+		    offset = _state$search.offset;
+		var spotsCount = state.spots.spotsCount;
+
+		return { term: term, sort: sort, offset: offset, spotsCount: spotsCount };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(Pagination);
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(160);
+
+	var _function = __webpack_require__(306);
 
 	var _function2 = _interopRequireDefault(_function);
 
-	var _googleMapReact = __webpack_require__(306);
+	var _googleMapReact = __webpack_require__(308);
 
 	var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
 
-	var _SpotOnMap = __webpack_require__(330);
+	var _SpotOnMap = __webpack_require__(332);
 
 	var _SpotOnMap2 = _interopRequireDefault(_SpotOnMap);
 
@@ -30133,7 +30534,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(MapContainer);
 
 /***/ },
-/* 304 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30143,7 +30544,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _shallowEqual = __webpack_require__(305);
+	var _shallowEqual = __webpack_require__(307);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -30154,7 +30555,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 305 */
+/* 307 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30192,7 +30593,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 306 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30202,7 +30603,7 @@
 	});
 	exports.default = undefined;
 
-	var _google_map = __webpack_require__(307);
+	var _google_map = __webpack_require__(309);
 
 	var _google_map2 = _interopRequireDefault(_google_map);
 
@@ -30211,7 +30612,7 @@
 	exports.default = _google_map2.default;
 
 /***/ },
-/* 307 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -30232,67 +30633,67 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _shallowEqual = __webpack_require__(308);
+	var _shallowEqual = __webpack_require__(310);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _marker_dispatcher = __webpack_require__(309);
+	var _marker_dispatcher = __webpack_require__(311);
 
 	var _marker_dispatcher2 = _interopRequireDefault(_marker_dispatcher);
 
-	var _google_map_map = __webpack_require__(311);
+	var _google_map_map = __webpack_require__(313);
 
 	var _google_map_map2 = _interopRequireDefault(_google_map_map);
 
-	var _google_map_markers = __webpack_require__(312);
+	var _google_map_markers = __webpack_require__(314);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
-	var _google_map_markers_prerender = __webpack_require__(314);
+	var _google_map_markers_prerender = __webpack_require__(316);
 
 	var _google_map_markers_prerender2 = _interopRequireDefault(_google_map_markers_prerender);
 
-	var _google_map_loader = __webpack_require__(315);
+	var _google_map_loader = __webpack_require__(317);
 
 	var _google_map_loader2 = _interopRequireDefault(_google_map_loader);
 
-	var _detect = __webpack_require__(317);
+	var _detect = __webpack_require__(319);
 
 	var _detect2 = _interopRequireDefault(_detect);
 
-	var _geo = __webpack_require__(318);
+	var _geo = __webpack_require__(320);
 
 	var _geo2 = _interopRequireDefault(_geo);
 
-	var _array_helper = __webpack_require__(323);
+	var _array_helper = __webpack_require__(325);
 
 	var _array_helper2 = _interopRequireDefault(_array_helper);
 
-	var _is_plain_object = __webpack_require__(324);
+	var _is_plain_object = __webpack_require__(326);
 
 	var _is_plain_object2 = _interopRequireDefault(_is_plain_object);
 
-	var _pick = __webpack_require__(325);
+	var _pick = __webpack_require__(327);
 
 	var _pick2 = _interopRequireDefault(_pick);
 
-	var _raf = __webpack_require__(326);
+	var _raf = __webpack_require__(328);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
-	var _log = __webpack_require__(327);
+	var _log = __webpack_require__(329);
 
 	var _log2 = _interopRequireDefault(_log);
 
-	var _isNumber = __webpack_require__(328);
+	var _isNumber = __webpack_require__(330);
 
 	var _isNumber2 = _interopRequireDefault(_isNumber);
 
-	var _omit = __webpack_require__(313);
+	var _omit = __webpack_require__(315);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
-	var _detectElementResize = __webpack_require__(329);
+	var _detectElementResize = __webpack_require__(331);
 
 	var _detectElementResize2 = _interopRequireDefault(_detectElementResize);
 
@@ -31271,7 +31672,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 308 */
+/* 310 */
 /***/ function(module, exports) {
 
 	/**
@@ -31343,7 +31744,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 309 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31354,7 +31755,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _eventemitter = __webpack_require__(310);
+	var _eventemitter = __webpack_require__(312);
 
 	var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
@@ -31407,7 +31808,7 @@
 	exports.default = MarkerDispatcher;
 
 /***/ },
-/* 310 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31702,7 +32103,7 @@
 
 
 /***/ },
-/* 311 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31762,7 +32163,7 @@
 	exports.default = GoogleMapMap;
 
 /***/ },
-/* 312 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31779,11 +32180,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _shallowEqual = __webpack_require__(308);
+	var _shallowEqual = __webpack_require__(310);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _omit = __webpack_require__(313);
+	var _omit = __webpack_require__(315);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
@@ -32097,7 +32498,7 @@
 	exports.default = GoogleMapMarkers;
 
 /***/ },
-/* 313 */
+/* 315 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32124,7 +32525,7 @@
 	exports.default = omit;
 
 /***/ },
-/* 314 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32147,7 +32548,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _google_map_markers = __webpack_require__(312);
+	var _google_map_markers = __webpack_require__(314);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
@@ -32165,7 +32566,7 @@
 	};
 
 /***/ },
-/* 315 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -32186,7 +32587,7 @@
 	// TODO add libraries language and other map options
 	function googleMapLoader(bootstrapURLKeys) {
 	  if (!$script_) {
-	    $script_ = __webpack_require__(316); // eslint-disable-line
+	    $script_ = __webpack_require__(318); // eslint-disable-line
 	  }
 
 	  // call from outside google-map-react
@@ -32243,7 +32644,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 316 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -32372,7 +32773,7 @@
 
 
 /***/ },
-/* 317 */
+/* 319 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32421,7 +32822,7 @@
 	}
 
 /***/ },
-/* 318 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32434,15 +32835,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(319);
+	var _lat_lng = __webpack_require__(321);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(321);
+	var _pointGeometry = __webpack_require__(323);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _transform = __webpack_require__(322);
+	var _transform = __webpack_require__(324);
 
 	var _transform2 = _interopRequireDefault(_transform);
 
@@ -32580,7 +32981,7 @@
 	exports.default = Geo;
 
 /***/ },
-/* 319 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32591,7 +32992,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _wrap2 = __webpack_require__(320);
+	var _wrap2 = __webpack_require__(322);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -32635,7 +33036,7 @@
 	exports.default = LatLng;
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32650,7 +33051,7 @@
 	}
 
 /***/ },
-/* 321 */
+/* 323 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32787,7 +33188,7 @@
 
 
 /***/ },
-/* 322 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32798,15 +33199,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(319);
+	var _lat_lng = __webpack_require__(321);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(321);
+	var _pointGeometry = __webpack_require__(323);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _wrap = __webpack_require__(320);
+	var _wrap = __webpack_require__(322);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32967,7 +33368,7 @@
 	exports.default = Transform;
 
 /***/ },
-/* 323 */
+/* 325 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32989,7 +33390,7 @@
 	}
 
 /***/ },
-/* 324 */
+/* 326 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33027,7 +33428,7 @@
 	}
 
 /***/ },
-/* 325 */
+/* 327 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33048,7 +33449,7 @@
 	}
 
 /***/ },
-/* 326 */
+/* 328 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33068,7 +33469,7 @@
 	}
 
 /***/ },
-/* 327 */
+/* 329 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33084,7 +33485,7 @@
 	exports.default = log2;
 
 /***/ },
-/* 328 */
+/* 330 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33109,7 +33510,7 @@
 	}
 
 /***/ },
-/* 329 */
+/* 331 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33287,7 +33688,7 @@
 	};
 
 /***/ },
-/* 330 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33298,13 +33699,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _addons = __webpack_require__(331);
+	var _addons = __webpack_require__(333);
 
 	var _addons2 = _interopRequireDefault(_addons);
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _function = __webpack_require__(304);
+	var _function = __webpack_require__(306);
 
 	var _function2 = _interopRequireDefault(_function);
 
@@ -33379,7 +33780,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot })(SpotOnMap);
 
 /***/ },
-/* 331 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33394,11 +33795,11 @@
 	  'Access using require' + "('react-addons-{addon}') instead."
 	);
 
-	module.exports = __webpack_require__(332);
+	module.exports = __webpack_require__(334);
 
 
 /***/ },
-/* 332 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -33421,17 +33822,17 @@
 
 	'use strict';
 
-	var LinkedStateMixin = __webpack_require__(333);
+	var LinkedStateMixin = __webpack_require__(335);
 	var React = __webpack_require__(3);
-	var ReactComponentWithPureRenderMixin = __webpack_require__(336);
-	var ReactCSSTransitionGroup = __webpack_require__(338);
-	var ReactFragment = __webpack_require__(344);
-	var ReactTransitionGroup = __webpack_require__(339);
+	var ReactComponentWithPureRenderMixin = __webpack_require__(338);
+	var ReactCSSTransitionGroup = __webpack_require__(340);
+	var ReactFragment = __webpack_require__(346);
+	var ReactTransitionGroup = __webpack_require__(341);
 	var ReactUpdates = __webpack_require__(55);
 
-	var cloneWithProps = __webpack_require__(345);
-	var shallowCompare = __webpack_require__(337);
-	var update = __webpack_require__(348);
+	var cloneWithProps = __webpack_require__(347);
+	var shallowCompare = __webpack_require__(339);
+	var update = __webpack_require__(350);
 	var warning = __webpack_require__(26);
 
 	var warnedAboutBatchedUpdates = false;
@@ -33457,14 +33858,14 @@
 
 	if (process.env.NODE_ENV !== 'production') {
 	  React.addons.Perf = __webpack_require__(143);
-	  React.addons.TestUtils = __webpack_require__(349);
+	  React.addons.TestUtils = __webpack_require__(351);
 	}
 
 	module.exports = React;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 333 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33481,8 +33882,8 @@
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(334);
-	var ReactStateSetters = __webpack_require__(335);
+	var ReactLink = __webpack_require__(336);
+	var ReactStateSetters = __webpack_require__(337);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -33505,7 +33906,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 334 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33579,7 +33980,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 335 */
+/* 337 */
 /***/ function(module, exports) {
 
 	/**
@@ -33688,7 +34089,7 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
-/* 336 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33704,7 +34105,7 @@
 
 	'use strict';
 
-	var shallowCompare = __webpack_require__(337);
+	var shallowCompare = __webpack_require__(339);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -33739,7 +34140,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ },
-/* 337 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33768,7 +34169,7 @@
 	module.exports = shallowCompare;
 
 /***/ },
-/* 338 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33789,8 +34190,8 @@
 
 	var assign = __webpack_require__(40);
 
-	var ReactTransitionGroup = __webpack_require__(339);
-	var ReactCSSTransitionGroupChild = __webpack_require__(341);
+	var ReactTransitionGroup = __webpack_require__(341);
+	var ReactCSSTransitionGroupChild = __webpack_require__(343);
 
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -33856,7 +34257,7 @@
 	module.exports = ReactCSSTransitionGroup;
 
 /***/ },
-/* 339 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33873,7 +34274,7 @@
 	'use strict';
 
 	var React = __webpack_require__(3);
-	var ReactTransitionChildMapping = __webpack_require__(340);
+	var ReactTransitionChildMapping = __webpack_require__(342);
 
 	var assign = __webpack_require__(40);
 	var emptyFunction = __webpack_require__(16);
@@ -34066,7 +34467,7 @@
 	module.exports = ReactTransitionGroup;
 
 /***/ },
-/* 340 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34169,7 +34570,7 @@
 	module.exports = ReactTransitionChildMapping;
 
 /***/ },
-/* 341 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34189,8 +34590,8 @@
 	var React = __webpack_require__(3);
 	var ReactDOM = __webpack_require__(4);
 
-	var CSSCore = __webpack_require__(342);
-	var ReactTransitionEvents = __webpack_require__(343);
+	var CSSCore = __webpack_require__(344);
+	var ReactTransitionEvents = __webpack_require__(345);
 
 	var onlyChild = __webpack_require__(157);
 
@@ -34339,7 +34740,7 @@
 	module.exports = ReactCSSTransitionGroupChild;
 
 /***/ },
-/* 342 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -34442,7 +34843,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 343 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34556,7 +34957,7 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 344 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -34626,7 +35027,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 345 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -34644,7 +35045,7 @@
 	'use strict';
 
 	var ReactElement = __webpack_require__(43);
-	var ReactPropTransferer = __webpack_require__(346);
+	var ReactPropTransferer = __webpack_require__(348);
 
 	var keyOf = __webpack_require__(80);
 	var warning = __webpack_require__(26);
@@ -34686,7 +35087,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 346 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34704,7 +35105,7 @@
 
 	var assign = __webpack_require__(40);
 	var emptyFunction = __webpack_require__(16);
-	var joinClasses = __webpack_require__(347);
+	var joinClasses = __webpack_require__(349);
 
 	/**
 	 * Creates a transfer strategy that will merge prop values using the supplied
@@ -34799,7 +35200,7 @@
 	module.exports = ReactPropTransferer;
 
 /***/ },
-/* 347 */
+/* 349 */
 /***/ function(module, exports) {
 
 	/**
@@ -34843,7 +35244,7 @@
 	module.exports = joinClasses;
 
 /***/ },
-/* 348 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -34956,7 +35357,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 349 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -35439,7 +35840,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 350 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35507,16 +35908,16 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Alert);
 
 /***/ },
-/* 351 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(352);
+	var content = __webpack_require__(354);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(354)(content, {});
+	var update = __webpack_require__(356)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -35533,21 +35934,21 @@
 	}
 
 /***/ },
-/* 352 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(353)();
+	exports = module.exports = __webpack_require__(355)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 1px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding-top: 20px; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item {\n  margin-left: 20px;\n  margin-right: 10px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 150px;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.1); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 1px -15px;\n  border-top: 1px solid #ccc; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n\n.content {\n  height: 100%; }\n\n.no-padding {\n  padding: 0; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 1px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin-top: 12px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding-top: 20px; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item {\n  margin-left: 20px;\n  margin-right: 10px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 150px;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.1); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 1px -15px;\n  border-top: 1px solid #ccc; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n\n.content {\n  height: 100%; }\n\n.no-padding {\n  padding: 0; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 353 */
+/* 355 */
 /***/ function(module, exports) {
 
 	/*
@@ -35603,7 +36004,7 @@
 
 
 /***/ },
-/* 354 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -35853,144 +36254,6 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
-
-/***/ },
-/* 355 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(160);
-
-	var _Actions = __webpack_require__(271);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var DisplaySelector = function (_Component) {
-		_inherits(DisplaySelector, _Component);
-
-		function DisplaySelector(props) {
-			_classCallCheck(this, DisplaySelector);
-
-			var _this = _possibleConstructorReturn(this, (DisplaySelector.__proto__ || Object.getPrototypeOf(DisplaySelector)).call(this, props));
-
-			_this.state = {
-				displayType: 'LIST',
-				sort: '0'
-			};
-			return _this;
-		}
-
-		_createClass(DisplaySelector, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
-				var sort = this.props.sort;
-
-				this.setState({ sort: sort });
-			}
-		}, {
-			key: 'handleClick',
-			value: function handleClick(displayType) {
-				this.setState({ displayType: displayType });
-			}
-		}, {
-			key: 'handleChange',
-			value: function handleChange(e) {
-				var sort = e.target.value;
-				if (sort !== this.state.sort) {
-					this.setState({ sort: sort });
-					var _props = this.props,
-					    getSpots = _props.getSpots,
-					    setSort = _props.setSort,
-					    term = _props.term;
-
-					setSort(sort);
-					getSpots(term, 0, sort);
-				}
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var displayType = this.state.displayType;
-
-				return _react2.default.createElement(
-					'div',
-					{ className: 'display-selector' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'wrapper' },
-						_react2.default.createElement(
-							'div',
-							{
-								className: 'selector-button ' + (displayType == 'GRID' ? 'active' : ''),
-								onClick: this.handleClick.bind(this, 'GRID')
-							},
-							_react2.default.createElement('span', { className: 'glyphicon glyphicon-th', 'aria-hidden': 'true' })
-						),
-						_react2.default.createElement(
-							'div',
-							{
-								className: 'selector-button ' + (displayType == 'LIST' ? 'active' : ''),
-								onClick: this.handleClick.bind(this, 'LIST')
-							},
-							_react2.default.createElement('span', { className: 'glyphicon glyphicon-th-list', 'aria-hidden': 'true' })
-						),
-						_react2.default.createElement(
-							'div',
-							null,
-							_react2.default.createElement(
-								'select',
-								{ className: 'form-control', value: this.state.sort, onChange: this.handleChange.bind(this) },
-								_react2.default.createElement(
-									'option',
-									{ value: 'null' },
-									'Sort By'
-								),
-								_react2.default.createElement(
-									'option',
-									{ value: '0' },
-									'Best Matched'
-								),
-								_react2.default.createElement(
-									'option',
-									{ value: '2' },
-									'Highest Rated'
-								)
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return DisplaySelector;
-	}(_react.Component);
-
-	function mapStateToProps(state) {
-		var _state$search = state.search,
-		    term = _state$search.term,
-		    sort = _state$search.sort;
-
-		return { term: term, sort: sort };
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort })(DisplaySelector);
 
 /***/ }
 /******/ ]);

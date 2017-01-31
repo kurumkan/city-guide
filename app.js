@@ -15,7 +15,7 @@ app.use(function(req, res, next){
 
 app.use(express.static(__dirname + '/frontend/public'));
 
-app.get("/api/spots", function(request, response){	
+app.get("/api/spots", function(request, response){		
 	var location = request.query.location,
 		offset = request.query.offset,
 		sort = request.query.sort,
@@ -39,11 +39,12 @@ app.get("/api/spots", function(request, response){
 					stack: body.error
 				}				
 				handleError(response, error, 'YELP');	
-			}else{
+			}else{				
 				response.json({
 					businesses: body.businesses,
 					latitude: body.region.center.latitude,
-					longitude: body.region.center.longitude
+					longitude: body.region.center.longitude,
+					total: body.total
 				});			
 			}			
 		}

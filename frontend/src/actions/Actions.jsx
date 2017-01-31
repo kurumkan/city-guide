@@ -4,23 +4,29 @@ import {browserHistory} from 'react-router';
 const ROOT_URL = '/api/spots/';
 
 //get list of polls
-export function getSpots(location='London', offset=0, sort=0){
-	return function(dispatch){			
+export function getSpots(term, offset, sort){
+	return function(dispatch){		
 		dispatch(removeErroMessage());						
-		axios.get(ROOT_URL+'?location='+location+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
-			.then((response)=>{				
+		dispatch(changeLoadingStatus());		
+		axios.get(ROOT_URL+'?location='+term+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
+			.then((response)=>{						
 				dispatch({
 					type: 'GET_SPOTS',
 					payload: response.data.businesses
-				});
-				dispatch({
-					type: 'SET_TERM',
-					payload: location
 				});				
 				dispatch(setMapCenter({
 						lat: response.data.latitude,
 						lng: response.data.longitude
-					}))		
+					}));		
+				dispatch({
+						type: 'SET_SPOTS_COUNT',
+						payload: response.data.total
+					});		
+				dispatch(changeLoadingStatus());
+				dispatch(setSort(sort));
+				dispatch(setTerm(term));
+				dispatch(setOffset(offset));
+				browserHistory.push('/search?term='+term+'&offset='+offset+'&sort='+sort);
 			})
 			.catch((error)=>{	
 				var {status} = error.response;
@@ -48,6 +54,13 @@ export function setMapCenter(coords){
 	};	
 }
 
+export function setTerm(term){
+	return {
+		type: 'SET_TERM',
+		payload: term
+	}
+}
+
 export function setSort(sort){
 	return {
 		type: 'SET_SORT',
@@ -63,6 +76,13 @@ export function setOffset(offset){
 }
 
 
+export function changeLoadingStatus(){			
+	return {
+		type: 'CHANGE_LOADING_STATUS'
+	}
+}
+
+
 export function setErrorMessage(error){
 	return {
 		type: 'SET_ERROR',
@@ -70,7 +90,7 @@ export function setErrorMessage(error){
 	}
 }
 
-export function removeErroMessage(){
+export function removeErroMessage(){		
 	return {
 		type: 'REMOVE_ERROR'
 	}

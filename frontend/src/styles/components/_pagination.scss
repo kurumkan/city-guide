@@ -1,0 +1,26 @@
+.pagination-wrapper{
+	margin-left: 10px;	
+}
+
+.navigator{
+	display: inline;
+}
+
+.pagination-custom{
+	margin-top: 0;
+	margin-right: 0;
+}
+
+.pagination-custom li>a, .pagination-custom li>a:focus, .pagination-custom li>a:hover{
+	color: #ff5a5f;
+}
+.pagination-custom > .active a, .pagination-custom > .active a:hover{
+	color: #fff;
+	background: #ff5a5f;
+	border-color: #ff5a5f;
+}
+.pagination-info{
+	font-size: 18px;
+	height: 30px;
+	line-height: 30px;
+}
