@@ -33,8 +33,8 @@ class SpotsList extends Component{
 				<div className='spots-list'>								
 					<h2>Search Results for: {term}</h2>
 					<DisplaySelector />
-					<div className='spots-list-wrapper'>
-						{this.renderSpots(spots)}		
+					<div className='row spots-list-wrapper'>						
+						{this.renderSpots(spots)}								
 					</div>	
 					<Pagination />
 				</div>

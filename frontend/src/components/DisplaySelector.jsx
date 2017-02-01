@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import {getSpots, setSort} from 'Actions';
+import {getSpots, setSort, changeDisplayType} from 'Actions';
 
 class DisplaySelector extends Component{
 	constructor(props) {
@@ -13,13 +13,14 @@ class DisplaySelector extends Component{
 	}	
 
 	componentWillMount() {
-		var {sort} = this.props;
-		this.setState({sort});
+		var {sort, displayType} = this.props;
+		this.setState({sort, displayType});
 	}
 
 	handleClick(displayType){
 		if(displayType!==this.state.displayType){
 			this.setState({displayType});	
+			this.props.changeDisplayType();
 		}		
 	}
 
@@ -65,7 +66,8 @@ class DisplaySelector extends Component{
 
 function mapStateToProps(state) {
 	var {sort, term} = state.search;
-	return {sort, term};		
+	var {displayType} = state;
+	return {sort, term, displayType};		
 }
 
-export default connect(mapStateToProps, {getSpots, setSort})(DisplaySelector);
+export default connect(mapStateToProps, {getSpots, setSort, changeDisplayType})(DisplaySelector);

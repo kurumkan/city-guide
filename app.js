@@ -23,7 +23,7 @@ app.get("/api/spots", function(request, response){
 
 	var params = {
 		location: location||'London',
-		limit: 10,
+		limit: 12,
 		offset: offset||0,		
 		sort: !sort||sort==0?sort:2,
 		category_filter: category_filter||'bars'

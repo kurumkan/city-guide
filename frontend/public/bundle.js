@@ -27443,13 +27443,18 @@
 
 	var _ReducerLoader2 = _interopRequireDefault(_ReducerLoader);
 
+	var _ReducerDisplayType = __webpack_require__(358);
+
+	var _ReducerDisplayType2 = _interopRequireDefault(_ReducerDisplayType);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var RootReducer = (0, _redux.combineReducers)({
 		spots: _ReducerSpots2.default,
 		error: _ErrorReducer2.default,
 		search: _ReducerSearch2.default,
-		isLoading: _ReducerLoader2.default
+		isLoading: _ReducerLoader2.default,
+		displayType: _ReducerDisplayType2.default
 	});
 
 	exports.default = RootReducer;
@@ -27954,6 +27959,7 @@
 	exports.setSort = setSort;
 	exports.setOffset = setOffset;
 	exports.changeLoadingStatus = changeLoadingStatus;
+	exports.changeDisplayType = changeDisplayType;
 	exports.setErrorMessage = setErrorMessage;
 	exports.removeErroMessage = removeErroMessage;
 
@@ -28052,6 +28058,12 @@
 	function changeLoadingStatus() {
 		return {
 			type: 'CHANGE_LOADING_STATUS'
+		};
+	}
+
+	function changeDisplayType() {
+		return {
+			type: 'CHANGE_DISPLAY_TYPE'
 		};
 	}
 
@@ -29943,7 +29955,7 @@
 					_react2.default.createElement(_DisplaySelector2.default, null),
 					_react2.default.createElement(
 						'div',
-						{ className: 'spots-list-wrapper' },
+						{ className: 'row spots-list-wrapper' },
 						this.renderSpots(spots)
 					),
 					_react2.default.createElement(_Pagination2.default, null)
@@ -30019,9 +30031,73 @@
 		}, {
 			key: 'render',
 			value: function render() {
-				var spot = this.props.spot;
+				var _props2 = this.props,
+				    spot = _props2.spot,
+				    displayType = _props2.displayType;
 
-				return _react2.default.createElement(
+				if (displayType == 'GRID') return _react2.default.createElement(
+					'div',
+					{ className: 'col-sm-6 col-md-4 spots-list-item' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'thumbnail' },
+						_react2.default.createElement(
+							'a',
+							{ href: spot.url, target: '_blank' },
+							_react2.default.createElement('image', { className: 'img-responsive', src: spot.image_url })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'caption' },
+							_react2.default.createElement(
+								'h3',
+								null,
+								spot.name
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('span', { className: 'glyphicon glyphicon-earphone', 'aria-hidden': 'true' }),
+								spot.display_phone
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement('span', { className: 'glyphicon glyphicon-map-marker', 'aria-hidden': 'true' }),
+								spot.location.address[0]
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'button',
+									{ className: 'btn btn-go' },
+									_react2.default.createElement('span', { className: 'glyphicon glyphicon-plus', 'aria-hidden': 'true' }),
+									'0 going'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'button',
+									{ className: 'btn btn-go', onClick: this.handleClick.bind(this) },
+									_react2.default.createElement('span', { className: 'glyphicon glyphicon-pushpin', 'aria-hidden': 'true' }),
+									'Pinpoint'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								null,
+								_react2.default.createElement(
+									'span',
+									{ className: "stars-container stars-" + Math.round(spot.rating * 20) },
+									'\u2605\u2605\u2605\u2605\u2605'
+								)
+							)
+						)
+					)
+				);else return _react2.default.createElement(
 					'div',
 					{ className: 'panel panel-default spots-list-item' },
 					_react2.default.createElement(
@@ -30110,7 +30186,15 @@
 		return SpotsListItem;
 	}(_react.Component);
 
-	exports.default = (0, _reactRedux.connect)(null, { selectSpot: _Actions.selectSpot, setMapCenter: _Actions.setMapCenter })(SpotsListItem);
+	function mapStateToProps(state) {
+		var displayType = state.displayType;
+
+		return {
+			displayType: displayType
+		};
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot, setMapCenter: _Actions.setMapCenter })(SpotsListItem);
 
 /***/ },
 /* 303 */
@@ -30214,15 +30298,18 @@
 		_createClass(DisplaySelector, [{
 			key: 'componentWillMount',
 			value: function componentWillMount() {
-				var sort = this.props.sort;
+				var _props = this.props,
+				    sort = _props.sort,
+				    displayType = _props.displayType;
 
-				this.setState({ sort: sort });
+				this.setState({ sort: sort, displayType: displayType });
 			}
 		}, {
 			key: 'handleClick',
 			value: function handleClick(displayType) {
 				if (displayType !== this.state.displayType) {
 					this.setState({ displayType: displayType });
+					this.props.changeDisplayType();
 				}
 			}
 		}, {
@@ -30230,10 +30317,10 @@
 			value: function handleChange(e) {
 				var sort = e.target.value;
 				if (sort !== this.state.sort) {
-					var _props = this.props,
-					    term = _props.term,
-					    setSort = _props.setSort,
-					    getSpots = _props.getSpots;
+					var _props2 = this.props,
+					    term = _props2.term,
+					    setSort = _props2.setSort,
+					    getSpots = _props2.getSpots;
 
 					this.setState({ sort: sort });
 					setSort(sort);
@@ -30302,11 +30389,12 @@
 		var _state$search = state.search,
 		    sort = _state$search.sort,
 		    term = _state$search.term;
+		var displayType = state.displayType;
 
-		return { sort: sort, term: term };
+		return { sort: sort, term: term, displayType: displayType };
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort })(DisplaySelector);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, changeDisplayType: _Actions.changeDisplayType })(DisplaySelector);
 
 /***/ },
 /* 305 */
@@ -36027,7 +36115,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 0px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin: 12px 10px; }\n\n.index-page {\n  background-size: cover !important;\n  background: url(\"/images/landing-bg.jpg\") no-repeat fixed;\n  background-position: center center;\n  min-height: 660px;\n  position: relative; }\n\n.landing-layer {\n  background-color: rgba(199, 54, 199, 0.2);\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\n.landing-layer:hover {\n  background-color: rgba(199, 54, 199, 0.1); }\n\n.index-page .searchbar {\n  padding: 30px;\n  background: rgba(0, 0, 0, 0.6);\n  margin-top: 40%;\n  border-radius: 3px; }\n\n.index-page .searchbar input, .index-page .searchbar button {\n  height: 50px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding-top: 20px; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item {\n  margin-left: 20px;\n  margin-right: 10px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 150px;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.1); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 0px -15px;\n  border-top: 1px solid #ccc;\n  min-height: 60px; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n\n.content {\n  height: 100%; }\n\n.no-padding {\n  padding: 0; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 0px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin: 12px 10px; }\n\n.index-page {\n  background-size: cover !important;\n  background: url(\"/images/landing-bg.jpg\") no-repeat fixed;\n  background-position: center center;\n  min-height: 660px;\n  position: relative; }\n\n.landing-layer {\n  background-color: rgba(199, 54, 199, 0.2);\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\n.landing-layer:hover {\n  background-color: rgba(199, 54, 199, 0.1); }\n\n.index-page .searchbar {\n  padding: 30px;\n  background: rgba(0, 0, 0, 0.6);\n  margin-top: 40%;\n  border-radius: 3px; }\n\n.index-page .searchbar input, .index-page .searchbar button {\n  height: 50px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px 10px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding: 20px;\n  margin: 0; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item .thumbnail {\n  height: 450px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 300px;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.05); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 0px -15px;\n  border-top: 1px solid #ccc;\n  min-height: 60px; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n\n.content {\n  height: 100%; }\n\n.no-padding {\n  padding: 0; }\n", ""]);
 
 	// exports
 
@@ -36339,6 +36427,30 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 358 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'LIST';
+		var action = arguments[1];
+
+		switch (action.type) {
+
+			case 'CHANGE_DISPLAY_TYPE':
+				return state == 'LIST' ? 'GRID' : 'LIST';
+
+			default:
+				return state;
+		}
+	};
 
 /***/ }
 /******/ ]);

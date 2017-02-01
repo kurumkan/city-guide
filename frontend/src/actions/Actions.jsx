@@ -97,6 +97,12 @@ export function changeLoadingStatus(){
 	}
 }
 
+export function changeDisplayType(){	
+	return {
+		type: 'CHANGE_DISPLAY_TYPE'		
+	}
+}
+
 
 export function setErrorMessage(error){
 	return {

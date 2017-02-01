@@ -1,29 +1,30 @@
 .spots-list{
-	padding: 1px;		
+	padding: 1px 10px;		    
 }
 
 .spots-list-wrapper{
   border-top: 1px solid #ccc;
-  padding-top: 20px;
+  padding: 20px;  
+  margin: 0;
 }
 
 .spots-list h2, p{
 	padding-left: 40px;
 }
 
-.spots-list-item{
-	margin-left: 20px;
-	margin-right: 10px;	
+.spots-list-item .thumbnail{
+  height: 450px;
 }
+
 
 .spots-list-item img{
 	transition: all .2s ease-in-out; 
-	width:150px; 
+  width: 300px;
   height: auto;
 }
 
 .spots-list-item img:hover{
-	transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .spots-list-item .glyphicon{
