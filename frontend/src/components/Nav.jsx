@@ -26,7 +26,9 @@ class Nav extends Component{
 						<ul className="nav navbar-nav">							
 							<NavLink to="/">Home</NavLink>												
 						</ul>
-						<Searchbar />
+						<div className='navbar-left'>
+							<Searchbar />
+						</div>	
 						<ul className="nav navbar-nav navbar-right">
 							<NavLink to="/signin">Sign In</NavLink>							
 							<NavLink to="/signup">Sign Up</NavLink>							

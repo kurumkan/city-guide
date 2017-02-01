@@ -26,7 +26,7 @@ class Searchbar extends Component{
 	}
 	render() {		
 		return (
-			<form className="navbar-form navbar-left searchbar" onSubmit={this.handleSubmit}>								
+			<form className="searchbar" onSubmit={this.handleSubmit}>								
 				<div className="input-group">
 					<input type="text" className="form-control" placeholder="Type a location" 
 						onChange={this.handleChange}

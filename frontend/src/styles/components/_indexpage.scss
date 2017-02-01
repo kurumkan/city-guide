@@ -1,0 +1,30 @@
+.index-page{
+	background-size:cover!important;
+	background: url('/images/landing-bg.jpg') no-repeat fixed;	
+	background-position: center center;
+	min-height: 660px;
+	position: relative;			
+}
+
+.landing-layer{
+	background-color: rgba(199, 54, 199, 0.2);	
+	top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;    
+}
+
+.landing-layer:hover{
+	background-color: rgba(199, 54, 199, 0.1);	
+}
+
+.index-page .searchbar{			
+	padding:30px;
+	background: rgba(0,0,0,0.6);		
+	margin-top: 40%;		
+	border-radius: 3px;
+}
+.index-page .searchbar input, .index-page .searchbar button{
+	height: 50px;
+}
