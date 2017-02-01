@@ -5,7 +5,6 @@ import {Link} from 'react-router';
 import {getSpots} from 'Actions';
 
 class Pagination extends Component{
-	
 	range(end) {
 	    var result = [];	    	    
 	    var start = end>4?end-4:1;	    
@@ -15,9 +14,13 @@ class Pagination extends Component{
 	    return result;
 	}
 
-	handleClick(newOffset){
-		var {term, sort, getSpots} = this.props;					
-		this.props.getSpots(term, newOffset, sort);		
+	handleClick(newOffset){		
+		var {spotsCount} = this.props;	
+
+		if(newOffset>=0&&newOffset<1000&&newOffset<spotsCount){
+			var {term, sort, getSpots} = this.props;					
+			this.props.getSpots(term, newOffset, sort);			
+		}		
 	}
 
 	render() {
@@ -26,7 +29,6 @@ class Pagination extends Component{
 		var pageNumber=Math.floor(offset/10)+1;			
 		var total = Math.ceil(spotsCount/10);
 		total=total<=100?total:100;
-
 		var n = total;
 		if(total>5){
 			if(pageNumber+2<=total){
@@ -42,7 +44,10 @@ class Pagination extends Component{
 					<Link to={baseUrl+newOffset}>{n}</Link>
 				</li>
 			)			
-		});				
+		});	
+
+		var next = pageNumber+1;
+		var prev = pageNumber-1;		
 
 		return (
 			<div className='pagination-wrapper'>				
@@ -52,14 +57,14 @@ class Pagination extends Component{
 				<div className='col-xs-7 text-right'>
 					<nav aria-label="Page navigation" className='navigator'>
 						<ul className="pagination pagination-custom">
-							<li>
-								<Link to="#" aria-label="Previous">
+							<li onClick={this.handleClick.bind(this, offset-10)} className={prev>0?'':'disabled'}>
+								<Link to={baseUrl+(offset-10)} aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</Link>
 							</li>
 							{renderPageLinks}
-							<li>
-								<Link to="#" aria-label="Next">
+							<li onClick={this.handleClick.bind(this, offset+10)} className={next>total?'disabled':''}>
+								<Link to={baseUrl+(offset+10)} aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</Link>
 							</li>

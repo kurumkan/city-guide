@@ -3,12 +3,25 @@ import {browserHistory} from 'react-router';
 
 const ROOT_URL = '/api/spots/';
 
+function validateParams(term,offset,sort){
+	if(typeof term != 'string' || !term)
+		return false;	
+	if(offset===''||isNaN(offset)||+offset<0||+offset>=1000)
+		return false;		
+	if(sort===''||isNaN(sort)||(+sort!==0&&+sort!=2))
+		return false;
+	return true;
+}
+
 //get list of polls
 export function getSpots(term, offset, sort){
 	return function(dispatch){		
 		dispatch(removeErroMessage());						
 		dispatch(changeLoadingStatus());		
-		axios.get(ROOT_URL+'?location='+term+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
+		if(!validateParams(term,offset,sort)){
+			browserHistory.push('/');
+		}else{
+			axios.get(ROOT_URL+'?location='+term+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
 			.then((response)=>{						
 				dispatch({
 					type: 'GET_SPOTS',
@@ -36,7 +49,9 @@ export function getSpots(term, offset, sort){
 				}else{
 					dispatch(setErrorMessage('Something went wrong. We are working on it.'));	
 				}								
-			})
+			})	
+		}
+		
 	}	
 }
 

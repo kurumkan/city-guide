@@ -13,6 +13,7 @@ import RootReducer from 'RootReducer';
 import Main from 'Main';
 import NotFound404 from 'NotFound404';
 import IndexPage from 'IndexPage';
+import SearchPage from 'SearchPage';
 
 var createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 var store = createStoreWithMiddleware(RootReducer);
@@ -22,8 +23,8 @@ ReactDOM.render(
 		<Router history={browserHistory}>
 			<Route path="/" component={Main}>
 				<IndexRoute component={IndexPage} />				
-				<Route path='search' component={IndexPage}>
-					<Route path='?term=:term&page=:page&sort=:sort' component={IndexPage} />					
+				<Route path='search' component={SearchPage}>
+					<Route path='?term=:term&page=:page&sort=:sort' component={SearchPage} />					
 				</Route>				
 			 	<Route path='404' component={NotFound404} />
 				<Route path='*' component={NotFound404} />

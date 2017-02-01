@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import {getSpots} from 'Actions';
+import {getSpots, setSort} from 'Actions';
 
 class DisplaySelector extends Component{
 	constructor(props) {
 		super(props);
 		this.state={
 			displayType: 'LIST',
-			sort: '0'
+			sort: 0
 		}
-	}
+	}	
 
 	componentWillMount() {
 		var {sort} = this.props;
@@ -26,9 +26,10 @@ class DisplaySelector extends Component{
 	handleChange(e){		
 		var sort = e.target.value;				
 		if(sort!==this.state.sort){			
-			this.setState({sort});						
-			var {term} = this.props;
-			this.props.getSpots(term, 0, sort);							
+			var{term, setSort,getSpots} = this.props;
+			this.setState({sort});
+			setSort(sort);									
+			getSpots(term, 0, sort);							
 		}
 	}
 	
@@ -67,4 +68,4 @@ function mapStateToProps(state) {
 	return {sort, term};		
 }
 
-export default connect(mapStateToProps, {getSpots})(DisplaySelector);
+export default connect(mapStateToProps, {getSpots, setSort})(DisplaySelector);

@@ -87,6 +87,10 @@
 
 	var _IndexPage2 = _interopRequireDefault(_IndexPage);
 
+	var _SearchPage = __webpack_require__(357);
+
+	var _SearchPage2 = _interopRequireDefault(_SearchPage);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// App css
@@ -107,8 +111,8 @@
 				_react2.default.createElement(_reactRouter.IndexRoute, { component: _IndexPage2.default }),
 				_react2.default.createElement(
 					_reactRouter.Route,
-					{ path: 'search', component: _IndexPage2.default },
-					_react2.default.createElement(_reactRouter.Route, { path: '?term=:term&page=:page&sort=:sort', component: _IndexPage2.default })
+					{ path: 'search', component: _SearchPage2.default },
+					_react2.default.createElement(_reactRouter.Route, { path: '?term=:term&page=:page&sort=:sort', component: _SearchPage2.default })
 				),
 				_react2.default.createElement(_reactRouter.Route, { path: '404', component: _NotFound2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
@@ -27959,39 +27963,50 @@
 
 	var ROOT_URL = '/api/spots/';
 
+	function validateParams(term, offset, sort) {
+		if (typeof term != 'string' || !term) return false;
+		if (offset === '' || isNaN(offset) || +offset < 0 || +offset >= 1000) return false;
+		if (sort === '' || isNaN(sort) || +sort !== 0 && +sort != 2) return false;
+		return true;
+	}
+
 	//get list of polls
 	function getSpots(term, offset, sort) {
 		return function (dispatch) {
 			dispatch(removeErroMessage());
 			dispatch(changeLoadingStatus());
-			_axios2.default.get(ROOT_URL + '?location=' + term + '&offset=' + offset + '&sort=' + sort + '&category_filter=bars').then(function (response) {
-				dispatch({
-					type: 'GET_SPOTS',
-					payload: response.data.businesses
-				});
-				dispatch(setMapCenter({
-					lat: response.data.latitude,
-					lng: response.data.longitude
-				}));
-				dispatch({
-					type: 'SET_SPOTS_COUNT',
-					payload: response.data.total
-				});
-				dispatch(changeLoadingStatus());
-				dispatch(setSort(sort));
-				dispatch(setTerm(term));
-				dispatch(setOffset(offset));
-				_reactRouter.browserHistory.push('/search?term=' + term + '&offset=' + offset + '&sort=' + sort);
-			}).catch(function (error) {
-				var status = error.response.status;
+			if (!validateParams(term, offset, sort)) {
+				_reactRouter.browserHistory.push('/');
+			} else {
+				_axios2.default.get(ROOT_URL + '?location=' + term + '&offset=' + offset + '&sort=' + sort + '&category_filter=bars').then(function (response) {
+					dispatch({
+						type: 'GET_SPOTS',
+						payload: response.data.businesses
+					});
+					dispatch(setMapCenter({
+						lat: response.data.latitude,
+						lng: response.data.longitude
+					}));
+					dispatch({
+						type: 'SET_SPOTS_COUNT',
+						payload: response.data.total
+					});
+					dispatch(changeLoadingStatus());
+					dispatch(setSort(sort));
+					dispatch(setTerm(term));
+					dispatch(setOffset(offset));
+					_reactRouter.browserHistory.push('/search?term=' + term + '&offset=' + offset + '&sort=' + sort);
+				}).catch(function (error) {
+					var status = error.response.status;
 
 
-				if (status == 400) {
-					dispatch(setErrorMessage('Sorry! No results were found for the requested search. Try searching with some different keywords'));
-				} else {
-					dispatch(setErrorMessage('Something went wrong. We are working on it.'));
-				}
-			});
+					if (status == 400) {
+						dispatch(setErrorMessage('Sorry! No results were found for the requested search. Try searching with some different keywords'));
+					} else {
+						dispatch(setErrorMessage('Something went wrong. We are working on it.'));
+					}
+				});
+			}
 		};
 	}
 
@@ -29690,24 +29705,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(160);
-
-	var _reactRouter = __webpack_require__(200);
-
-	var _Actions = __webpack_require__(271);
-
-	var _SpotsList = __webpack_require__(300);
-
-	var _SpotsList2 = _interopRequireDefault(_SpotsList);
-
-	var _MapContainer = __webpack_require__(305);
-
-	var _MapContainer2 = _interopRequireDefault(_MapContainer);
-
-	var _Alert = __webpack_require__(352);
-
-	var _Alert2 = _interopRequireDefault(_Alert);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29726,46 +29723,12 @@
 		}
 
 		_createClass(IndexPage, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
-				var _props$location$query = this.props.location.query,
-				    term = _props$location$query.term,
-				    offset = _props$location$query.offset,
-				    sort = _props$location$query.sort;
-				var _props = this.props,
-				    setSort = _props.setSort,
-				    setTerm = _props.setTerm,
-				    setOffset = _props.setOffset,
-				    getSpots = _props.getSpots,
-				    setErrorMessage = _props.setErrorMessage;
-
-
-				if (term && offset && sort) {
-					setTerm(term);
-					setSort(sort);
-					setOffset(offset);
-					getSpots(term, offset, sort);
-				} else {
-					_reactRouter.browserHistory.push('signin');
-				}
-			}
-		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
 					{ className: 'index-page row' },
-					_react2.default.createElement(_Alert2.default, null),
-					_react2.default.createElement(
-						'div',
-						{ className: 'col-sm-5 no-padding' },
-						_react2.default.createElement(_MapContainer2.default, null)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'col-sm-7 no-padding', id: 'right' },
-						_react2.default.createElement(_SpotsList2.default, null)
-					)
+					'indexpage'
 				);
 			}
 		}]);
@@ -29773,16 +29736,7 @@
 		return IndexPage;
 	}(_react.Component);
 
-	function mapStateToProps(state) {
-		var _state$search = state.search,
-		    term = _state$search.term,
-		    sort = _state$search.sort,
-		    offset = _state$search.offset;
-
-		return { term: term, sort: sort, offset: offset };
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, setTerm: _Actions.setTerm, setOffset: _Actions.setOffset, setErrorMessage: _Actions.setErrorMessage })(IndexPage);
+	exports.default = IndexPage;
 
 /***/ },
 /* 300 */
@@ -30132,7 +30086,7 @@
 
 			_this.state = {
 				displayType: 'LIST',
-				sort: '0'
+				sort: 0
 			};
 			return _this;
 		}
@@ -30156,10 +30110,14 @@
 			value: function handleChange(e) {
 				var sort = e.target.value;
 				if (sort !== this.state.sort) {
-					this.setState({ sort: sort });
-					var term = this.props.term;
+					var _props = this.props,
+					    term = _props.term,
+					    setSort = _props.setSort,
+					    getSpots = _props.getSpots;
 
-					this.props.getSpots(term, 0, sort);
+					this.setState({ sort: sort });
+					setSort(sort);
+					getSpots(term, 0, sort);
 				}
 			}
 		}, {
@@ -30228,7 +30186,7 @@
 		return { sort: sort, term: term };
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(DisplaySelector);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort })(DisplaySelector);
 
 /***/ },
 /* 304 */
@@ -30282,12 +30240,17 @@
 		}, {
 			key: 'handleClick',
 			value: function handleClick(newOffset) {
-				var _props = this.props,
-				    term = _props.term,
-				    sort = _props.sort,
-				    getSpots = _props.getSpots;
+				var spotsCount = this.props.spotsCount;
 
-				this.props.getSpots(term, newOffset, sort);
+
+				if (newOffset >= 0 && newOffset < 1000 && newOffset < spotsCount) {
+					var _props = this.props,
+					    term = _props.term,
+					    sort = _props.sort,
+					    getSpots = _props.getSpots;
+
+					this.props.getSpots(term, newOffset, sort);
+				}
 			}
 		}, {
 			key: 'render',
@@ -30304,7 +30267,6 @@
 				var pageNumber = Math.floor(offset / 10) + 1;
 				var total = Math.ceil(spotsCount / 10);
 				total = total <= 100 ? total : 100;
-
 				var n = total;
 				if (total > 5) {
 					if (pageNumber + 2 <= total) {
@@ -30325,6 +30287,9 @@
 						)
 					);
 				});
+
+				var next = pageNumber + 1;
+				var prev = pageNumber - 1;
 
 				return _react2.default.createElement(
 					'div',
@@ -30348,10 +30313,10 @@
 								{ className: 'pagination pagination-custom' },
 								_react2.default.createElement(
 									'li',
-									null,
+									{ onClick: this.handleClick.bind(this, offset - 10), className: prev > 0 ? '' : 'disabled' },
 									_react2.default.createElement(
 										_reactRouter.Link,
-										{ to: '#', 'aria-label': 'Previous' },
+										{ to: baseUrl + (offset - 10), 'aria-label': 'Previous' },
 										_react2.default.createElement(
 											'span',
 											{ 'aria-hidden': 'true' },
@@ -30362,10 +30327,10 @@
 								renderPageLinks,
 								_react2.default.createElement(
 									'li',
-									null,
+									{ onClick: this.handleClick.bind(this, offset + 10), className: next > total ? 'disabled' : '' },
 									_react2.default.createElement(
 										_reactRouter.Link,
-										{ to: '#', 'aria-label': 'Next' },
+										{ to: baseUrl + (offset + 10), 'aria-label': 'Next' },
 										_react2.default.createElement(
 											'span',
 											{ 'aria-hidden': 'true' },
@@ -36254,6 +36219,108 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(160);
+
+	var _reactRouter = __webpack_require__(200);
+
+	var _Actions = __webpack_require__(271);
+
+	var _SpotsList = __webpack_require__(300);
+
+	var _SpotsList2 = _interopRequireDefault(_SpotsList);
+
+	var _MapContainer = __webpack_require__(305);
+
+	var _MapContainer2 = _interopRequireDefault(_MapContainer);
+
+	var _Alert = __webpack_require__(352);
+
+	var _Alert2 = _interopRequireDefault(_Alert);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SearchPage = function (_Component) {
+		_inherits(SearchPage, _Component);
+
+		function SearchPage() {
+			_classCallCheck(this, SearchPage);
+
+			return _possibleConstructorReturn(this, (SearchPage.__proto__ || Object.getPrototypeOf(SearchPage)).apply(this, arguments));
+		}
+
+		_createClass(SearchPage, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var _props$location$query = this.props.location.query,
+				    term = _props$location$query.term,
+				    offset = _props$location$query.offset,
+				    sort = _props$location$query.sort;
+				var _props = this.props,
+				    setSort = _props.setSort,
+				    setTerm = _props.setTerm,
+				    setOffset = _props.setOffset,
+				    getSpots = _props.getSpots,
+				    setErrorMessage = _props.setErrorMessage;
+
+				getSpots(term, offset, sort);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'search-page row' },
+					_react2.default.createElement(_Alert2.default, null),
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-sm-5 no-padding' },
+						_react2.default.createElement(_MapContainer2.default, null)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-sm-7 no-padding', id: 'right' },
+						_react2.default.createElement(_SpotsList2.default, null)
+					)
+				);
+			}
+		}]);
+
+		return SearchPage;
+	}(_react.Component);
+
+	function mapStateToProps(state) {
+		var _state$search = state.search,
+		    term = _state$search.term,
+		    sort = _state$search.sort,
+		    offset = _state$search.offset;
+
+		return { term: term, sort: sort, offset: offset };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, setTerm: _Actions.setTerm, setOffset: _Actions.setOffset, setErrorMessage: _Actions.setErrorMessage })(SearchPage);
 
 /***/ }
 /******/ ]);
