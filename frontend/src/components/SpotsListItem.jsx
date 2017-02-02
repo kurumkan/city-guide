@@ -15,15 +15,20 @@ class SpotsListItem extends Component{
 
 	render() {
 		var {spot, displayType} = this.props;
+		var name = spot.name.substring(0,25);
+		name = name.length==25?name+'...':name;
+
 		if(displayType=='GRID')
 			return (
-				<div className="col-sm-6 col-md-4 spots-list-item">
+				<div className="col-xs-6 col-md-4 spots-list-item">
 					<div className="thumbnail">
+						
 						<a href={spot.url} target='_blank' >
-				    		<image className='img-responsive' src={spot.image_url} />
-				    	</a>	
+					    	<image className='img-responsive' src={spot.image_url} />
+					    </a>	
+
 						<div className="caption">
-							<h3>{spot.name}</h3>						
+							<h3>{name}</h3>						
 							<div>
 					    		<span className="glyphicon glyphicon-earphone" aria-hidden="true"></span>
 					    		{spot.display_phone}

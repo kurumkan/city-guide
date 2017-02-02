@@ -1,9 +1,15 @@
 var express = require("express");
 var app = express();
 var path =require("path");
-
+var bodyParser = require("body-parser");
+var mongoose = require("mongoose");
 
 var {handleError, requestYelp} = require("./util_helpers.js");
+
+
+mongoose.connect("mongodb://localhost/cityguide");
+var User = require('./models/user');
+
 
 app.use(function(req, res, next){
 	if(req.headers["x-forwarded-proto"] === "https"){		
@@ -14,6 +20,21 @@ app.use(function(req, res, next){
 });
 
 app.use(express.static(__dirname + '/frontend/public'));
+app.use(bodyParser.json({type:'*/*'}));
+
+
+//auth dependencies
+var Auth = require('./auth/authentication');
+var PassportServicer = require('./auth/passport');
+var passport = require('passport');
+var requireAuth = passport.authenticate('jwt', {session: false});
+var requireSignin = passport.authenticate('local', {session: false});
+
+
+//auth routes
+app.post('/signup', Auth.signup);
+app.post('/signin', requireSignin, Auth.signin);
+
 
 app.get("/api/spots", function(request, response){		
 	var location = request.query.location,
@@ -39,7 +60,7 @@ app.get("/api/spots", function(request, response){
 					stack: body.error
 				}				
 				handleError(response, error, 'YELP');	
-			}else{				
+			}else{			
 				response.json({
 					businesses: body.businesses,
 					latitude: body.region.center.latitude,

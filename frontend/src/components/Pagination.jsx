@@ -17,7 +17,7 @@ class Pagination extends Component{
 	handleClick(newOffset){		
 		var {spotsCount} = this.props;	
 
-		if(newOffset>=0&&newOffset<1000&&newOffset<spotsCount){
+		if(newOffset>=0&&newOffset<988&&newOffset<spotsCount){
 			var {term, sort, getSpots} = this.props;					
 			this.props.getSpots(term, newOffset, sort);			
 		}		
@@ -26,9 +26,9 @@ class Pagination extends Component{
 	render() {
 		var {spotsCount, term, sort, offset} = this.props;	
 
-		var pageNumber=Math.floor(offset/10)+1;			
-		var total = Math.ceil(spotsCount/10);
-		total=total<=100?total:100;
+		var pageNumber=Math.floor(offset/12)+1;			
+		var total = Math.ceil(spotsCount/12);
+		total=total<=83?total:83;
 		var n = total;
 		if(total>5){
 			if(pageNumber+2<=total){
@@ -38,7 +38,7 @@ class Pagination extends Component{
 
 		var baseUrl='/search?term='+term+'&sort='+sort+'&offset=';
 		var renderPageLinks = this.range(n).map((n)=>{			
-			var newOffset = (n-1)*10;
+			var newOffset = (n-1)*12;
 			return (
 				<li key={n} onClick={this.handleClick.bind(this,newOffset)} className={pageNumber===n?'active':''}>
 					<Link to={baseUrl+newOffset}>{n}</Link>
@@ -57,14 +57,14 @@ class Pagination extends Component{
 				<div className='col-xs-7 text-right'>
 					<nav aria-label="Page navigation" className='navigator'>
 						<ul className="pagination pagination-custom">
-							<li onClick={this.handleClick.bind(this, offset-10)} className={prev>0?'':'disabled'}>
-								<Link to={baseUrl+(offset-10)} aria-label="Previous">
+							<li onClick={this.handleClick.bind(this, offset-12)} className={prev>0?'':'disabled'}>
+								<Link to={baseUrl+(offset-12)} aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 								</Link>
 							</li>
 							{renderPageLinks}
-							<li onClick={this.handleClick.bind(this, offset+10)} className={next>total?'disabled':''}>
-								<Link to={baseUrl+(offset+10)} aria-label="Next">
+							<li onClick={this.handleClick.bind(this, offset+12)} className={next>total?'disabled':''}>
+								<Link to={baseUrl+(offset+12)} aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</Link>
 							</li>

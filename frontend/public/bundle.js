@@ -75,26 +75,41 @@
 
 	var _RootReducer2 = _interopRequireDefault(_RootReducer);
 
-	var _Main = __webpack_require__(267);
+	var _Main = __webpack_require__(312);
 
 	var _Main2 = _interopRequireDefault(_Main);
 
-	var _NotFound = __webpack_require__(298);
+	var _NotFound = __webpack_require__(343);
 
 	var _NotFound2 = _interopRequireDefault(_NotFound);
 
-	var _IndexPage = __webpack_require__(299);
+	var _IndexPage = __webpack_require__(344);
 
 	var _IndexPage2 = _interopRequireDefault(_IndexPage);
 
-	var _SearchPage = __webpack_require__(300);
+	var _SearchPage = __webpack_require__(345);
 
 	var _SearchPage2 = _interopRequireDefault(_SearchPage);
+
+	var _Signin = __webpack_require__(399);
+
+	var _Signin2 = _interopRequireDefault(_Signin);
+
+	var _Signup = __webpack_require__(400);
+
+	var _Signup2 = _interopRequireDefault(_Signup);
+
+	var _Signout = __webpack_require__(401);
+
+	var _Signout2 = _interopRequireDefault(_Signout);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// App css
-	__webpack_require__(354);
+	__webpack_require__(402);
+
+	//auth components
+
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
 	var store = createStoreWithMiddleware(_RootReducer2.default);
@@ -114,6 +129,9 @@
 					{ path: 'search', component: _SearchPage2.default },
 					_react2.default.createElement(_reactRouter.Route, { path: '?term=:term&page=:page&sort=:sort', component: _SearchPage2.default })
 				),
+				_react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _Signup2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _Signin2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: 'signout', component: _Signout2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '404', component: _NotFound2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
 			)
@@ -27443,9 +27461,15 @@
 
 	var _ReducerLoader2 = _interopRequireDefault(_ReducerLoader);
 
-	var _ReducerDisplayType = __webpack_require__(358);
+	var _ReducerDisplayType = __webpack_require__(267);
 
 	var _ReducerDisplayType2 = _interopRequireDefault(_ReducerDisplayType);
+
+	var _AuthReducer = __webpack_require__(268);
+
+	var _AuthReducer2 = _interopRequireDefault(_AuthReducer);
+
+	var _reduxForm = __webpack_require__(269);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27454,7 +27478,9 @@
 		error: _ErrorReducer2.default,
 		search: _ReducerSearch2.default,
 		isLoading: _ReducerLoader2.default,
-		displayType: _ReducerDisplayType2.default
+		displayType: _ReducerDisplayType2.default,
+		form: _reduxForm.reducer,
+		auth: _AuthReducer2.default
 	});
 
 	exports.default = RootReducer;
@@ -27605,6 +27631,2953 @@
 
 /***/ },
 /* 267 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'LIST';
+		var action = arguments[1];
+
+		switch (action.type) {
+
+			case 'CHANGE_DISPLAY_TYPE':
+				return state == 'LIST' ? 'GRID' : 'LIST';
+
+			default:
+				return state;
+		}
+	};
+
+/***/ },
+/* 268 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+		var action = arguments[1];
+
+		switch (action.type) {
+			case 'AUTH_USER':
+				var _action$payload = action.payload,
+				    username = _action$payload.username,
+				    userid = _action$payload.userid;
+
+				return _extends({}, state, { authenticated: true, username: username, userid: userid });
+			case 'UNAUTH_USER':
+				return _extends({}, state, { authenticated: false, username: '', userid: null });
+			default:
+				return state;
+		}
+	};
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(160);
+
+	var _createAll2 = __webpack_require__(270);
+
+	var _createAll3 = _interopRequireDefault(_createAll2);
+
+	var _createAll = _createAll3['default'](false, _react2['default'], _reactRedux.connect);
+
+	var actionTypes = _createAll.actionTypes;
+	var blur = _createAll.blur;
+	var change = _createAll.change;
+	var changeWithKey = _createAll.changeWithKey;
+	var destroy = _createAll.destroy;
+	var focus = _createAll.focus;
+	var reducer = _createAll.reducer;
+	var reduxForm = _createAll.reduxForm;
+	var getValues = _createAll.getValues;
+	var initialize = _createAll.initialize;
+	var initializeWithKey = _createAll.initializeWithKey;
+	var propTypes = _createAll.propTypes;
+	var reset = _createAll.reset;
+	var startAsyncValidation = _createAll.startAsyncValidation;
+	var startSubmit = _createAll.startSubmit;
+	var stopAsyncValidation = _createAll.stopAsyncValidation;
+	var stopSubmit = _createAll.stopSubmit;
+	var touch = _createAll.touch;
+	var touchWithKey = _createAll.touchWithKey;
+	var untouch = _createAll.untouch;
+	var untouchWithKey = _createAll.untouchWithKey;
+	exports.actionTypes = actionTypes;
+	exports.blur = blur;
+	exports.change = change;
+	exports.changeWithKey = changeWithKey;
+	exports.destroy = destroy;
+	exports.focus = focus;
+	exports.reducer = reducer;
+	exports.reduxForm = reduxForm;
+	exports.getValues = getValues;
+	exports.initialize = initialize;
+	exports.initializeWithKey = initializeWithKey;
+	exports.propTypes = propTypes;
+	exports.reset = reset;
+	exports.startAsyncValidation = startAsyncValidation;
+	exports.startSubmit = startSubmit;
+	exports.stopAsyncValidation = stopAsyncValidation;
+	exports.stopSubmit = stopSubmit;
+	exports.touch = touch;
+	exports.touchWithKey = touchWithKey;
+	exports.untouch = untouch;
+	exports.untouchWithKey = untouchWithKey;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports['default'] = createAll;
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _reducer = __webpack_require__(271);
+
+	var _reducer2 = _interopRequireDefault(_reducer);
+
+	var _createReduxForm = __webpack_require__(281);
+
+	var _createReduxForm2 = _interopRequireDefault(_createReduxForm);
+
+	var _mapValues = __webpack_require__(273);
+
+	var _mapValues2 = _interopRequireDefault(_mapValues);
+
+	var _bindActionData = __webpack_require__(288);
+
+	var _bindActionData2 = _interopRequireDefault(_bindActionData);
+
+	var _actions = __webpack_require__(287);
+
+	var actions = _interopRequireWildcard(_actions);
+
+	var _actionTypes = __webpack_require__(272);
+
+	var actionTypes = _interopRequireWildcard(_actionTypes);
+
+	var _createPropTypes = __webpack_require__(311);
+
+	var _createPropTypes2 = _interopRequireDefault(_createPropTypes);
+
+	var _getValuesFromState = __webpack_require__(276);
+
+	var _getValuesFromState2 = _interopRequireDefault(_getValuesFromState);
+
+	// bind form as first parameter of action creators
+	var boundActions = _extends({}, _mapValues2['default'](_extends({}, actions, {
+	  changeWithKey: function changeWithKey(key) {
+	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      args[_key - 1] = arguments[_key];
+	    }
+
+	    return _bindActionData2['default'](actions.change, { key: key }).apply(undefined, args);
+	  },
+	  initializeWithKey: function initializeWithKey(key) {
+	    for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+	      args[_key2 - 1] = arguments[_key2];
+	    }
+
+	    return _bindActionData2['default'](actions.initialize, { key: key }).apply(undefined, args);
+	  },
+	  reset: function reset(key) {
+	    return _bindActionData2['default'](actions.reset, { key: key })();
+	  },
+	  touchWithKey: function touchWithKey(key) {
+	    for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+	      args[_key3 - 1] = arguments[_key3];
+	    }
+
+	    return _bindActionData2['default'](actions.touch, { key: key }).apply(undefined, args);
+	  },
+	  untouchWithKey: function untouchWithKey(key) {
+	    for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+	      args[_key4 - 1] = arguments[_key4];
+	    }
+
+	    return _bindActionData2['default'](actions.untouch, { key: key }).apply(undefined, args);
+	  },
+	  destroy: function destroy(key) {
+	    return _bindActionData2['default'](actions.destroy, { key: key })();
+	  }
+	}), function (action) {
+	  return function (form) {
+	    for (var _len5 = arguments.length, args = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {
+	      args[_key5 - 1] = arguments[_key5];
+	    }
+
+	    return _bindActionData2['default'](action, { form: form }).apply(undefined, args);
+	  };
+	}));
+
+	var blur = boundActions.blur;
+	var change = boundActions.change;
+	var changeWithKey = boundActions.changeWithKey;
+	var destroy = boundActions.destroy;
+	var focus = boundActions.focus;
+	var initialize = boundActions.initialize;
+	var initializeWithKey = boundActions.initializeWithKey;
+	var reset = boundActions.reset;
+	var startAsyncValidation = boundActions.startAsyncValidation;
+	var startSubmit = boundActions.startSubmit;
+	var stopAsyncValidation = boundActions.stopAsyncValidation;
+	var stopSubmit = boundActions.stopSubmit;
+	var submitFailed = boundActions.submitFailed;
+	var touch = boundActions.touch;
+	var touchWithKey = boundActions.touchWithKey;
+	var untouch = boundActions.untouch;
+	var untouchWithKey = boundActions.untouchWithKey;
+
+	function createAll(isReactNative, React, connect) {
+	  return {
+	    actionTypes: actionTypes,
+	    blur: blur,
+	    change: change,
+	    changeWithKey: changeWithKey,
+	    destroy: destroy,
+	    focus: focus,
+	    getValues: _getValuesFromState2['default'],
+	    initialize: initialize,
+	    initializeWithKey: initializeWithKey,
+	    propTypes: _createPropTypes2['default'](React),
+	    reduxForm: _createReduxForm2['default'](isReactNative, React, connect),
+	    reducer: _reducer2['default'],
+	    reset: reset,
+	    startAsyncValidation: startAsyncValidation,
+	    startSubmit: startSubmit,
+	    stopAsyncValidation: stopAsyncValidation,
+	    stopSubmit: stopSubmit,
+	    submitFailed: submitFailed,
+	    touch: touch,
+	    touchWithKey: touchWithKey,
+	    untouch: untouch,
+	    untouchWithKey: untouchWithKey
+	  };
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _initialState, _behaviors;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	var _actionTypes = __webpack_require__(272);
+
+	var _mapValues = __webpack_require__(273);
+
+	var _mapValues2 = _interopRequireDefault(_mapValues);
+
+	var _read = __webpack_require__(274);
+
+	var _read2 = _interopRequireDefault(_read);
+
+	var _write = __webpack_require__(275);
+
+	var _write2 = _interopRequireDefault(_write);
+
+	var _getValuesFromState = __webpack_require__(276);
+
+	var _getValuesFromState2 = _interopRequireDefault(_getValuesFromState);
+
+	var _initializeState = __webpack_require__(278);
+
+	var _initializeState2 = _interopRequireDefault(_initializeState);
+
+	var _resetState = __webpack_require__(279);
+
+	var _resetState2 = _interopRequireDefault(_resetState);
+
+	var _setErrors = __webpack_require__(280);
+
+	var _setErrors2 = _interopRequireDefault(_setErrors);
+
+	var _fieldValue = __webpack_require__(277);
+
+	var globalErrorKey = '_error';
+
+	exports.globalErrorKey = globalErrorKey;
+	var initialState = (_initialState = {
+	  _active: undefined,
+	  _asyncValidating: false
+	}, _initialState[globalErrorKey] = undefined, _initialState._initialized = false, _initialState._submitting = false, _initialState._submitFailed = false, _initialState);
+
+	exports.initialState = initialState;
+	var behaviors = (_behaviors = {}, _behaviors[_actionTypes.ADD_ARRAY_VALUE] = function (state, _ref) {
+	  var path = _ref.path;
+	  var index = _ref.index;
+	  var value = _ref.value;
+
+	  var array = _read2['default'](path, state);
+	  var stateCopy = _extends({}, state);
+	  var arrayCopy = array ? [].concat(array) : [];
+	  var newValue = value !== null && typeof value === 'object' ? _initializeState2['default'](value, Object.keys(value)) : _fieldValue.makeFieldValue({ value: value });
+	  if (index === undefined) {
+	    arrayCopy.push(newValue);
+	  } else {
+	    arrayCopy.splice(index, 0, newValue);
+	  }
+	  return _write2['default'](path, arrayCopy, stateCopy);
+	}, _behaviors[_actionTypes.BLUR] = function (state, _ref2) {
+	  var field = _ref2.field;
+	  var value = _ref2.value;
+	  var touch = _ref2.touch;
+
+	  // remove _active from state
+	  var _active = state._active;
+
+	  var stateCopy = _objectWithoutProperties(state, ['_active']);
+
+	  // eslint-disable-line prefer-const
+	  return _write2['default'](field, function (previous) {
+	    var result = _extends({}, previous);
+	    if (value !== undefined) {
+	      result.value = value;
+	    }
+	    if (touch) {
+	      result.touched = true;
+	    }
+	    return _fieldValue.makeFieldValue(result);
+	  }, stateCopy);
+	}, _behaviors[_actionTypes.CHANGE] = function (state, _ref3) {
+	  var field = _ref3.field;
+	  var value = _ref3.value;
+	  var touch = _ref3.touch;
+
+	  return _write2['default'](field, function (previous) {
+	    var _extends13 = _extends({}, previous, { value: value });
+
+	    var asyncError = _extends13.asyncError;
+	    var submitError = _extends13.submitError;
+
+	    var result = _objectWithoutProperties(_extends13, ['asyncError', 'submitError']);
+
+	    if (touch) {
+	      result.touched = true;
+	    }
+	    return _fieldValue.makeFieldValue(result);
+	  }, state);
+	}, _behaviors[_actionTypes.DESTROY] = function () {
+	  return undefined;
+	}, _behaviors[_actionTypes.FOCUS] = function (state, _ref4) {
+	  var field = _ref4.field;
+
+	  var stateCopy = _write2['default'](field, function (previous) {
+	    return _fieldValue.makeFieldValue(_extends({}, previous, { visited: true }));
+	  }, state);
+	  stateCopy._active = field;
+	  return stateCopy;
+	}, _behaviors[_actionTypes.INITIALIZE] = function (state, _ref5) {
+	  var _extends2;
+
+	  var data = _ref5.data;
+	  var fields = _ref5.fields;
+
+	  return _extends({}, _initializeState2['default'](data, fields, state), (_extends2 = {
+	    _asyncValidating: false,
+	    _active: undefined
+	  }, _extends2[globalErrorKey] = undefined, _extends2._initialized = true, _extends2._submitting = false, _extends2._submitFailed = false, _extends2));
+	}, _behaviors[_actionTypes.REMOVE_ARRAY_VALUE] = function (state, _ref6) {
+	  var path = _ref6.path;
+	  var index = _ref6.index;
+
+	  var array = _read2['default'](path, state);
+	  var stateCopy = _extends({}, state);
+	  var arrayCopy = array ? [].concat(array) : [];
+	  if (index === undefined) {
+	    arrayCopy.pop();
+	  } else if (isNaN(index)) {
+	    delete arrayCopy[index];
+	  } else {
+	    arrayCopy.splice(index, 1);
+	  }
+	  return _write2['default'](path, arrayCopy, stateCopy);
+	}, _behaviors[_actionTypes.RESET] = function (state) {
+	  var _extends3;
+
+	  return _extends({}, _resetState2['default'](state), (_extends3 = {
+	    _active: undefined,
+	    _asyncValidating: false
+	  }, _extends3[globalErrorKey] = undefined, _extends3._initialized = state._initialized, _extends3._submitting = false, _extends3._submitFailed = false, _extends3));
+	}, _behaviors[_actionTypes.START_ASYNC_VALIDATION] = function (state, _ref7) {
+	  var field = _ref7.field;
+
+	  return _extends({}, state, {
+	    _asyncValidating: field || true
+	  });
+	}, _behaviors[_actionTypes.START_SUBMIT] = function (state) {
+	  return _extends({}, state, {
+	    _submitting: true
+	  });
+	}, _behaviors[_actionTypes.STOP_ASYNC_VALIDATION] = function (state, _ref8) {
+	  var _extends4;
+
+	  var errors = _ref8.errors;
+
+	  return _extends({}, _setErrors2['default'](state, errors, 'asyncError'), (_extends4 = {
+	    _asyncValidating: false
+	  }, _extends4[globalErrorKey] = errors && errors[globalErrorKey], _extends4));
+	}, _behaviors[_actionTypes.STOP_SUBMIT] = function (state, _ref9) {
+	  var _extends5;
+
+	  var errors = _ref9.errors;
+
+	  return _extends({}, _setErrors2['default'](state, errors, 'submitError'), (_extends5 = {}, _extends5[globalErrorKey] = errors && errors[globalErrorKey], _extends5._submitting = false, _extends5._submitFailed = !!(errors && Object.keys(errors).length), _extends5));
+	}, _behaviors[_actionTypes.SUBMIT_FAILED] = function (state) {
+	  return _extends({}, state, {
+	    _submitFailed: true
+	  });
+	}, _behaviors[_actionTypes.SWAP_ARRAY_VALUES] = function (state, _ref10) {
+	  var path = _ref10.path;
+	  var indexA = _ref10.indexA;
+	  var indexB = _ref10.indexB;
+
+	  var array = _read2['default'](path, state);
+	  var arrayLength = array.length;
+	  if (indexA === indexB || isNaN(indexA) || isNaN(indexB) || indexA >= arrayLength || indexB >= arrayLength) {
+	    return state; // do nothing
+	  }
+	  var stateCopy = _extends({}, state);
+	  var arrayCopy = [].concat(array);
+	  arrayCopy[indexA] = array[indexB];
+	  arrayCopy[indexB] = array[indexA];
+	  return _write2['default'](path, arrayCopy, stateCopy);
+	}, _behaviors[_actionTypes.TOUCH] = function (state, _ref11) {
+	  var fields = _ref11.fields;
+
+	  return _extends({}, state, fields.reduce(function (accumulator, field) {
+	    return _write2['default'](field, function (value) {
+	      return _fieldValue.makeFieldValue(_extends({}, value, { touched: true }));
+	    }, accumulator);
+	  }, state));
+	}, _behaviors[_actionTypes.UNTOUCH] = function (state, _ref12) {
+	  var fields = _ref12.fields;
+
+	  return _extends({}, state, fields.reduce(function (accumulator, field) {
+	    return _write2['default'](field, function (value) {
+	      if (value) {
+	        var touched = value.touched;
+
+	        var rest = _objectWithoutProperties(value, ['touched']);
+
+	        return _fieldValue.makeFieldValue(rest);
+	      }
+	      return _fieldValue.makeFieldValue(value);
+	    }, accumulator);
+	  }, state));
+	}, _behaviors);
+
+	var reducer = function reducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	  var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	  var behavior = behaviors[action.type];
+	  return behavior ? behavior(state, action) : state;
+	};
+
+	function formReducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+	  var _extends11;
+
+	  var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+	  var form = action.form;
+	  var key = action.key;
+
+	  var rest = _objectWithoutProperties(action, ['form', 'key']);
+
+	  // eslint-disable-line no-redeclare
+	  if (!form) {
+	    return state;
+	  }
+	  if (key) {
+	    var _extends8, _extends9;
+
+	    if (action.type === _actionTypes.DESTROY) {
+	      var _extends7;
+
+	      return _extends({}, state, (_extends7 = {}, _extends7[form] = state[form] && Object.keys(state[form]).reduce(function (accumulator, stateKey) {
+	        var _extends6;
+
+	        return stateKey === key ? accumulator : _extends({}, accumulator, (_extends6 = {}, _extends6[stateKey] = state[form][stateKey], _extends6));
+	      }, {}), _extends7));
+	    }
+	    return _extends({}, state, (_extends9 = {}, _extends9[form] = _extends({}, state[form], (_extends8 = {}, _extends8[key] = reducer((state[form] || {})[key], rest), _extends8)), _extends9));
+	  }
+	  if (action.type === _actionTypes.DESTROY) {
+	    return Object.keys(state).reduce(function (accumulator, formName) {
+	      var _extends10;
+
+	      return formName === form ? accumulator : _extends({}, accumulator, (_extends10 = {}, _extends10[formName] = state[formName], _extends10));
+	    }, {});
+	  }
+	  return _extends({}, state, (_extends11 = {}, _extends11[form] = reducer(state[form], rest), _extends11));
+	}
+
+	/**
+	 * Adds additional functionality to the reducer
+	 */
+	function decorate(target) {
+	  target.plugin = function plugin(reducers) {
+	    var _this = this;
+
+	    // use 'function' keyword to enable 'this'
+	    return decorate(function () {
+	      var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	      var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	      var result = _this(state, action);
+	      return _extends({}, result, _mapValues2['default'](reducers, function (pluginReducer, key) {
+	        return pluginReducer(result[key] || initialState, action);
+	      }));
+	    });
+	  };
+
+	  target.normalize = function normalize(normalizers) {
+	    var _this2 = this;
+
+	    // use 'function' keyword to enable 'this'
+	    return decorate(function () {
+	      var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	      var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+	      var result = _this2(state, action);
+	      return _extends({}, result, _mapValues2['default'](normalizers, function (formNormalizers, form) {
+	        var runNormalize = function runNormalize(previous, currentResult) {
+	          var previousValues = _getValuesFromState2['default'](_extends({}, initialState, previous));
+	          var formResult = _extends({}, initialState, currentResult);
+	          return _extends({}, formResult, _mapValues2['default'](formNormalizers, function (fieldNormalizer, field) {
+	            return _extends({}, formResult[field], {
+	              value: _fieldValue.makeFieldValue(fieldNormalizer(formResult[field] ? formResult[field].value : undefined, // value
+	              previous && previous[field] ? previous[field].value : undefined, // previous value
+	              _getValuesFromState2['default'](formResult), // all field values
+	              previousValues)) // all previous field values
+	            });
+	          }));
+	        };
+	        if (action.key) {
+	          var _extends12;
+
+	          return _extends({}, result[form], (_extends12 = {}, _extends12[action.key] = runNormalize(state[form][action.key], result[form][action.key]), _extends12));
+	        }
+	        return runNormalize(state[form], result[form]);
+	      }));
+	    });
+	  };
+
+	  return target;
+	}
+
+	exports['default'] = decorate(formReducer);
+
+/***/ },
+/* 272 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	var ADD_ARRAY_VALUE = 'redux-form/ADD_ARRAY_VALUE';
+	exports.ADD_ARRAY_VALUE = ADD_ARRAY_VALUE;
+	var BLUR = 'redux-form/BLUR';
+	exports.BLUR = BLUR;
+	var CHANGE = 'redux-form/CHANGE';
+	exports.CHANGE = CHANGE;
+	var DESTROY = 'redux-form/DESTROY';
+	exports.DESTROY = DESTROY;
+	var FOCUS = 'redux-form/FOCUS';
+	exports.FOCUS = FOCUS;
+	var INITIALIZE = 'redux-form/INITIALIZE';
+	exports.INITIALIZE = INITIALIZE;
+	var REMOVE_ARRAY_VALUE = 'redux-form/REMOVE_ARRAY_VALUE';
+	exports.REMOVE_ARRAY_VALUE = REMOVE_ARRAY_VALUE;
+	var RESET = 'redux-form/RESET';
+	exports.RESET = RESET;
+	var START_ASYNC_VALIDATION = 'redux-form/START_ASYNC_VALIDATION';
+	exports.START_ASYNC_VALIDATION = START_ASYNC_VALIDATION;
+	var START_SUBMIT = 'redux-form/START_SUBMIT';
+	exports.START_SUBMIT = START_SUBMIT;
+	var STOP_ASYNC_VALIDATION = 'redux-form/STOP_ASYNC_VALIDATION';
+	exports.STOP_ASYNC_VALIDATION = STOP_ASYNC_VALIDATION;
+	var STOP_SUBMIT = 'redux-form/STOP_SUBMIT';
+	exports.STOP_SUBMIT = STOP_SUBMIT;
+	var SUBMIT_FAILED = 'redux-form/SUBMIT_FAILED';
+	exports.SUBMIT_FAILED = SUBMIT_FAILED;
+	var SWAP_ARRAY_VALUES = 'redux-form/SWAP_ARRAY_VALUES';
+	exports.SWAP_ARRAY_VALUES = SWAP_ARRAY_VALUES;
+	var TOUCH = 'redux-form/TOUCH';
+	exports.TOUCH = TOUCH;
+	var UNTOUCH = 'redux-form/UNTOUCH';
+	exports.UNTOUCH = UNTOUCH;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports) {
+
+	/**
+	 * Maps all the values in the given object through the given function and saves them, by key, to a result object
+	 */
+	"use strict";
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports["default"] = mapValues;
+
+	function mapValues(obj, fn) {
+	  return obj ? Object.keys(obj).reduce(function (accumulator, key) {
+	    var _extends2;
+
+	    return _extends({}, accumulator, (_extends2 = {}, _extends2[key] = fn(obj[key], key), _extends2));
+	  }, {}) : obj;
+	}
+
+	module.exports = exports["default"];
+
+/***/ },
+/* 274 */
+/***/ function(module, exports) {
+
+	/**
+	 * Reads any potentially deep value from an object using dot and array syntax
+	 */
+	'use strict';
+
+	exports.__esModule = true;
+	var read = function read(_x, _x2) {
+	  var _again = true;
+
+	  _function: while (_again) {
+	    var path = _x,
+	        object = _x2;
+	    _again = false;
+
+	    if (!path || !object) {
+	      return object;
+	    }
+	    var dotIndex = path.indexOf('.');
+	    if (dotIndex === 0) {
+	      _x = path.substring(1);
+	      _x2 = object;
+	      _again = true;
+	      dotIndex = undefined;
+	      continue _function;
+	    }
+	    var openIndex = path.indexOf('[');
+	    var closeIndex = path.indexOf(']');
+	    if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
+	      // iterate down object tree
+	      _x = path.substring(dotIndex + 1);
+	      _x2 = object[path.substring(0, dotIndex)];
+	      _again = true;
+	      dotIndex = openIndex = closeIndex = undefined;
+	      continue _function;
+	    }
+	    if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	      if (closeIndex < 0) {
+	        throw new Error('found [ but no ]');
+	      }
+	      var key = path.substring(0, openIndex);
+	      var index = path.substring(openIndex + 1, closeIndex);
+	      if (!index.length) {
+	        return object[key];
+	      }
+	      if (openIndex === 0) {
+	        _x = path.substring(closeIndex + 1);
+	        _x2 = object[index];
+	        _again = true;
+	        dotIndex = openIndex = closeIndex = key = index = undefined;
+	        continue _function;
+	      }
+	      if (!object[key]) {
+	        return undefined;
+	      }
+	      _x = path.substring(closeIndex + 1);
+	      _x2 = object[key][index];
+	      _again = true;
+	      dotIndex = openIndex = closeIndex = key = index = undefined;
+	      continue _function;
+	    }
+	    return object[path];
+	  }
+	};
+
+	exports['default'] = read;
+	module.exports = exports['default'];
+
+/***/ },
+/* 275 */
+/***/ function(module, exports) {
+
+	/**
+	 * Writes any potentially deep value from an object using dot and array syntax,
+	 * and returns a new copy of the object.
+	 */
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var write = function write(_x, _x2, _x3) {
+	  var _again = true;
+
+	  _function: while (_again) {
+	    var path = _x,
+	        value = _x2,
+	        object = _x3;
+
+	    var _extends7;
+
+	    _again = false;
+
+	    var dotIndex = path.indexOf('.');
+	    if (dotIndex === 0) {
+	      _x = path.substring(1);
+	      _x2 = value;
+	      _x3 = object;
+	      _again = true;
+	      _extends7 = dotIndex = undefined;
+	      continue _function;
+	    }
+	    var openIndex = path.indexOf('[');
+	    var closeIndex = path.indexOf(']');
+	    if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
+	      var _extends2;
+
+	      // is dot notation
+	      var key = path.substring(0, dotIndex);
+	      return _extends({}, object, (_extends2 = {}, _extends2[key] = write(path.substring(dotIndex + 1), value, object[key] || {}), _extends2));
+	    }
+	    if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	      var _extends6;
+
+	      var _extends4;
+
+	      var _extends3;
+
+	      var _extends5;
+
+	      var _ret = (function () {
+	        // is array notation
+	        if (closeIndex < 0) {
+	          throw new Error('found [ but no ]');
+	        }
+	        var key = path.substring(0, openIndex);
+	        var index = path.substring(openIndex + 1, closeIndex);
+	        var array = object[key] || [];
+	        var rest = path.substring(closeIndex + 1);
+	        if (index) {
+	          // indexed array
+	          if (rest.length) {
+	            // need to keep recursing
+	            var dest = array[index] || {};
+	            var arrayCopy = [].concat(array);
+	            arrayCopy[index] = write(rest, value, dest);
+	            return {
+	              v: _extends({}, object || {}, (_extends3 = {}, _extends3[key] = arrayCopy, _extends3))
+	            };
+	          }
+	          var copy = [].concat(array);
+	          copy[index] = typeof value === 'function' ? value(copy[index]) : value;
+	          return {
+	            v: _extends({}, object || {}, (_extends4 = {}, _extends4[key] = copy, _extends4))
+	          };
+	        }
+	        // indexless array
+	        if (rest.length) {
+	          // need to keep recursing
+	          if ((!array || !array.length) && typeof value === 'function') {
+	            return {
+	              v: object
+	            }; // don't even set a value under [key]
+	          }
+	          var arrayCopy = array.map(function (dest) {
+	            return write(rest, value, dest);
+	          });
+	          return {
+	            v: _extends({}, object || {}, (_extends5 = {}, _extends5[key] = arrayCopy, _extends5))
+	          };
+	        }
+	        var result = undefined;
+	        if (Array.isArray(value)) {
+	          result = value;
+	        } else if (object[key]) {
+	          result = array.map(function (dest) {
+	            return typeof value === 'function' ? value(dest) : value;
+	          });
+	        } else if (typeof value === 'function') {
+	          return {
+	            v: object
+	          }; // don't even set a value under [key]
+	        } else {
+	            result = value;
+	          }
+	        return {
+	          v: _extends({}, object || {}, (_extends6 = {}, _extends6[key] = result, _extends6))
+	        };
+	      })();
+
+	      if (typeof _ret === 'object') return _ret.v;
+	    }
+	    return _extends({}, object, (_extends7 = {}, _extends7[path] = typeof value === 'function' ? value(object[path]) : value, _extends7));
+	  }
+	};
+
+	exports['default'] = write;
+	module.exports = exports['default'];
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _fieldValue = __webpack_require__(277);
+
+	/**
+	 * A different version of getValues() that does not need the fields array
+	 */
+	var getValuesFromState = function getValuesFromState(state) {
+	  if (!state) {
+	    return state;
+	  }
+	  var keys = Object.keys(state);
+	  if (!keys.length) {
+	    return undefined;
+	  }
+	  return keys.reduce(function (accumulator, key) {
+	    var field = state[key];
+	    if (field) {
+	      if (field.hasOwnProperty && field.hasOwnProperty('value')) {
+	        if (field.value !== undefined) {
+	          accumulator[key] = field.value;
+	        }
+	      } else if (Array.isArray(field)) {
+	        accumulator[key] = field.map(function (arrayField) {
+	          return _fieldValue.isFieldValue(arrayField) ? arrayField.value : getValuesFromState(arrayField);
+	        });
+	      } else if (typeof field === 'object') {
+	        var result = getValuesFromState(field);
+
+	        if (result && Object.keys(result).length > 0) {
+	          accumulator[key] = result;
+	        }
+	      }
+	    }
+	    return accumulator;
+	  }, {});
+	};
+
+	exports['default'] = getValuesFromState;
+	module.exports = exports['default'];
+
+/***/ },
+/* 277 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports.makeFieldValue = makeFieldValue;
+	exports.isFieldValue = isFieldValue;
+	var flag = '_isFieldValue';
+	var isObject = function isObject(object) {
+	  return typeof object === 'object';
+	};
+
+	function makeFieldValue(object) {
+	  if (object && isObject(object)) {
+	    Object.defineProperty(object, flag, { value: true });
+	  }
+	  return object;
+	}
+
+	function isFieldValue(object) {
+	  return !!(object && isObject(object) && object[flag]);
+	}
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _fieldValue = __webpack_require__(277);
+
+	var makeEntry = function makeEntry(value) {
+	  return _fieldValue.makeFieldValue(value === undefined ? {} : { initial: value, value: value });
+	};
+
+	/**
+	 * Sets the initial values into the state and returns a new copy of the state
+	 */
+	var initializeState = function initializeState(values, fields) {
+	  var state = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+	  if (!fields) {
+	    throw new Error('fields must be passed when initializing state');
+	  }
+	  if (!values || !fields.length) {
+	    return state;
+	  }
+	  var initializeField = function initializeField(_x2, _x3, _x4) {
+	    var _again = true;
+
+	    _function: while (_again) {
+	      var path = _x2,
+	          src = _x3,
+	          dest = _x4;
+	      _again = false;
+
+	      var dotIndex = path.indexOf('.');
+	      if (dotIndex === 0) {
+	        _x2 = path.substring(1);
+	        _x3 = src;
+	        _x4 = dest;
+	        _again = true;
+	        dotIndex = undefined;
+	        continue _function;
+	      }
+	      var openIndex = path.indexOf('[');
+	      var closeIndex = path.indexOf(']');
+	      var result = dest || {};
+	      if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
+	        // is dot notation
+	        var key = path.substring(0, dotIndex);
+	        result[key] = src[key] && initializeField(path.substring(dotIndex + 1), src[key], result[key] || {});
+	      } else if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	        (function () {
+	          // is array notation
+	          if (closeIndex < 0) {
+	            throw new Error('found \'[\' but no \']\': \'' + path + '\'');
+	          }
+	          var key = path.substring(0, openIndex);
+	          var srcArray = src[key];
+	          var destArray = result[key];
+	          var rest = path.substring(closeIndex + 1);
+	          if (Array.isArray(srcArray)) {
+	            if (rest.length) {
+	              // need to keep recursing
+	              result[key] = srcArray.map(function (srcValue, srcIndex) {
+	                return initializeField(rest, srcValue, destArray && destArray[srcIndex]);
+	              });
+	            } else {
+	              result[key] = srcArray.map(function (srcValue) {
+	                return makeEntry(srcValue);
+	              });
+	            }
+	          } else {
+	            result[key] = [];
+	          }
+	        })();
+	      } else {
+	        result[path] = makeEntry(src && src[path]);
+	      }
+	      return result;
+	    }
+	  };
+	  return fields.reduce(function (accumulator, field) {
+	    return initializeField(field, values, accumulator);
+	  }, _extends({}, state));
+	};
+
+	exports['default'] = initializeState;
+	module.exports = exports['default'];
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _fieldValue = __webpack_require__(277);
+
+	var reset = function reset(value) {
+	  return _fieldValue.makeFieldValue(value === undefined || value && value.initial === undefined ? {} : { initial: value.initial, value: value.initial });
+	};
+
+	/**
+	 * Sets the initial values into the state and returns a new copy of the state
+	 */
+	var resetState = function resetState(values) {
+	  return values ? Object.keys(values).reduce(function (accumulator, key) {
+	    var value = values[key];
+	    if (Array.isArray(value)) {
+	      accumulator[key] = value.map(function (item) {
+	        return _fieldValue.isFieldValue(item) ? reset(item) : resetState(item);
+	      });
+	    } else if (value) {
+	      if (_fieldValue.isFieldValue(value)) {
+	        accumulator[key] = reset(value);
+	      } else if (typeof value === 'object' && value !== null) {
+	        accumulator[key] = resetState(value);
+	      } else {
+	        accumulator[key] = value;
+	      }
+	    }
+	    return accumulator;
+	  }, {}) : values;
+	};
+
+	exports['default'] = resetState;
+	module.exports = exports['default'];
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _fieldValue = __webpack_require__(277);
+
+	var isMetaKey = function isMetaKey(key) {
+	  return key[0] === '_';
+	};
+
+	/**
+	 * Sets an error on a field deep in the tree, returning a new copy of the state
+	 */
+	var setErrors = function setErrors(_x, _x2, _x3) {
+	  var _again = true;
+
+	  _function: while (_again) {
+	    var state = _x,
+	        errors = _x2,
+	        destKey = _x3;
+	    _again = false;
+
+	    var clear = function clear() {
+	      if (Array.isArray(state)) {
+	        return state.map(function (stateItem, index) {
+	          return setErrors(stateItem, errors && errors[index], destKey);
+	        });
+	      }
+	      if (state && typeof state === 'object') {
+	        var result = Object.keys(state).reduce(function (accumulator, key) {
+	          var _extends2;
+
+	          return isMetaKey(key) ? accumulator : _extends({}, accumulator, (_extends2 = {}, _extends2[key] = setErrors(state[key], errors && errors[key], destKey), _extends2));
+	        }, state);
+	        if (_fieldValue.isFieldValue(state)) {
+	          _fieldValue.makeFieldValue(result);
+	        }
+	        return result;
+	      }
+	      return _fieldValue.makeFieldValue(state);
+	    };
+	    if (!errors) {
+	      if (!state) {
+	        return state;
+	      }
+	      if (state[destKey]) {
+	        var copy = _extends({}, state);
+	        delete copy[destKey];
+	        return _fieldValue.makeFieldValue(copy);
+	      }
+	      return clear();
+	    }
+	    if (typeof errors === 'string') {
+	      var _extends3;
+
+	      return _fieldValue.makeFieldValue(_extends({}, state, (_extends3 = {}, _extends3[destKey] = errors, _extends3)));
+	    }
+	    if (Array.isArray(errors)) {
+	      if (!state || Array.isArray(state)) {
+	        var _ret = (function () {
+	          var copy = (state || []).map(function (stateItem, index) {
+	            return setErrors(stateItem, errors[index], destKey);
+	          });
+	          errors.forEach(function (errorItem, index) {
+	            return copy[index] = setErrors(copy[index], errorItem, destKey);
+	          });
+	          return {
+	            v: copy
+	          };
+	        })();
+
+	        if (typeof _ret === 'object') return _ret.v;
+	      }
+	      _x = state;
+	      _x2 = errors[0];
+	      _x3 = destKey;
+	      _again = true;
+	      clear = copy = _extends3 = _ret = undefined;
+	      continue _function;
+	      // use first error
+	    }
+	    if (_fieldValue.isFieldValue(state)) {
+	      var _extends4;
+
+	      return _fieldValue.makeFieldValue(_extends({}, state, (_extends4 = {}, _extends4[destKey] = errors, _extends4)));
+	    }
+	    var errorKeys = Object.keys(errors);
+	    if (!errorKeys.length && !state) {
+	      return state;
+	    }
+	    return errorKeys.reduce(function (accumulator, key) {
+	      var _extends5;
+
+	      return isMetaKey(key) ? accumulator : _extends({}, accumulator, (_extends5 = {}, _extends5[key] = setErrors(state && state[key], errors[key], destKey), _extends5));
+	    }, clear() || {});
+	  }
+	};
+
+	exports['default'] = setErrors;
+	module.exports = exports['default'];
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _createReduxFormConnector = __webpack_require__(282);
+
+	var _createReduxFormConnector2 = _interopRequireDefault(_createReduxFormConnector);
+
+	var _hoistNonReactStatics = __webpack_require__(198);
+
+	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
+
+	/**
+	 * The decorator that is the main API to redux-form
+	 */
+	var createReduxForm = function createReduxForm(isReactNative, React, connect) {
+	  var Component = React.Component;
+
+	  var reduxFormConnector = _createReduxFormConnector2['default'](isReactNative, React, connect);
+	  return function (config, mapStateToProps, mapDispatchToProps, mergeProps, options) {
+	    return function (WrappedComponent) {
+	      var ReduxFormConnector = reduxFormConnector(WrappedComponent, mapStateToProps, mapDispatchToProps, mergeProps, options);
+	      var configWithDefaults = _extends({
+	        touchOnBlur: true,
+	        touchOnChange: false,
+	        destroyOnUnmount: true
+	      }, config);
+
+	      var ConnectedForm = (function (_Component) {
+	        _inherits(ConnectedForm, _Component);
+
+	        function ConnectedForm() {
+	          _classCallCheck(this, ConnectedForm);
+
+	          _Component.apply(this, arguments);
+	        }
+
+	        ConnectedForm.prototype.render = function render() {
+	          return React.createElement(ReduxFormConnector, _extends({}, configWithDefaults, this.props));
+	        };
+
+	        return ConnectedForm;
+	      })(Component);
+
+	      return _hoistNonReactStatics2['default'](ConnectedForm, WrappedComponent);
+	    };
+	  };
+	};
+
+	exports['default'] = createReduxForm;
+	module.exports = exports['default'];
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _reactLazyCacheNoGetters = __webpack_require__(283);
+
+	var _reactLazyCacheNoGetters2 = _interopRequireDefault(_reactLazyCacheNoGetters);
+
+	var _getDisplayName = __webpack_require__(285);
+
+	var _getDisplayName2 = _interopRequireDefault(_getDisplayName);
+
+	var _createHigherOrderComponent = __webpack_require__(286);
+
+	var _createHigherOrderComponent2 = _interopRequireDefault(_createHigherOrderComponent);
+
+	/**
+	 * This component tracks props that affect how the form is mounted to the store. Normally these should not change,
+	 * but if they do, the connected components below it need to be redefined.
+	 */
+	var createReduxFormConnector = function createReduxFormConnector(isReactNative, React, connect) {
+	  return function (WrappedComponent, mapStateToProps, mapDispatchToProps, mergeProps, options) {
+	    var Component = React.Component;
+	    var PropTypes = React.PropTypes;
+
+	    var ReduxFormConnector = (function (_Component) {
+	      _inherits(ReduxFormConnector, _Component);
+
+	      function ReduxFormConnector(props) {
+	        _classCallCheck(this, ReduxFormConnector);
+
+	        _Component.call(this, props);
+	        this.cache = new _reactLazyCacheNoGetters2['default'](this, {
+	          ReduxForm: {
+	            params: [
+	            // props that effect how redux-form connects to the redux store
+	            'reduxMountPoint', 'form', 'formKey', 'getFormState'],
+	            fn: _createHigherOrderComponent2['default'](props, isReactNative, React, connect, WrappedComponent, mapStateToProps, mapDispatchToProps, mergeProps, options)
+	          }
+	        });
+	      }
+
+	      ReduxFormConnector.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	        this.cache.componentWillReceiveProps(nextProps);
+	      };
+
+	      ReduxFormConnector.prototype.render = function render() {
+	        var ReduxForm = this.cache.get('ReduxForm');
+	        // remove some redux-form config-only props
+	        var _props = this.props;
+	        var reduxMountPoint = _props.reduxMountPoint;
+	        var destroyOnUnmount = _props.destroyOnUnmount;
+	        var form = _props.form;
+	        var getFormState = _props.getFormState;
+	        var touchOnBlur = _props.touchOnBlur;
+	        var touchOnChange = _props.touchOnChange;
+
+	        var passableProps = _objectWithoutProperties(_props, ['reduxMountPoint', 'destroyOnUnmount', 'form', 'getFormState', 'touchOnBlur', 'touchOnChange']);
+
+	        // eslint-disable-line no-redeclare
+	        return React.createElement(ReduxForm, passableProps);
+	      };
+
+	      return ReduxFormConnector;
+	    })(Component);
+
+	    ReduxFormConnector.displayName = 'ReduxFormConnector(' + _getDisplayName2['default'](WrappedComponent) + ')';
+	    ReduxFormConnector.WrappedComponent = WrappedComponent;
+	    ReduxFormConnector.propTypes = {
+	      destroyOnUnmount: PropTypes.bool,
+	      reduxMountPoint: PropTypes.string,
+	      form: PropTypes.string.isRequired,
+	      formKey: PropTypes.string,
+	      getFormState: PropTypes.func,
+	      touchOnBlur: PropTypes.bool,
+	      touchOnChange: PropTypes.bool
+	    };
+	    ReduxFormConnector.defaultProps = {
+	      reduxMountPoint: 'form',
+	      getFormState: function getFormState(state, reduxMountPoint) {
+	        return state[reduxMountPoint];
+	      }
+	    };
+	    return ReduxFormConnector;
+	  };
+	};
+
+	exports['default'] = createReduxFormConnector;
+	module.exports = exports['default'];
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(284);
+
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _deepEqual = __webpack_require__(218);
+
+	var _deepEqual2 = _interopRequireDefault(_deepEqual);
+
+	function intersects(array1, array2) {
+	  return !!(array1 && array2 && array1.some(function (item) {
+	    return ~array2.indexOf(item);
+	  }));
+	}
+
+	var LazyCache = (function () {
+	  function LazyCache(component, calculators) {
+	    var _this = this;
+
+	    _classCallCheck(this, LazyCache);
+
+	    this.component = component;
+	    this.allProps = [];
+	    this.cache = Object.keys(calculators).reduce(function (accumulator, key) {
+	      var _extends2;
+
+	      var calculator = calculators[key];
+	      var fn = calculator.fn;
+	      var paramNames = calculator.params;
+	      paramNames.forEach(function (param) {
+	        if (! ~_this.allProps.indexOf(param)) {
+	          _this.allProps.push(param);
+	        }
+	      });
+	      return _extends({}, accumulator, (_extends2 = {}, _extends2[key] = {
+	        value: undefined,
+	        props: paramNames,
+	        fn: fn
+	      }, _extends2));
+	    }, {});
+	  }
+
+	  LazyCache.prototype.get = function get(key) {
+	    var component = this.component;
+	    var _cache$key = this.cache[key];
+	    var value = _cache$key.value;
+	    var fn = _cache$key.fn;
+	    var props = _cache$key.props;
+
+	    if (value !== undefined) {
+	      return value;
+	    }
+	    var params = props.map(function (prop) {
+	      return component.props[prop];
+	    });
+	    var result = fn.apply(undefined, params);
+	    this.cache[key].value = result;
+	    return result;
+	  };
+
+	  LazyCache.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	    var _this2 = this;
+
+	    var component = this.component;
+
+	    var diffProps = [];
+	    this.allProps.forEach(function (prop) {
+	      if (!_deepEqual2['default'](component.props[prop], nextProps[prop])) {
+	        diffProps.push(prop);
+	      }
+	    });
+	    if (diffProps.length) {
+	      Object.keys(this.cache).forEach(function (key) {
+	        if (intersects(diffProps, _this2.cache[key].props)) {
+	          delete _this2.cache[key].value; // uncache value
+	        }
+	      });
+	    }
+	  };
+
+	  return LazyCache;
+	})();
+
+	exports['default'] = LazyCache;
+	module.exports = exports['default'];
+
+/***/ },
+/* 285 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = getDisplayName;
+
+	function getDisplayName(Comp) {
+	  return Comp.displayName || Comp.name || 'Component';
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _actions = __webpack_require__(287);
+
+	var importedActions = _interopRequireWildcard(_actions);
+
+	var _getDisplayName = __webpack_require__(285);
+
+	var _getDisplayName2 = _interopRequireDefault(_getDisplayName);
+
+	var _reducer = __webpack_require__(271);
+
+	var _deepEqual = __webpack_require__(218);
+
+	var _deepEqual2 = _interopRequireDefault(_deepEqual);
+
+	var _bindActionData = __webpack_require__(288);
+
+	var _bindActionData2 = _interopRequireDefault(_bindActionData);
+
+	var _getValues = __webpack_require__(289);
+
+	var _getValues2 = _interopRequireDefault(_getValues);
+
+	var _isValid = __webpack_require__(290);
+
+	var _isValid2 = _interopRequireDefault(_isValid);
+
+	var _readFields = __webpack_require__(291);
+
+	var _readFields2 = _interopRequireDefault(_readFields);
+
+	var _handleSubmit2 = __webpack_require__(305);
+
+	var _handleSubmit3 = _interopRequireDefault(_handleSubmit2);
+
+	var _asyncValidation = __webpack_require__(306);
+
+	var _asyncValidation2 = _interopRequireDefault(_asyncValidation);
+
+	var _eventsSilenceEvents = __webpack_require__(307);
+
+	var _eventsSilenceEvents2 = _interopRequireDefault(_eventsSilenceEvents);
+
+	var _eventsSilenceEvent = __webpack_require__(308);
+
+	var _eventsSilenceEvent2 = _interopRequireDefault(_eventsSilenceEvent);
+
+	var _wrapMapDispatchToProps = __webpack_require__(309);
+
+	var _wrapMapDispatchToProps2 = _interopRequireDefault(_wrapMapDispatchToProps);
+
+	var _wrapMapStateToProps = __webpack_require__(310);
+
+	var _wrapMapStateToProps2 = _interopRequireDefault(_wrapMapStateToProps);
+
+	/**
+	 * Creates a HOC that knows how to create redux-connected sub-components.
+	 */
+	var createHigherOrderComponent = function createHigherOrderComponent(config, isReactNative, React, connect, WrappedComponent, mapStateToProps, mapDispatchToProps, mergeProps, options) {
+	  var Component = React.Component;
+	  var PropTypes = React.PropTypes;
+
+	  return function (reduxMountPoint, formName, formKey, getFormState) {
+	    var ReduxForm = (function (_Component) {
+	      _inherits(ReduxForm, _Component);
+
+	      function ReduxForm(props) {
+	        _classCallCheck(this, ReduxForm);
+
+	        _Component.call(this, props);
+	        // bind functions
+	        this.asyncValidate = this.asyncValidate.bind(this);
+	        this.handleSubmit = this.handleSubmit.bind(this);
+	        this.fields = _readFields2['default'](props, {}, {}, this.asyncValidate, isReactNative);
+	      }
+
+	      ReduxForm.prototype.componentWillMount = function componentWillMount() {
+	        var _props = this.props;
+	        var fields = _props.fields;
+	        var form = _props.form;
+	        var initialize = _props.initialize;
+	        var initialValues = _props.initialValues;
+
+	        if (initialValues && !form._initialized) {
+	          initialize(initialValues, fields);
+	        }
+	      };
+
+	      ReduxForm.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	        if (!_deepEqual2['default'](this.props.fields, nextProps.fields) || !_deepEqual2['default'](this.props.form, nextProps.form, { strict: true })) {
+	          this.fields = _readFields2['default'](nextProps, this.props, this.fields, this.asyncValidate, isReactNative);
+	        }
+	        if (!_deepEqual2['default'](this.props.initialValues, nextProps.initialValues)) {
+	          this.props.initialize(nextProps.initialValues, nextProps.fields);
+	        }
+	      };
+
+	      ReduxForm.prototype.componentWillUnmount = function componentWillUnmount() {
+	        if (config.destroyOnUnmount) {
+	          this.props.destroy();
+	        }
+	      };
+
+	      ReduxForm.prototype.asyncValidate = function asyncValidate(name, value) {
+	        var _this = this;
+
+	        var _props2 = this.props;
+	        var asyncValidate = _props2.asyncValidate;
+	        var dispatch = _props2.dispatch;
+	        var fields = _props2.fields;
+	        var form = _props2.form;
+	        var startAsyncValidation = _props2.startAsyncValidation;
+	        var stopAsyncValidation = _props2.stopAsyncValidation;
+	        var validate = _props2.validate;
+
+	        if (asyncValidate) {
+	          var _ret = (function () {
+	            var values = _getValues2['default'](fields, form);
+	            if (name) {
+	              values[name] = value;
+	            }
+	            var syncErrors = validate(values, _this.props);
+
+	            // if blur validating, only run async validate if sync validation passes
+	            if (!name || _isValid2['default'](syncErrors[name])) {
+	              return {
+	                v: _asyncValidation2['default'](function () {
+	                  return asyncValidate(values, dispatch, _this.props);
+	                }, startAsyncValidation, stopAsyncValidation, name)
+	              };
+	            }
+	          })();
+
+	          if (typeof _ret === 'object') return _ret.v;
+	        }
+	      };
+
+	      ReduxForm.prototype.handleSubmit = function handleSubmit(submitOrEvent) {
+	        var _this2 = this;
+
+	        var _props3 = this.props;
+	        var onSubmit = _props3.onSubmit;
+	        var fields = _props3.fields;
+	        var form = _props3.form;
+
+	        var check = function check(submit) {
+	          if (!submit || typeof submit !== 'function') {
+	            throw new Error('You must either pass handleSubmit() an onSubmit function or pass onSubmit as a prop');
+	          }
+	          return submit;
+	        };
+	        return !submitOrEvent || _eventsSilenceEvent2['default'](submitOrEvent) ?
+	        // submitOrEvent is an event: fire submit
+	        _handleSubmit3['default'](check(onSubmit), _getValues2['default'](fields, form), this.props, this.asyncValidate) :
+	        // submitOrEvent is the submit function: return deferred submit thunk
+	        _eventsSilenceEvents2['default'](function (event) {
+	          _eventsSilenceEvent2['default'](event);
+	          _handleSubmit3['default'](check(submitOrEvent), _getValues2['default'](fields, form), _this2.props, _this2.asyncValidate);
+	        });
+	      };
+
+	      ReduxForm.prototype.render = function render() {
+	        var _ref,
+	            _this3 = this;
+
+	        var allFields = this.fields;
+	        var _props4 = this.props;
+	        var addArrayValue = _props4.addArrayValue;
+	        var asyncBlurFields = _props4.asyncBlurFields;
+	        var blur = _props4.blur;
+	        var change = _props4.change;
+	        var destroy = _props4.destroy;
+	        var focus = _props4.focus;
+	        var fields = _props4.fields;
+	        var form = _props4.form;
+	        var initialValues = _props4.initialValues;
+	        var initialize = _props4.initialize;
+	        var onSubmit = _props4.onSubmit;
+	        var propNamespace = _props4.propNamespace;
+	        var reset = _props4.reset;
+	        var removeArrayValue = _props4.removeArrayValue;
+	        var returnRejectedSubmitPromise = _props4.returnRejectedSubmitPromise;
+	        var startAsyncValidation = _props4.startAsyncValidation;
+	        var startSubmit = _props4.startSubmit;
+	        var stopAsyncValidation = _props4.stopAsyncValidation;
+	        var stopSubmit = _props4.stopSubmit;
+	        var submitFailed = _props4.submitFailed;
+	        var swapArrayValues = _props4.swapArrayValues;
+	        var touch = _props4.touch;
+	        var untouch = _props4.untouch;
+	        var validate = _props4.validate;
+
+	        var passableProps = _objectWithoutProperties(_props4, ['addArrayValue', 'asyncBlurFields', 'blur', 'change', 'destroy', 'focus', 'fields', 'form', 'initialValues', 'initialize', 'onSubmit', 'propNamespace', 'reset', 'removeArrayValue', 'returnRejectedSubmitPromise', 'startAsyncValidation', 'startSubmit', 'stopAsyncValidation', 'stopSubmit', 'submitFailed', 'swapArrayValues', 'touch', 'untouch', 'validate']);
+
+	        // eslint-disable-line no-redeclare
+	        var _allFields$_meta = allFields._meta;
+	        var allPristine = _allFields$_meta.allPristine;
+	        var allValid = _allFields$_meta.allValid;
+	        var errors = _allFields$_meta.errors;
+	        var formError = _allFields$_meta.formError;
+	        var values = _allFields$_meta.values;
+
+	        var props = {
+	          // State:
+	          active: form._active,
+	          asyncValidating: form._asyncValidating,
+	          dirty: !allPristine,
+	          error: formError,
+	          errors: errors,
+	          fields: allFields,
+	          formKey: formKey,
+	          invalid: !allValid,
+	          pristine: allPristine,
+	          submitting: form._submitting,
+	          submitFailed: form._submitFailed,
+	          valid: allValid,
+	          values: values,
+
+	          // Actions:
+	          asyncValidate: _eventsSilenceEvents2['default'](function () {
+	            return _this3.asyncValidate();
+	          }),
+	          // ^ doesn't just pass this.asyncValidate to disallow values passing
+	          destroyForm: _eventsSilenceEvents2['default'](destroy),
+	          handleSubmit: this.handleSubmit,
+	          initializeForm: _eventsSilenceEvents2['default'](function (initValues) {
+	            return initialize(initValues, fields);
+	          }),
+	          resetForm: _eventsSilenceEvents2['default'](reset),
+	          touch: _eventsSilenceEvents2['default'](function () {
+	            return touch.apply(undefined, arguments);
+	          }),
+	          touchAll: _eventsSilenceEvents2['default'](function () {
+	            return touch.apply(undefined, fields);
+	          }),
+	          untouch: _eventsSilenceEvents2['default'](function () {
+	            return untouch.apply(undefined, arguments);
+	          }),
+	          untouchAll: _eventsSilenceEvents2['default'](function () {
+	            return untouch.apply(undefined, fields);
+	          })
+	        };
+	        var passedProps = propNamespace ? (_ref = {}, _ref[propNamespace] = props, _ref) : props;
+	        return React.createElement(WrappedComponent, _extends({}, passableProps, passedProps));
+	      };
+
+	      return ReduxForm;
+	    })(Component);
+
+	    ReduxForm.displayName = 'ReduxForm(' + _getDisplayName2['default'](WrappedComponent) + ')';
+	    ReduxForm.WrappedComponent = WrappedComponent;
+	    ReduxForm.propTypes = {
+	      // props:
+	      asyncBlurFields: PropTypes.arrayOf(PropTypes.string),
+	      asyncValidate: PropTypes.func,
+	      dispatch: PropTypes.func.isRequired,
+	      fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+	      form: PropTypes.object,
+	      initialValues: PropTypes.any,
+	      onSubmit: PropTypes.func,
+	      propNamespace: PropTypes.string,
+	      readonly: PropTypes.bool,
+	      returnRejectedSubmitPromise: PropTypes.bool,
+	      validate: PropTypes.func,
+
+	      // actions:
+	      addArrayValue: PropTypes.func.isRequired,
+	      blur: PropTypes.func.isRequired,
+	      change: PropTypes.func.isRequired,
+	      destroy: PropTypes.func.isRequired,
+	      focus: PropTypes.func.isRequired,
+	      initialize: PropTypes.func.isRequired,
+	      removeArrayValue: PropTypes.func.isRequired,
+	      reset: PropTypes.func.isRequired,
+	      startAsyncValidation: PropTypes.func.isRequired,
+	      startSubmit: PropTypes.func.isRequired,
+	      stopAsyncValidation: PropTypes.func.isRequired,
+	      stopSubmit: PropTypes.func.isRequired,
+	      submitFailed: PropTypes.func.isRequired,
+	      swapArrayValues: PropTypes.func.isRequired,
+	      touch: PropTypes.func.isRequired,
+	      untouch: PropTypes.func.isRequired
+	    };
+	    ReduxForm.defaultProps = {
+	      asyncBlurFields: [],
+	      form: _reducer.initialState,
+	      readonly: false,
+	      returnRejectedSubmitPromise: false,
+	      validate: function validate() {
+	        return {};
+	      }
+	    };
+
+	    // bind touch flags to blur and change
+	    var unboundActions = _extends({}, importedActions, {
+	      blur: _bindActionData2['default'](importedActions.blur, {
+	        touch: !!config.touchOnBlur
+	      }),
+	      change: _bindActionData2['default'](importedActions.change, {
+	        touch: !!config.touchOnChange
+	      })
+	    });
+
+	    // make redux connector with or without form key
+	    var decorate = formKey !== undefined && formKey !== null ? connect(_wrapMapStateToProps2['default'](mapStateToProps, function (state) {
+	      var formState = getFormState(state, reduxMountPoint);
+	      if (!formState) {
+	        throw new Error('You need to mount the redux-form reducer at "' + reduxMountPoint + '"');
+	      }
+	      return formState && formState[formName] && formState[formName][formKey];
+	    }), _wrapMapDispatchToProps2['default'](mapDispatchToProps, _bindActionData2['default'](unboundActions, { form: formName, key: formKey })), mergeProps, options) : connect(_wrapMapStateToProps2['default'](mapStateToProps, function (state) {
+	      var formState = getFormState(state, reduxMountPoint);
+	      if (!formState) {
+	        throw new Error('You need to mount the redux-form reducer at "' + reduxMountPoint + '"');
+	      }
+	      return formState && formState[formName];
+	    }), _wrapMapDispatchToProps2['default'](mapDispatchToProps, _bindActionData2['default'](unboundActions, { form: formName })), mergeProps, options);
+
+	    return decorate(ReduxForm);
+	  };
+	};
+
+	exports['default'] = createHigherOrderComponent;
+	module.exports = exports['default'];
+	// contains dispatch
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _actionTypes = __webpack_require__(272);
+
+	var addArrayValue = function addArrayValue(path, value, index) {
+	  return { type: _actionTypes.ADD_ARRAY_VALUE, path: path, value: value, index: index };
+	};
+
+	exports.addArrayValue = addArrayValue;
+	var blur = function blur(field, value) {
+	  return { type: _actionTypes.BLUR, field: field, value: value };
+	};
+
+	exports.blur = blur;
+	var change = function change(field, value) {
+	  return { type: _actionTypes.CHANGE, field: field, value: value };
+	};
+
+	exports.change = change;
+	var destroy = function destroy() {
+	  return { type: _actionTypes.DESTROY };
+	};
+
+	exports.destroy = destroy;
+	var focus = function focus(field) {
+	  return { type: _actionTypes.FOCUS, field: field };
+	};
+
+	exports.focus = focus;
+	var initialize = function initialize(data, fields) {
+	  if (!Array.isArray(fields)) {
+	    throw new Error('must provide fields array to initialize() action creator');
+	  }
+	  return { type: _actionTypes.INITIALIZE, data: data, fields: fields };
+	};
+
+	exports.initialize = initialize;
+	var removeArrayValue = function removeArrayValue(path, index) {
+	  return { type: _actionTypes.REMOVE_ARRAY_VALUE, path: path, index: index };
+	};
+
+	exports.removeArrayValue = removeArrayValue;
+	var reset = function reset() {
+	  return { type: _actionTypes.RESET };
+	};
+
+	exports.reset = reset;
+	var startAsyncValidation = function startAsyncValidation(field) {
+	  return { type: _actionTypes.START_ASYNC_VALIDATION, field: field };
+	};
+
+	exports.startAsyncValidation = startAsyncValidation;
+	var startSubmit = function startSubmit() {
+	  return { type: _actionTypes.START_SUBMIT };
+	};
+
+	exports.startSubmit = startSubmit;
+	var stopAsyncValidation = function stopAsyncValidation(errors) {
+	  return { type: _actionTypes.STOP_ASYNC_VALIDATION, errors: errors };
+	};
+
+	exports.stopAsyncValidation = stopAsyncValidation;
+	var stopSubmit = function stopSubmit(errors) {
+	  return { type: _actionTypes.STOP_SUBMIT, errors: errors };
+	};
+
+	exports.stopSubmit = stopSubmit;
+	var submitFailed = function submitFailed() {
+	  return { type: _actionTypes.SUBMIT_FAILED };
+	};
+
+	exports.submitFailed = submitFailed;
+	var swapArrayValues = function swapArrayValues(path, indexA, indexB) {
+	  return { type: _actionTypes.SWAP_ARRAY_VALUES, path: path, indexA: indexA, indexB: indexB };
+	};
+
+	exports.swapArrayValues = swapArrayValues;
+	var touch = function touch() {
+	  for (var _len = arguments.length, fields = Array(_len), _key = 0; _key < _len; _key++) {
+	    fields[_key] = arguments[_key];
+	  }
+
+	  return { type: _actionTypes.TOUCH, fields: fields };
+	};
+
+	exports.touch = touch;
+	var untouch = function untouch() {
+	  for (var _len2 = arguments.length, fields = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	    fields[_key2] = arguments[_key2];
+	  }
+
+	  return { type: _actionTypes.UNTOUCH, fields: fields };
+	};
+	exports.untouch = untouch;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports['default'] = bindActionData;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _mapValues = __webpack_require__(273);
+
+	var _mapValues2 = _interopRequireDefault(_mapValues);
+
+	/**
+	 * Adds additional properties to the results of the function or map of functions passed
+	 */
+
+	function bindActionData(action, data) {
+	  if (typeof action === 'function') {
+	    return function () {
+	      return _extends({}, action.apply(undefined, arguments), data);
+	    };
+	  }
+	  if (typeof action === 'object') {
+	    return _mapValues2['default'](action, function (value) {
+	      return bindActionData(value, data);
+	    });
+	  }
+	  return action;
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 289 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	var getValue = function getValue(field, state, dest) {
+	  var dotIndex = field.indexOf('.');
+	  var openIndex = field.indexOf('[');
+	  var closeIndex = field.indexOf(']');
+	  if (openIndex > 0 && closeIndex !== openIndex + 1) {
+	    throw new Error('found [ not followed by ]');
+	  }
+	  if (openIndex > 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	    (function () {
+	      // array field
+	      var key = field.substring(0, openIndex);
+	      var rest = field.substring(closeIndex + 1);
+	      if (rest[0] === '.') {
+	        rest = rest.substring(1);
+	      }
+	      var array = state && state[key] || [];
+	      if (rest) {
+	        if (!dest[key]) {
+	          dest[key] = [];
+	        }
+	        array.forEach(function (item, index) {
+	          if (!dest[key][index]) {
+	            dest[key][index] = {};
+	          }
+	          getValue(rest, item, dest[key][index]);
+	        });
+	      } else {
+	        dest[key] = array.map(function (item) {
+	          return item.value;
+	        });
+	      }
+	    })();
+	  } else if (dotIndex > 0) {
+	    // subobject field
+	    var key = field.substring(0, dotIndex);
+	    var rest = field.substring(dotIndex + 1);
+	    if (!dest[key]) {
+	      dest[key] = {};
+	    }
+	    getValue(rest, state && state[key] || {}, dest[key]);
+	  } else {
+	    dest[field] = state[field] && state[field].value;
+	  }
+	};
+
+	var getValues = function getValues(fields, state) {
+	  return fields.reduce(function (accumulator, field) {
+	    getValue(field, state, accumulator);
+	    return accumulator;
+	  }, {});
+	};
+
+	exports['default'] = getValues;
+	module.exports = exports['default'];
+
+/***/ },
+/* 290 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = isValid;
+
+	function isValid(error) {
+	  if (Array.isArray(error)) {
+	    return error.reduce(function (valid, errorValue) {
+	      return valid && isValid(errorValue);
+	    }, true);
+	  }
+	  if (error && typeof error === 'object') {
+	    return Object.keys(error).reduce(function (valid, key) {
+	      return valid && isValid(error[key]);
+	    }, true);
+	  }
+	  return !error;
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _readField = __webpack_require__(292);
+
+	var _readField2 = _interopRequireDefault(_readField);
+
+	var _write = __webpack_require__(275);
+
+	var _write2 = _interopRequireDefault(_write);
+
+	var _getValues = __webpack_require__(289);
+
+	var _getValues2 = _interopRequireDefault(_getValues);
+
+	var _removeField = __webpack_require__(304);
+
+	var _removeField2 = _interopRequireDefault(_removeField);
+
+	/**
+	 * Reads props and generates (or updates) field structure
+	 */
+	var readFields = function readFields(props, previousProps, myFields, asyncValidate, isReactNative) {
+	  var fields = props.fields;
+	  var form = props.form;
+	  var validate = props.validate;
+
+	  var previousFields = previousProps.fields;
+	  var values = _getValues2['default'](fields, form);
+	  var syncErrors = validate(values, props);
+	  var errors = {};
+	  var formError = syncErrors._error || form._error;
+	  var allValid = !formError;
+	  var allPristine = true;
+	  var tally = function tally(field) {
+	    if (field.error) {
+	      errors = _write2['default'](field.name, field.error, errors);
+	      allValid = false;
+	    }
+	    if (field.dirty) {
+	      allPristine = false;
+	    }
+	  };
+	  var fieldObjects = previousFields ? previousFields.reduce(function (accumulator, previousField) {
+	    return ~fields.indexOf(previousField) ? accumulator : _removeField2['default'](accumulator, previousField);
+	  }, _extends({}, myFields)) : _extends({}, myFields);
+	  fields.forEach(function (name) {
+	    _readField2['default'](form, name, undefined, fieldObjects, syncErrors, asyncValidate, isReactNative, props, tally);
+	  });
+	  Object.defineProperty(fieldObjects, '_meta', {
+	    value: {
+	      allPristine: allPristine,
+	      allValid: allValid,
+	      values: values,
+	      errors: errors,
+	      formError: formError
+	    }
+	  });
+	  return fieldObjects;
+	};
+	exports['default'] = readFields;
+	module.exports = exports['default'];
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _eventsCreateOnBlur = __webpack_require__(293);
+
+	var _eventsCreateOnBlur2 = _interopRequireDefault(_eventsCreateOnBlur);
+
+	var _eventsCreateOnChange = __webpack_require__(296);
+
+	var _eventsCreateOnChange2 = _interopRequireDefault(_eventsCreateOnChange);
+
+	var _eventsCreateOnDragStart = __webpack_require__(297);
+
+	var _eventsCreateOnDragStart2 = _interopRequireDefault(_eventsCreateOnDragStart);
+
+	var _eventsCreateOnDrop = __webpack_require__(298);
+
+	var _eventsCreateOnDrop2 = _interopRequireDefault(_eventsCreateOnDrop);
+
+	var _eventsCreateOnFocus = __webpack_require__(299);
+
+	var _eventsCreateOnFocus2 = _interopRequireDefault(_eventsCreateOnFocus);
+
+	var _silencePromise = __webpack_require__(300);
+
+	var _silencePromise2 = _interopRequireDefault(_silencePromise);
+
+	var _read = __webpack_require__(274);
+
+	var _read2 = _interopRequireDefault(_read);
+
+	var _updateField = __webpack_require__(302);
+
+	var _updateField2 = _interopRequireDefault(_updateField);
+
+	var readField = function readField(_x2, _x3, _x4, _x5, _x6, _x7, _x8, _x9) {
+	  var _arguments = arguments;
+	  var _again = true;
+
+	  _function: while (_again) {
+	    var state = _x2,
+	        fieldName = _x3,
+	        pathToHere = _x4,
+	        fields = _x5,
+	        syncErrors = _x6,
+	        asyncValidate = _x7,
+	        isReactNative = _x8,
+	        props = _x9;
+	    if (pathToHere === undefined) pathToHere = '';
+	    _again = false;
+	    var callback = _arguments.length <= 8 || _arguments[8] === undefined ? function () {
+	      return null;
+	    } : _arguments[8];
+	    var asyncBlurFields = props.asyncBlurFields;
+	    var blur = props.blur;
+	    var change = props.change;
+	    var focus = props.focus;
+	    var form = props.form;
+	    var initialValues = props.initialValues;
+	    var readonly = props.readonly;
+	    var addArrayValue = props.addArrayValue;
+	    var removeArrayValue = props.removeArrayValue;
+	    var swapArrayValues = props.swapArrayValues;
+
+	    var dotIndex = fieldName.indexOf('.');
+	    var openIndex = fieldName.indexOf('[');
+	    var closeIndex = fieldName.indexOf(']');
+	    if (openIndex > 0 && closeIndex !== openIndex + 1) {
+	      throw new Error('found [ not followed by ]');
+	    }
+	    if (openIndex > 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	      var _ret = (function () {
+	        // array field
+	        var key = fieldName.substring(0, openIndex);
+	        var rest = fieldName.substring(closeIndex + 1);
+	        if (rest[0] === '.') {
+	          rest = rest.substring(1);
+	        }
+	        var stateArray = state && state[key] || [];
+	        if (!fields[key]) {
+	          fields[key] = [];
+	          Object.defineProperty(fields[key], 'addField', {
+	            value: function value(_value, index) {
+	              return addArrayValue(pathToHere + key, _value, index);
+	            }
+	          });
+	          Object.defineProperty(fields[key], 'removeField', {
+	            value: function value(index) {
+	              return removeArrayValue(pathToHere + key, index);
+	            }
+	          });
+	          Object.defineProperty(fields[key], 'swapFields', {
+	            value: function value(indexA, indexB) {
+	              return swapArrayValues(pathToHere + key, indexA, indexB);
+	            }
+	          });
+	        }
+	        var fieldArray = fields[key];
+	        stateArray.forEach(function (fieldState, index) {
+	          if (rest && !fieldArray[index]) {
+	            fieldArray[index] = {};
+	          }
+	          var dest = rest ? fieldArray[index] : {};
+	          var result = readField(fieldState, rest, '' + pathToHere + key + '[' + index + ']' + (rest ? '.' : ''), dest, syncErrors, asyncValidate, isReactNative, props, callback);
+	          if (!rest) {
+	            // if nothing after [] in field name, assign directly to array
+	            fieldArray[index] = result;
+	          }
+	        });
+	        if (fieldArray.length > stateArray.length) {
+	          // remove extra items that aren't in state array
+	          fieldArray.splice(stateArray.length, fieldArray.length - stateArray.length);
+	        }
+	        return {
+	          v: fieldArray
+	        };
+	      })();
+
+	      if (typeof _ret === 'object') return _ret.v;
+	    }
+	    if (dotIndex > 0) {
+	      // subobject field
+	      var key = fieldName.substring(0, dotIndex);
+	      var rest = fieldName.substring(dotIndex + 1);
+	      if (!fields[key]) {
+	        fields[key] = {};
+	      }
+	      _arguments = [_x2 = state[key] || {}, _x3 = rest, _x4 = pathToHere + key + '.', _x5 = fields[key], _x6 = syncErrors, _x7 = asyncValidate, _x8 = isReactNative, _x9 = props, callback];
+	      _again = true;
+	      callback = asyncBlurFields = blur = change = focus = form = initialValues = readonly = addArrayValue = removeArrayValue = swapArrayValues = dotIndex = openIndex = closeIndex = _ret = key = rest = undefined;
+	      continue _function;
+	    }
+	    var name = pathToHere + fieldName;
+	    var field = fields[fieldName] || {};
+	    if (field.name !== name) {
+	      var onChange = _eventsCreateOnChange2['default'](name, change, isReactNative);
+	      var initialFormValue = _read2['default'](name + '.initial', form);
+	      var initialValue = initialFormValue || _read2['default'](name, initialValues);
+	      field.name = name;
+	      field.defaultChecked = initialValue === true;
+	      field.defaultValue = initialValue;
+	      field.initialValue = initialValue;
+	      if (!readonly) {
+	        field.onBlur = _eventsCreateOnBlur2['default'](name, blur, isReactNative, ~asyncBlurFields.indexOf(name) && function (blurName, blurValue) {
+	          return _silencePromise2['default'](asyncValidate(blurName, blurValue));
+	        });
+	        field.onChange = onChange;
+	        field.onDragStart = _eventsCreateOnDragStart2['default'](name, function () {
+	          return field.value;
+	        });
+	        field.onDrop = _eventsCreateOnDrop2['default'](name, change);
+	        field.onFocus = _eventsCreateOnFocus2['default'](name, focus);
+	        field.onUpdate = onChange; // alias to support belle. https://github.com/nikgraf/belle/issues/58
+	      }
+	      field.valid = true;
+	      field.invalid = false;
+	      Object.defineProperty(field, '_isField', { value: true });
+	    }
+
+	    var fieldState = (fieldName ? state[fieldName] : state) || {};
+	    var syncError = _read2['default'](name, syncErrors);
+	    var updated = _updateField2['default'](field, fieldState, name === form._active, syncError);
+	    if (fieldName || fields[fieldName] !== updated) {
+	      fields[fieldName] = updated;
+	    }
+	    callback(updated);
+	    return updated;
+	  }
+	};
+
+	exports['default'] = readField;
+	module.exports = exports['default'];
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _getValue = __webpack_require__(294);
+
+	var _getValue2 = _interopRequireDefault(_getValue);
+
+	var createOnBlur = function createOnBlur(name, blur, isReactNative, afterBlur) {
+	  return function (event) {
+	    var value = _getValue2['default'](event, isReactNative);
+	    blur(name, value);
+	    if (afterBlur) {
+	      afterBlur(name, value);
+	    }
+	  };
+	};
+	exports['default'] = createOnBlur;
+	module.exports = exports['default'];
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _isEvent = __webpack_require__(295);
+
+	var _isEvent2 = _interopRequireDefault(_isEvent);
+
+	var getSelectedValues = function getSelectedValues(options) {
+	  var result = [];
+	  if (options) {
+	    for (var index = 0; index < options.length; index++) {
+	      var option = options[index];
+	      if (option.selected) {
+	        result.push(option.value);
+	      }
+	    }
+	  }
+	  return result;
+	};
+
+	var getValue = function getValue(event, isReactNative) {
+	  if (_isEvent2['default'](event)) {
+	    if (!isReactNative && event.nativeEvent && event.nativeEvent.text !== undefined) {
+	      return event.nativeEvent.text;
+	    }
+	    if (isReactNative && event.nativeEvent !== undefined) {
+	      return event.nativeEvent.text;
+	    }
+	    var _event$target = event.target;
+	    var type = _event$target.type;
+	    var value = _event$target.value;
+	    var checked = _event$target.checked;
+	    var files = _event$target.files;
+	    var dataTransfer = event.dataTransfer;
+
+	    if (type === 'checkbox') {
+	      return checked;
+	    }
+	    if (type === 'file') {
+	      return files || dataTransfer && dataTransfer.files;
+	    }
+	    if (type === 'select-multiple') {
+	      return getSelectedValues(event.target.options);
+	    }
+	    return value;
+	  }
+	  // not an event, so must be either our value or an object containing our value in the 'value' key
+	  return event && typeof event === 'object' && event.value !== undefined ? event.value : // extract value from { value: value } structure. https://github.com/nikgraf/belle/issues/58
+	  event;
+	};
+
+	exports['default'] = getValue;
+	module.exports = exports['default'];
+
+/***/ },
+/* 295 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	exports.__esModule = true;
+	var isEvent = function isEvent(candidate) {
+	  return !!(candidate && candidate.stopPropagation && candidate.preventDefault);
+	};
+
+	exports["default"] = isEvent;
+	module.exports = exports["default"];
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _getValue = __webpack_require__(294);
+
+	var _getValue2 = _interopRequireDefault(_getValue);
+
+	var createOnChange = function createOnChange(name, change, isReactNative) {
+	  return function (event) {
+	    return change(name, _getValue2['default'](event, isReactNative));
+	  };
+	};
+	exports['default'] = createOnChange;
+	module.exports = exports['default'];
+
+/***/ },
+/* 297 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	var dataKey = 'value';
+	exports.dataKey = dataKey;
+	var createOnDragStart = function createOnDragStart(name, getValue) {
+	  return function (event) {
+	    event.dataTransfer.setData(dataKey, getValue());
+	  };
+	};
+
+	exports['default'] = createOnDragStart;
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _createOnDragStart = __webpack_require__(297);
+
+	var createOnDrop = function createOnDrop(name, change) {
+	  return function (event) {
+	    change(name, event.dataTransfer.getData(_createOnDragStart.dataKey));
+	  };
+	};
+	exports['default'] = createOnDrop;
+	module.exports = exports['default'];
+
+/***/ },
+/* 299 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	exports.__esModule = true;
+	var createOnFocus = function createOnFocus(name, focus) {
+	  return function () {
+	    return focus(name);
+	  };
+	};
+	exports["default"] = createOnFocus;
+	module.exports = exports["default"];
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _isPromise = __webpack_require__(301);
+
+	var _isPromise2 = _interopRequireDefault(_isPromise);
+
+	var noop = function noop() {
+	  return undefined;
+	};
+
+	var silencePromise = function silencePromise(promise) {
+	  return _isPromise2['default'](promise) ? promise.then(noop, noop) : promise;
+	};
+
+	exports['default'] = silencePromise;
+	module.exports = exports['default'];
+
+/***/ },
+/* 301 */
+/***/ function(module, exports) {
+
+	module.exports = isPromise;
+
+	function isPromise(obj) {
+	  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+	}
+
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _isPristine = __webpack_require__(303);
+
+	var _isPristine2 = _interopRequireDefault(_isPristine);
+
+	var _isValid = __webpack_require__(290);
+
+	var _isValid2 = _interopRequireDefault(_isValid);
+
+	/**
+	 * Updates a field object from the store values
+	 */
+	var updateField = function updateField(field, formField, active, syncError) {
+	  var diff = {};
+
+	  // update field value
+	  if (field.value !== formField.value) {
+	    diff.value = formField.value;
+	    diff.checked = typeof formField.value === 'boolean' ? formField.value : undefined;
+	  }
+
+	  // update dirty/pristine
+	  var pristine = _isPristine2['default'](formField.value, formField.initial);
+	  if (field.pristine !== pristine) {
+	    diff.dirty = !pristine;
+	    diff.pristine = pristine;
+	  }
+
+	  // update field error
+	  var error = syncError || formField.submitError || formField.asyncError;
+	  if (error !== field.error) {
+	    diff.error = error;
+	  }
+	  var valid = _isValid2['default'](error);
+	  if (field.valid !== valid) {
+	    diff.invalid = !valid;
+	    diff.valid = valid;
+	  }
+
+	  if (active !== field.active) {
+	    diff.active = active;
+	  }
+	  var touched = !!formField.touched;
+	  if (touched !== field.touched) {
+	    diff.touched = touched;
+	  }
+	  var visited = !!formField.visited;
+	  if (visited !== field.visited) {
+	    diff.visited = visited;
+	  }
+
+	  if (formField.initial && formField.initial !== field.initialValue) {
+	    field.defaultChecked = formField.initial === true;
+	    field.defaultValue = formField.initial;
+	    field.initialValue = formField.initial;
+	  }
+
+	  return Object.keys(diff).length ? _extends({}, field, diff) : field;
+	};
+	exports['default'] = updateField;
+	module.exports = exports['default'];
+
+/***/ },
+/* 303 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	exports['default'] = isPristine;
+
+	function isPristine(initial, data) {
+	  if (initial === data) {
+	    return true;
+	  }
+	  if (typeof initial === 'boolean' || typeof data === 'boolean') {
+	    return initial === data;
+	  } else if (initial instanceof Date && data instanceof Date) {
+	    return initial.getTime() === data.getTime();
+	  } else if (initial && typeof initial === 'object') {
+	    if (!data || typeof data !== 'object') {
+	      return false;
+	    }
+	    var initialKeys = Object.keys(initial);
+	    var dataKeys = Object.keys(data);
+	    if (initialKeys.length !== dataKeys.length) {
+	      return false;
+	    }
+	    for (var index = 0; index < dataKeys.length; index++) {
+	      var key = dataKeys[index];
+	      if (!isPristine(initial[key], data[key])) {
+	        return false;
+	      }
+	    }
+	  } else if (initial || data) {
+	    // allow '' to equate to undefined or null
+	    return initial === data;
+	  }
+	  return true;
+	}
+
+	module.exports = exports['default'];
+
+/***/ },
+/* 304 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var without = function without(object, key) {
+	  var copy = _extends({}, object);
+	  delete copy[key];
+	  return copy;
+	};
+
+	var removeField = function removeField(fields, path) {
+	  var dotIndex = path.indexOf('.');
+	  var openIndex = path.indexOf('[');
+	  var closeIndex = path.indexOf(']');
+	  if (openIndex > 0 && closeIndex !== openIndex + 1) {
+	    throw new Error('found [ not followed by ]');
+	  }
+	  if (openIndex > 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	    var _extends2;
+
+	    var _ret = (function () {
+	      // array field
+	      var key = path.substring(0, openIndex);
+	      if (!Array.isArray(fields[key])) {
+	        return {
+	          v: without(fields, key)
+	        };
+	      }
+	      var rest = path.substring(closeIndex + 1);
+	      if (rest[0] === '.') {
+	        rest = rest.substring(1);
+	      }
+	      if (rest) {
+	        var _ret2 = (function () {
+	          var copy = [];
+	          fields[key].forEach(function (item, index) {
+	            var result = removeField(item, rest);
+	            if (Object.keys(result).length) {
+	              copy[index] = result;
+	            }
+	          });
+	          return {
+	            v: {
+	              v: copy.length ? _extends({}, fields, (_extends2 = {}, _extends2[key] = copy, _extends2)) : without(fields, key)
+	            }
+	          };
+	        })();
+
+	        if (typeof _ret2 === 'object') return _ret2.v;
+	      }
+	      return {
+	        v: without(fields, key)
+	      };
+	    })();
+
+	    if (typeof _ret === 'object') return _ret.v;
+	  }
+	  if (dotIndex > 0) {
+	    var _extends3;
+
+	    // subobject field
+	    var key = path.substring(0, dotIndex);
+	    var rest = path.substring(dotIndex + 1);
+	    if (!fields[key]) {
+	      return fields;
+	    }
+	    var result = removeField(fields[key], rest);
+	    return Object.keys(result).length ? _extends({}, fields, (_extends3 = {}, _extends3[key] = removeField(fields[key], rest), _extends3)) : without(fields, key);
+	  }
+	  return without(fields, path);
+	};
+
+	exports['default'] = removeField;
+	module.exports = exports['default'];
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _isPromise = __webpack_require__(301);
+
+	var _isPromise2 = _interopRequireDefault(_isPromise);
+
+	var _isValid = __webpack_require__(290);
+
+	var _isValid2 = _interopRequireDefault(_isValid);
+
+	var handleSubmit = function handleSubmit(submit, values, props, asyncValidate) {
+	  var dispatch = props.dispatch;
+	  var fields = props.fields;
+	  var startSubmit = props.startSubmit;
+	  var stopSubmit = props.stopSubmit;
+	  var submitFailed = props.submitFailed;
+	  var returnRejectedSubmitPromise = props.returnRejectedSubmitPromise;
+	  var touch = props.touch;
+	  var validate = props.validate;
+
+	  var syncErrors = validate(values, props);
+	  touch.apply(undefined, fields); // touch all fields
+	  if (_isValid2['default'](syncErrors)) {
+	    var doSubmit = function doSubmit() {
+	      var result = submit(values, dispatch);
+	      if (_isPromise2['default'](result)) {
+	        startSubmit();
+	        return result.then(function (submitResult) {
+	          stopSubmit();
+	          return submitResult;
+	        }, function (submitError) {
+	          stopSubmit(submitError);
+	          if (returnRejectedSubmitPromise) {
+	            return Promise.reject(submitError);
+	          }
+	        });
+	      }
+	      return result;
+	    };
+	    var asyncValidateResult = asyncValidate();
+	    return _isPromise2['default'](asyncValidateResult) ?
+	    // asyncValidateResult will be rejected if async validation failed
+	    asyncValidateResult.then(doSubmit, function () {
+	      submitFailed();
+	      return returnRejectedSubmitPromise ? Promise.reject() : Promise.resolve();
+	    }) : doSubmit(); // no async validation, so submit
+	  }
+	  submitFailed();
+	};
+
+	exports['default'] = handleSubmit;
+	module.exports = exports['default'];
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _isPromise = __webpack_require__(301);
+
+	var _isPromise2 = _interopRequireDefault(_isPromise);
+
+	var _isValid = __webpack_require__(290);
+
+	var _isValid2 = _interopRequireDefault(_isValid);
+
+	var asyncValidation = function asyncValidation(fn, start, stop, field) {
+	  start(field);
+	  var promise = fn();
+	  if (!_isPromise2['default'](promise)) {
+	    throw new Error('asyncValidate function passed to reduxForm must return a promise');
+	  }
+	  var handleErrors = function handleErrors(rejected) {
+	    return function (errors) {
+	      if (!_isValid2['default'](errors)) {
+	        stop(errors);
+	        return Promise.reject();
+	      } else if (rejected) {
+	        stop();
+	        throw new Error('Asynchronous validation promise was rejected without errors.');
+	      }
+	      stop();
+	      return Promise.resolve();
+	    };
+	  };
+	  return promise.then(handleErrors(false), handleErrors(true));
+	};
+
+	exports['default'] = asyncValidation;
+	module.exports = exports['default'];
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _silenceEvent = __webpack_require__(308);
+
+	var _silenceEvent2 = _interopRequireDefault(_silenceEvent);
+
+	var silenceEvents = function silenceEvents(fn) {
+	  return function (event) {
+	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      args[_key - 1] = arguments[_key];
+	    }
+
+	    return _silenceEvent2['default'](event) ? fn.apply(undefined, args) : fn.apply(undefined, [event].concat(args));
+	  };
+	};
+
+	exports['default'] = silenceEvents;
+	module.exports = exports['default'];
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _isEvent = __webpack_require__(295);
+
+	var _isEvent2 = _interopRequireDefault(_isEvent);
+
+	var silenceEvent = function silenceEvent(event) {
+	  var is = _isEvent2['default'](event);
+	  if (is) {
+	    event.preventDefault();
+	  }
+	  return is;
+	};
+
+	exports['default'] = silenceEvent;
+	module.exports = exports['default'];
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _redux = __webpack_require__(167);
+
+	var wrapMapDispatchToProps = function wrapMapDispatchToProps(mapDispatchToProps, actionCreators) {
+	  if (mapDispatchToProps) {
+	    if (typeof mapDispatchToProps === 'function') {
+	      if (mapDispatchToProps.length > 1) {
+	        return function (dispatch, ownProps) {
+	          return _extends({
+	            dispatch: dispatch
+	          }, mapDispatchToProps(dispatch, ownProps), _redux.bindActionCreators(actionCreators, dispatch));
+	        };
+	      }
+	      return function (dispatch) {
+	        return _extends({
+	          dispatch: dispatch
+	        }, mapDispatchToProps(dispatch), _redux.bindActionCreators(actionCreators, dispatch));
+	      };
+	    }
+	    return function (dispatch) {
+	      return _extends({
+	        dispatch: dispatch
+	      }, _redux.bindActionCreators(mapDispatchToProps, dispatch), _redux.bindActionCreators(actionCreators, dispatch));
+	    };
+	  }
+	  return function (dispatch) {
+	    return _extends({
+	      dispatch: dispatch
+	    }, _redux.bindActionCreators(actionCreators, dispatch));
+	  };
+	};
+
+	exports['default'] = wrapMapDispatchToProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 310 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var wrapMapStateToProps = function wrapMapStateToProps(mapStateToProps, getForm) {
+	  if (mapStateToProps) {
+	    if (typeof mapStateToProps !== 'function') {
+	      throw new Error('mapStateToProps must be a function');
+	    }
+	    if (mapStateToProps.length > 1) {
+	      return function (state, ownProps) {
+	        return _extends({}, mapStateToProps(state, ownProps), {
+	          form: getForm(state)
+	        });
+	      };
+	    }
+	    return function (state) {
+	      return _extends({}, mapStateToProps(state), {
+	        form: getForm(state)
+	      });
+	    };
+	  }
+	  return function (state) {
+	    return {
+	      form: getForm(state)
+	    };
+	  };
+	};
+
+	exports['default'] = wrapMapStateToProps;
+	module.exports = exports['default'];
+
+/***/ },
+/* 311 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	exports.__esModule = true;
+	var createPropTypes = function createPropTypes(_ref) {
+	  var _ref$PropTypes = _ref.PropTypes;
+	  var any = _ref$PropTypes.any;
+	  var bool = _ref$PropTypes.bool;
+	  var string = _ref$PropTypes.string;
+	  var func = _ref$PropTypes.func;
+	  var object = _ref$PropTypes.object;
+	  return {
+	    // State:
+	    active: string, // currently active field
+	    asyncValidating: bool.isRequired, // true if async validation is running
+	    dirty: bool.isRequired, // true if any values are different from initialValues
+	    error: any, // form-wide error from '_error' key in validation result
+	    errors: object, // a map of errors corresponding to structure of form data (result of validation)
+	    fields: object.isRequired, // the map of fields
+	    formKey: any, // the form key if one was provided (used when doing multirecord forms)
+	    invalid: bool.isRequired, // true if there are any validation errors
+	    pristine: bool.isRequired, // true if the values are the same as initialValues
+	    submitting: bool.isRequired, // true if the form is in the process of being submitted
+	    submitFailed: bool.isRequired, // true if the form was submitted and failed for any reason
+	    valid: bool.isRequired, // true if there are no validation errors
+	    values: object.isRequired, // the values of the form as they will be submitted
+
+	    // Actions:
+	    asyncValidate: func.isRequired, // function to trigger async validation
+	    destroyForm: func.isRequired, // action to destroy the form's data in Redux
+	    handleSubmit: func.isRequired, // function to submit the form
+	    initializeForm: func.isRequired, // action to initialize form data
+	    resetForm: func.isRequired, // action to reset the form data to previously initialized values
+	    touch: func.isRequired, // action to mark fields as touched
+	    touchAll: func.isRequired, // action to mark ALL fields as touched
+	    untouch: func.isRequired, // action to mark fields as untouched
+	    untouchAll: func.isRequired // action to mark ALL fields as untouched
+	  };
+	};
+
+	exports["default"] = createPropTypes;
+	module.exports = exports["default"];
+
+/***/ },
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27619,11 +30592,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Nav = __webpack_require__(268);
+	var _Nav = __webpack_require__(313);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
-	var _Footer = __webpack_require__(297);
+	var _Footer = __webpack_require__(342);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
 
@@ -27667,7 +30640,7 @@
 	exports.default = Main;
 
 /***/ },
-/* 268 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27686,11 +30659,11 @@
 
 	var _reactRouter = __webpack_require__(200);
 
-	var _NavLink = __webpack_require__(269);
+	var _NavLink = __webpack_require__(314);
 
 	var _NavLink2 = _interopRequireDefault(_NavLink);
 
-	var _Searchbar = __webpack_require__(270);
+	var _Searchbar = __webpack_require__(315);
 
 	var _Searchbar2 = _interopRequireDefault(_Searchbar);
 
@@ -27783,7 +30756,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null, null, { pure: false })(Nav);
 
 /***/ },
-/* 269 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27844,7 +30817,7 @@
 	exports.default = NavLink;
 
 /***/ },
-/* 270 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27861,7 +30834,7 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _Actions = __webpack_require__(271);
+	var _Actions = __webpack_require__(316);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27944,7 +30917,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(Searchbar);
 
 /***/ },
-/* 271 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27962,8 +30935,11 @@
 	exports.changeDisplayType = changeDisplayType;
 	exports.setErrorMessage = setErrorMessage;
 	exports.removeErroMessage = removeErroMessage;
+	exports.signinUser = signinUser;
+	exports.signupUser = signupUser;
+	exports.signoutUser = signoutUser;
 
-	var _axios = __webpack_require__(272);
+	var _axios = __webpack_require__(317);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -27975,7 +30951,7 @@
 
 	function validateParams(term, offset, sort) {
 		if (typeof term != 'string' || !term) return false;
-		if (offset === '' || isNaN(offset) || +offset < 0 || +offset >= 1000) return false;
+		if (offset === '' || isNaN(offset) || +offset < 0 || +offset >= 988) return false;
 		if (sort === '' || isNaN(sort) || +sort !== 0 && +sort != 2) return false;
 		return true;
 	}
@@ -28080,22 +31056,105 @@
 		};
 	}
 
+	function signinUser(_ref) {
+		var login = _ref.login,
+		    password = _ref.password;
+
+
+		return function (dispatch) {
+			_axios2.default.post('/signin', { login: login, password: password }).then(function (response) {
+				//-update state to indicate user is authenticated
+				var _response$data = response.data,
+				    username = _response$data.username,
+				    userid = _response$data.userid,
+				    token = _response$data.token;
+
+				dispatch({
+					type: 'AUTH_USER',
+					payload: {
+						username: username,
+						userid: userid
+					}
+				});
+				//-save jwt token
+				localStorage.setItem('token', token);
+				localStorage.setItem('username', username);
+				localStorage.setItem('userid', userid);
+
+				_reactRouter.browserHistory.push('/');
+
+				dispatch(removeErroMessage());
+			}).catch(function () {
+				//- show error message
+				dispatch(setErrorMessage('Bad Login Info'));
+			});
+		};
+	}
+
+	function signupUser(_ref2) {
+		var username = _ref2.username,
+		    email = _ref2.email,
+		    password = _ref2.password;
+
+		//by using redux-thunk we have direct access to dispatch method
+		//also action creator now returns a function, no an object
+		//this function will immediately be called by redux thunk with dispatch method
+
+		return function (dispatch) {
+			_axios2.default.post('/signup', { username: username, email: email, password: password }).then(function (response) {
+				var _response$data2 = response.data,
+				    username = _response$data2.username,
+				    userid = _response$data2.userid,
+				    token = _response$data2.token;
+				//-update state to indicate user is authenticated
+
+				dispatch({
+					type: 'AUTH_USER',
+					payload: {
+						username: username,
+						userid: userid
+					}
+				});
+				//-save jwt token
+				localStorage.setItem('token', token);
+				localStorage.setItem('username', username);
+				localStorage.setItem('userid', userid);
+
+				_reactRouter.browserHistory.push('/');
+
+				dispatch(removeErroMessage());
+			}).catch(function (e) {
+				//- show error message
+				dispatch(setErrorMessage('This email or username are already in use'));
+			});
+		};
+	}
+
+	function signoutUser() {
+		localStorage.removeItem('token');
+		localStorage.removeItem('username');
+		localStorage.removeItem('userid');
+		return {
+			type: 'UNAUTH_USER'
+		};
+	}
+
 /***/ },
-/* 272 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(273);
+	module.exports = __webpack_require__(318);
 
 /***/ },
-/* 273 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
-	var bind = __webpack_require__(275);
-	var Axios = __webpack_require__(276);
-	var defaults = __webpack_require__(277);
+	var utils = __webpack_require__(319);
+	var bind = __webpack_require__(320);
+	var Axios = __webpack_require__(321);
+	var defaults = __webpack_require__(322);
 
 	/**
 	 * Create an instance of Axios
@@ -28128,15 +31187,15 @@
 	};
 
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(294);
-	axios.CancelToken = __webpack_require__(295);
-	axios.isCancel = __webpack_require__(291);
+	axios.Cancel = __webpack_require__(339);
+	axios.CancelToken = __webpack_require__(340);
+	axios.isCancel = __webpack_require__(336);
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(296);
+	axios.spread = __webpack_require__(341);
 
 	module.exports = axios;
 
@@ -28145,12 +31204,12 @@
 
 
 /***/ },
-/* 274 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(275);
+	var bind = __webpack_require__(320);
 
 	/*global toString:true*/
 
@@ -28450,7 +31509,7 @@
 
 
 /***/ },
-/* 275 */
+/* 320 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28467,17 +31526,17 @@
 
 
 /***/ },
-/* 276 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(277);
-	var utils = __webpack_require__(274);
-	var InterceptorManager = __webpack_require__(288);
-	var dispatchRequest = __webpack_require__(289);
-	var isAbsoluteURL = __webpack_require__(292);
-	var combineURLs = __webpack_require__(293);
+	var defaults = __webpack_require__(322);
+	var utils = __webpack_require__(319);
+	var InterceptorManager = __webpack_require__(333);
+	var dispatchRequest = __webpack_require__(334);
+	var isAbsoluteURL = __webpack_require__(337);
+	var combineURLs = __webpack_require__(338);
 
 	/**
 	 * Create a new instance of Axios
@@ -28558,13 +31617,13 @@
 
 
 /***/ },
-/* 277 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(274);
-	var normalizeHeaderName = __webpack_require__(278);
+	var utils = __webpack_require__(319);
+	var normalizeHeaderName = __webpack_require__(323);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -28581,10 +31640,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(279);
+	    adapter = __webpack_require__(324);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(279);
+	    adapter = __webpack_require__(324);
 	  }
 	  return adapter;
 	}
@@ -28658,12 +31717,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 278 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
+	var utils = __webpack_require__(319);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -28676,18 +31735,18 @@
 
 
 /***/ },
-/* 279 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(274);
-	var settle = __webpack_require__(280);
-	var buildURL = __webpack_require__(283);
-	var parseHeaders = __webpack_require__(284);
-	var isURLSameOrigin = __webpack_require__(285);
-	var createError = __webpack_require__(281);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(286);
+	var utils = __webpack_require__(319);
+	var settle = __webpack_require__(325);
+	var buildURL = __webpack_require__(328);
+	var parseHeaders = __webpack_require__(329);
+	var isURLSameOrigin = __webpack_require__(330);
+	var createError = __webpack_require__(326);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(331);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -28783,7 +31842,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(287);
+	      var cookies = __webpack_require__(332);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -28860,12 +31919,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 280 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(281);
+	var createError = __webpack_require__(326);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -28891,12 +31950,12 @@
 
 
 /***/ },
-/* 281 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(282);
+	var enhanceError = __webpack_require__(327);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -28914,7 +31973,7 @@
 
 
 /***/ },
-/* 282 */
+/* 327 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28939,12 +31998,12 @@
 
 
 /***/ },
-/* 283 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
+	var utils = __webpack_require__(319);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -29013,12 +32072,12 @@
 
 
 /***/ },
-/* 284 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
+	var utils = __webpack_require__(319);
 
 	/**
 	 * Parse headers into an object
@@ -29056,12 +32115,12 @@
 
 
 /***/ },
-/* 285 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
+	var utils = __webpack_require__(319);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -29130,7 +32189,7 @@
 
 
 /***/ },
-/* 286 */
+/* 331 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29172,12 +32231,12 @@
 
 
 /***/ },
-/* 287 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
+	var utils = __webpack_require__(319);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -29231,12 +32290,12 @@
 
 
 /***/ },
-/* 288 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
+	var utils = __webpack_require__(319);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -29289,15 +32348,15 @@
 
 
 /***/ },
-/* 289 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
-	var transformData = __webpack_require__(290);
-	var isCancel = __webpack_require__(291);
-	var defaults = __webpack_require__(277);
+	var utils = __webpack_require__(319);
+	var transformData = __webpack_require__(335);
+	var isCancel = __webpack_require__(336);
+	var defaults = __webpack_require__(322);
 
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -29374,12 +32433,12 @@
 
 
 /***/ },
-/* 290 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(274);
+	var utils = __webpack_require__(319);
 
 	/**
 	 * Transform the data for a request or a response
@@ -29400,7 +32459,7 @@
 
 
 /***/ },
-/* 291 */
+/* 336 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29411,7 +32470,7 @@
 
 
 /***/ },
-/* 292 */
+/* 337 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29431,7 +32490,7 @@
 
 
 /***/ },
-/* 293 */
+/* 338 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29449,7 +32508,7 @@
 
 
 /***/ },
-/* 294 */
+/* 339 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29474,12 +32533,12 @@
 
 
 /***/ },
-/* 295 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cancel = __webpack_require__(294);
+	var Cancel = __webpack_require__(339);
 
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -29537,7 +32596,7 @@
 
 
 /***/ },
-/* 296 */
+/* 341 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29570,7 +32629,7 @@
 
 
 /***/ },
-/* 297 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29630,7 +32689,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 298 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29706,7 +32765,7 @@
 	exports.default = NotFound404;
 
 /***/ },
-/* 299 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29721,7 +32780,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Searchbar = __webpack_require__(270);
+	var _Searchbar = __webpack_require__(315);
 
 	var _Searchbar2 = _interopRequireDefault(_Searchbar);
 
@@ -29769,7 +32828,7 @@
 	exports.default = IndexPage;
 
 /***/ },
-/* 300 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29788,17 +32847,17 @@
 
 	var _reactRouter = __webpack_require__(200);
 
-	var _Actions = __webpack_require__(271);
+	var _Actions = __webpack_require__(316);
 
-	var _SpotsList = __webpack_require__(301);
+	var _SpotsList = __webpack_require__(346);
 
 	var _SpotsList2 = _interopRequireDefault(_SpotsList);
 
-	var _MapContainer = __webpack_require__(306);
+	var _MapContainer = __webpack_require__(351);
 
 	var _MapContainer2 = _interopRequireDefault(_MapContainer);
 
-	var _Alert = __webpack_require__(353);
+	var _Alert = __webpack_require__(398);
 
 	var _Alert2 = _interopRequireDefault(_Alert);
 
@@ -29871,7 +32930,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, setTerm: _Actions.setTerm, setOffset: _Actions.setOffset, setErrorMessage: _Actions.setErrorMessage })(SearchPage);
 
 /***/ },
-/* 301 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29888,19 +32947,19 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _SpotsListItem = __webpack_require__(302);
+	var _SpotsListItem = __webpack_require__(347);
 
 	var _SpotsListItem2 = _interopRequireDefault(_SpotsListItem);
 
-	var _Loader = __webpack_require__(303);
+	var _Loader = __webpack_require__(348);
 
 	var _Loader2 = _interopRequireDefault(_Loader);
 
-	var _DisplaySelector = __webpack_require__(304);
+	var _DisplaySelector = __webpack_require__(349);
 
 	var _DisplaySelector2 = _interopRequireDefault(_DisplaySelector);
 
-	var _Pagination = __webpack_require__(305);
+	var _Pagination = __webpack_require__(350);
 
 	var _Pagination2 = _interopRequireDefault(_Pagination);
 
@@ -29978,7 +33037,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(SpotsList);
 
 /***/ },
-/* 302 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29995,7 +33054,7 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _Actions = __webpack_require__(271);
+	var _Actions = __webpack_require__(316);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30035,9 +33094,12 @@
 				    spot = _props2.spot,
 				    displayType = _props2.displayType;
 
+				var name = spot.name.substring(0, 25);
+				name = name.length == 25 ? name + '...' : name;
+
 				if (displayType == 'GRID') return _react2.default.createElement(
 					'div',
-					{ className: 'col-sm-6 col-md-4 spots-list-item' },
+					{ className: 'col-xs-6 col-md-4 spots-list-item' },
 					_react2.default.createElement(
 						'div',
 						{ className: 'thumbnail' },
@@ -30052,7 +33114,7 @@
 							_react2.default.createElement(
 								'h3',
 								null,
-								spot.name
+								name
 							),
 							_react2.default.createElement(
 								'div',
@@ -30197,7 +33259,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot, setMapCenter: _Actions.setMapCenter })(SpotsListItem);
 
 /***/ },
-/* 303 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30253,7 +33315,7 @@
 	exports.default = Loader;
 
 /***/ },
-/* 304 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30270,7 +33332,7 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _Actions = __webpack_require__(271);
+	var _Actions = __webpack_require__(316);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30397,7 +33459,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, changeDisplayType: _Actions.changeDisplayType })(DisplaySelector);
 
 /***/ },
-/* 305 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30416,7 +33478,7 @@
 
 	var _reactRouter = __webpack_require__(200);
 
-	var _Actions = __webpack_require__(271);
+	var _Actions = __webpack_require__(316);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30451,7 +33513,7 @@
 				var spotsCount = this.props.spotsCount;
 
 
-				if (newOffset >= 0 && newOffset < 1000 && newOffset < spotsCount) {
+				if (newOffset >= 0 && newOffset < 988 && newOffset < spotsCount) {
 					var _props = this.props,
 					    term = _props.term,
 					    sort = _props.sort,
@@ -30472,9 +33534,9 @@
 				    offset = _props2.offset;
 
 
-				var pageNumber = Math.floor(offset / 10) + 1;
-				var total = Math.ceil(spotsCount / 10);
-				total = total <= 100 ? total : 100;
+				var pageNumber = Math.floor(offset / 12) + 1;
+				var total = Math.ceil(spotsCount / 12);
+				total = total <= 83 ? total : 83;
 				var n = total;
 				if (total > 5) {
 					if (pageNumber + 2 <= total) {
@@ -30484,7 +33546,7 @@
 
 				var baseUrl = '/search?term=' + term + '&sort=' + sort + '&offset=';
 				var renderPageLinks = this.range(n).map(function (n) {
-					var newOffset = (n - 1) * 10;
+					var newOffset = (n - 1) * 12;
 					return _react2.default.createElement(
 						'li',
 						{ key: n, onClick: _this2.handleClick.bind(_this2, newOffset), className: pageNumber === n ? 'active' : '' },
@@ -30521,10 +33583,10 @@
 								{ className: 'pagination pagination-custom' },
 								_react2.default.createElement(
 									'li',
-									{ onClick: this.handleClick.bind(this, offset - 10), className: prev > 0 ? '' : 'disabled' },
+									{ onClick: this.handleClick.bind(this, offset - 12), className: prev > 0 ? '' : 'disabled' },
 									_react2.default.createElement(
 										_reactRouter.Link,
-										{ to: baseUrl + (offset - 10), 'aria-label': 'Previous' },
+										{ to: baseUrl + (offset - 12), 'aria-label': 'Previous' },
 										_react2.default.createElement(
 											'span',
 											{ 'aria-hidden': 'true' },
@@ -30535,10 +33597,10 @@
 								renderPageLinks,
 								_react2.default.createElement(
 									'li',
-									{ onClick: this.handleClick.bind(this, offset + 10), className: next > total ? 'disabled' : '' },
+									{ onClick: this.handleClick.bind(this, offset + 12), className: next > total ? 'disabled' : '' },
 									_react2.default.createElement(
 										_reactRouter.Link,
-										{ to: baseUrl + (offset + 10), 'aria-label': 'Next' },
+										{ to: baseUrl + (offset + 12), 'aria-label': 'Next' },
 										_react2.default.createElement(
 											'span',
 											{ 'aria-hidden': 'true' },
@@ -30569,7 +33631,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(Pagination);
 
 /***/ },
-/* 306 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30586,15 +33648,15 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _function = __webpack_require__(307);
+	var _function = __webpack_require__(352);
 
 	var _function2 = _interopRequireDefault(_function);
 
-	var _googleMapReact = __webpack_require__(309);
+	var _googleMapReact = __webpack_require__(354);
 
 	var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
 
-	var _SpotOnMap = __webpack_require__(333);
+	var _SpotOnMap = __webpack_require__(378);
 
 	var _SpotOnMap2 = _interopRequireDefault(_SpotOnMap);
 
@@ -30707,7 +33769,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(MapContainer);
 
 /***/ },
-/* 307 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30717,7 +33779,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _shallowEqual = __webpack_require__(308);
+	var _shallowEqual = __webpack_require__(353);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -30728,7 +33790,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 308 */
+/* 353 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30766,7 +33828,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 309 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30776,7 +33838,7 @@
 	});
 	exports.default = undefined;
 
-	var _google_map = __webpack_require__(310);
+	var _google_map = __webpack_require__(355);
 
 	var _google_map2 = _interopRequireDefault(_google_map);
 
@@ -30785,7 +33847,7 @@
 	exports.default = _google_map2.default;
 
 /***/ },
-/* 310 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -30806,67 +33868,67 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _shallowEqual = __webpack_require__(311);
+	var _shallowEqual = __webpack_require__(356);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _marker_dispatcher = __webpack_require__(312);
+	var _marker_dispatcher = __webpack_require__(357);
 
 	var _marker_dispatcher2 = _interopRequireDefault(_marker_dispatcher);
 
-	var _google_map_map = __webpack_require__(314);
+	var _google_map_map = __webpack_require__(359);
 
 	var _google_map_map2 = _interopRequireDefault(_google_map_map);
 
-	var _google_map_markers = __webpack_require__(315);
+	var _google_map_markers = __webpack_require__(360);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
-	var _google_map_markers_prerender = __webpack_require__(317);
+	var _google_map_markers_prerender = __webpack_require__(362);
 
 	var _google_map_markers_prerender2 = _interopRequireDefault(_google_map_markers_prerender);
 
-	var _google_map_loader = __webpack_require__(318);
+	var _google_map_loader = __webpack_require__(363);
 
 	var _google_map_loader2 = _interopRequireDefault(_google_map_loader);
 
-	var _detect = __webpack_require__(320);
+	var _detect = __webpack_require__(365);
 
 	var _detect2 = _interopRequireDefault(_detect);
 
-	var _geo = __webpack_require__(321);
+	var _geo = __webpack_require__(366);
 
 	var _geo2 = _interopRequireDefault(_geo);
 
-	var _array_helper = __webpack_require__(326);
+	var _array_helper = __webpack_require__(371);
 
 	var _array_helper2 = _interopRequireDefault(_array_helper);
 
-	var _is_plain_object = __webpack_require__(327);
+	var _is_plain_object = __webpack_require__(372);
 
 	var _is_plain_object2 = _interopRequireDefault(_is_plain_object);
 
-	var _pick = __webpack_require__(328);
+	var _pick = __webpack_require__(373);
 
 	var _pick2 = _interopRequireDefault(_pick);
 
-	var _raf = __webpack_require__(329);
+	var _raf = __webpack_require__(374);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
-	var _log = __webpack_require__(330);
+	var _log = __webpack_require__(375);
 
 	var _log2 = _interopRequireDefault(_log);
 
-	var _isNumber = __webpack_require__(331);
+	var _isNumber = __webpack_require__(376);
 
 	var _isNumber2 = _interopRequireDefault(_isNumber);
 
-	var _omit = __webpack_require__(316);
+	var _omit = __webpack_require__(361);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
-	var _detectElementResize = __webpack_require__(332);
+	var _detectElementResize = __webpack_require__(377);
 
 	var _detectElementResize2 = _interopRequireDefault(_detectElementResize);
 
@@ -31845,7 +34907,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 311 */
+/* 356 */
 /***/ function(module, exports) {
 
 	/**
@@ -31917,7 +34979,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 312 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31928,7 +34990,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _eventemitter = __webpack_require__(313);
+	var _eventemitter = __webpack_require__(358);
 
 	var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
@@ -31981,7 +35043,7 @@
 	exports.default = MarkerDispatcher;
 
 /***/ },
-/* 313 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32276,7 +35338,7 @@
 
 
 /***/ },
-/* 314 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32336,7 +35398,7 @@
 	exports.default = GoogleMapMap;
 
 /***/ },
-/* 315 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32353,11 +35415,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _shallowEqual = __webpack_require__(311);
+	var _shallowEqual = __webpack_require__(356);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _omit = __webpack_require__(316);
+	var _omit = __webpack_require__(361);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
@@ -32671,7 +35733,7 @@
 	exports.default = GoogleMapMarkers;
 
 /***/ },
-/* 316 */
+/* 361 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32698,7 +35760,7 @@
 	exports.default = omit;
 
 /***/ },
-/* 317 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32721,7 +35783,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _google_map_markers = __webpack_require__(315);
+	var _google_map_markers = __webpack_require__(360);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
@@ -32739,7 +35801,7 @@
 	};
 
 /***/ },
-/* 318 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -32760,7 +35822,7 @@
 	// TODO add libraries language and other map options
 	function googleMapLoader(bootstrapURLKeys) {
 	  if (!$script_) {
-	    $script_ = __webpack_require__(319); // eslint-disable-line
+	    $script_ = __webpack_require__(364); // eslint-disable-line
 	  }
 
 	  // call from outside google-map-react
@@ -32817,7 +35879,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 319 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -32946,7 +36008,7 @@
 
 
 /***/ },
-/* 320 */
+/* 365 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32995,7 +36057,7 @@
 	}
 
 /***/ },
-/* 321 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33008,15 +36070,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(322);
+	var _lat_lng = __webpack_require__(367);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(324);
+	var _pointGeometry = __webpack_require__(369);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _transform = __webpack_require__(325);
+	var _transform = __webpack_require__(370);
 
 	var _transform2 = _interopRequireDefault(_transform);
 
@@ -33154,7 +36216,7 @@
 	exports.default = Geo;
 
 /***/ },
-/* 322 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33165,7 +36227,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _wrap2 = __webpack_require__(323);
+	var _wrap2 = __webpack_require__(368);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -33209,7 +36271,7 @@
 	exports.default = LatLng;
 
 /***/ },
-/* 323 */
+/* 368 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33224,7 +36286,7 @@
 	}
 
 /***/ },
-/* 324 */
+/* 369 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33361,7 +36423,7 @@
 
 
 /***/ },
-/* 325 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33372,15 +36434,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(322);
+	var _lat_lng = __webpack_require__(367);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(324);
+	var _pointGeometry = __webpack_require__(369);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _wrap = __webpack_require__(323);
+	var _wrap = __webpack_require__(368);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33541,7 +36603,7 @@
 	exports.default = Transform;
 
 /***/ },
-/* 326 */
+/* 371 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33563,7 +36625,7 @@
 	}
 
 /***/ },
-/* 327 */
+/* 372 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33601,7 +36663,7 @@
 	}
 
 /***/ },
-/* 328 */
+/* 373 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33622,7 +36684,7 @@
 	}
 
 /***/ },
-/* 329 */
+/* 374 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33642,7 +36704,7 @@
 	}
 
 /***/ },
-/* 330 */
+/* 375 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -33658,7 +36720,7 @@
 	exports.default = log2;
 
 /***/ },
-/* 331 */
+/* 376 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33683,7 +36745,7 @@
 	}
 
 /***/ },
-/* 332 */
+/* 377 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33861,7 +36923,7 @@
 	};
 
 /***/ },
-/* 333 */
+/* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33872,17 +36934,17 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _addons = __webpack_require__(334);
+	var _addons = __webpack_require__(379);
 
 	var _addons2 = _interopRequireDefault(_addons);
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _function = __webpack_require__(307);
+	var _function = __webpack_require__(352);
 
 	var _function2 = _interopRequireDefault(_function);
 
-	var _Actions = __webpack_require__(271);
+	var _Actions = __webpack_require__(316);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33953,7 +37015,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot })(SpotOnMap);
 
 /***/ },
-/* 334 */
+/* 379 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33968,11 +37030,11 @@
 	  'Access using require' + "('react-addons-{addon}') instead."
 	);
 
-	module.exports = __webpack_require__(335);
+	module.exports = __webpack_require__(380);
 
 
 /***/ },
-/* 335 */
+/* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -33995,17 +37057,17 @@
 
 	'use strict';
 
-	var LinkedStateMixin = __webpack_require__(336);
+	var LinkedStateMixin = __webpack_require__(381);
 	var React = __webpack_require__(3);
-	var ReactComponentWithPureRenderMixin = __webpack_require__(339);
-	var ReactCSSTransitionGroup = __webpack_require__(341);
-	var ReactFragment = __webpack_require__(347);
-	var ReactTransitionGroup = __webpack_require__(342);
+	var ReactComponentWithPureRenderMixin = __webpack_require__(384);
+	var ReactCSSTransitionGroup = __webpack_require__(386);
+	var ReactFragment = __webpack_require__(392);
+	var ReactTransitionGroup = __webpack_require__(387);
 	var ReactUpdates = __webpack_require__(55);
 
-	var cloneWithProps = __webpack_require__(348);
-	var shallowCompare = __webpack_require__(340);
-	var update = __webpack_require__(351);
+	var cloneWithProps = __webpack_require__(393);
+	var shallowCompare = __webpack_require__(385);
+	var update = __webpack_require__(396);
 	var warning = __webpack_require__(26);
 
 	var warnedAboutBatchedUpdates = false;
@@ -34031,14 +37093,14 @@
 
 	if (process.env.NODE_ENV !== 'production') {
 	  React.addons.Perf = __webpack_require__(143);
-	  React.addons.TestUtils = __webpack_require__(352);
+	  React.addons.TestUtils = __webpack_require__(397);
 	}
 
 	module.exports = React;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 336 */
+/* 381 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34055,8 +37117,8 @@
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(337);
-	var ReactStateSetters = __webpack_require__(338);
+	var ReactLink = __webpack_require__(382);
+	var ReactStateSetters = __webpack_require__(383);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -34079,7 +37141,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 337 */
+/* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34153,7 +37215,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 338 */
+/* 383 */
 /***/ function(module, exports) {
 
 	/**
@@ -34262,7 +37324,7 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
-/* 339 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34278,7 +37340,7 @@
 
 	'use strict';
 
-	var shallowCompare = __webpack_require__(340);
+	var shallowCompare = __webpack_require__(385);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -34313,7 +37375,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ },
-/* 340 */
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34342,7 +37404,7 @@
 	module.exports = shallowCompare;
 
 /***/ },
-/* 341 */
+/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34363,8 +37425,8 @@
 
 	var assign = __webpack_require__(40);
 
-	var ReactTransitionGroup = __webpack_require__(342);
-	var ReactCSSTransitionGroupChild = __webpack_require__(344);
+	var ReactTransitionGroup = __webpack_require__(387);
+	var ReactCSSTransitionGroupChild = __webpack_require__(389);
 
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -34430,7 +37492,7 @@
 	module.exports = ReactCSSTransitionGroup;
 
 /***/ },
-/* 342 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34447,7 +37509,7 @@
 	'use strict';
 
 	var React = __webpack_require__(3);
-	var ReactTransitionChildMapping = __webpack_require__(343);
+	var ReactTransitionChildMapping = __webpack_require__(388);
 
 	var assign = __webpack_require__(40);
 	var emptyFunction = __webpack_require__(16);
@@ -34640,7 +37702,7 @@
 	module.exports = ReactTransitionGroup;
 
 /***/ },
-/* 343 */
+/* 388 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34743,7 +37805,7 @@
 	module.exports = ReactTransitionChildMapping;
 
 /***/ },
-/* 344 */
+/* 389 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -34763,8 +37825,8 @@
 	var React = __webpack_require__(3);
 	var ReactDOM = __webpack_require__(4);
 
-	var CSSCore = __webpack_require__(345);
-	var ReactTransitionEvents = __webpack_require__(346);
+	var CSSCore = __webpack_require__(390);
+	var ReactTransitionEvents = __webpack_require__(391);
 
 	var onlyChild = __webpack_require__(157);
 
@@ -34913,7 +37975,7 @@
 	module.exports = ReactCSSTransitionGroupChild;
 
 /***/ },
-/* 345 */
+/* 390 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -35016,7 +38078,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 346 */
+/* 391 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35130,7 +38192,7 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 347 */
+/* 392 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -35200,7 +38262,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 348 */
+/* 393 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -35218,7 +38280,7 @@
 	'use strict';
 
 	var ReactElement = __webpack_require__(43);
-	var ReactPropTransferer = __webpack_require__(349);
+	var ReactPropTransferer = __webpack_require__(394);
 
 	var keyOf = __webpack_require__(80);
 	var warning = __webpack_require__(26);
@@ -35260,7 +38322,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 349 */
+/* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35278,7 +38340,7 @@
 
 	var assign = __webpack_require__(40);
 	var emptyFunction = __webpack_require__(16);
-	var joinClasses = __webpack_require__(350);
+	var joinClasses = __webpack_require__(395);
 
 	/**
 	 * Creates a transfer strategy that will merge prop values using the supplied
@@ -35373,7 +38435,7 @@
 	module.exports = ReactPropTransferer;
 
 /***/ },
-/* 350 */
+/* 395 */
 /***/ function(module, exports) {
 
 	/**
@@ -35417,7 +38479,7 @@
 	module.exports = joinClasses;
 
 /***/ },
-/* 351 */
+/* 396 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -35530,7 +38592,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 352 */
+/* 397 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -36013,7 +39075,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 353 */
+/* 398 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36081,16 +39143,472 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Alert);
 
 /***/ },
-/* 354 */
+/* 399 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(200);
+
+	var _reduxForm = __webpack_require__(269);
+
+	var _Actions = __webpack_require__(316);
+
+	var _Alert = __webpack_require__(398);
+
+	var _Alert2 = _interopRequireDefault(_Alert);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Signin = function (_Component) {
+	  _inherits(Signin, _Component);
+
+	  function Signin() {
+	    _classCallCheck(this, Signin);
+
+	    return _possibleConstructorReturn(this, (Signin.__proto__ || Object.getPrototypeOf(Signin)).apply(this, arguments));
+	  }
+
+	  _createClass(Signin, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.removeErroMessage();
+	    }
+	  }, {
+	    key: 'handleFormSubmit',
+	    value: function handleFormSubmit(_ref) {
+	      var login = _ref.login,
+	          password = _ref.password;
+
+	      this.props.signinUser({ login: login, password: password });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          handleSubmit = _props.handleSubmit,
+	          _props$fields = _props.fields,
+	          login = _props$fields.login,
+	          password = _props$fields.password;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'text-center' },
+	          'Sign In'
+	        ),
+	        _react2.default.createElement('div', { className: 'col-md-3' }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-6' },
+	          _react2.default.createElement(_Alert2.default, null),
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'login' },
+	                'Email or Username:'
+	              ),
+	              _react2.default.createElement('input', _extends({
+	                id: 'login',
+	                className: 'form-control', placeholder: 'Email or Username'
+	              }, login)),
+	              login.error && login.touched && _react2.default.createElement(
+	                'div',
+	                { className: 'text-danger' },
+	                login.error
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'password' },
+	                'Password:'
+	              ),
+	              _react2.default.createElement('input', _extends({
+	                id: 'password',
+	                className: 'form-control', type: 'password'
+	              }, password)),
+	              password.error && password.touched && _react2.default.createElement(
+	                'div',
+	                { className: 'text-danger' },
+	                password.error
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', className: 'btn btn-success' },
+	              'Submit'
+	            ),
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/', className: 'btn btn-default' },
+	              'Cancel'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement('div', { className: 'col-md-3' })
+	      );
+	    }
+	  }]);
+
+	  return Signin;
+	}(_react.Component);
+
+	function validate(fromProps) {
+	  var errors = {};
+
+	  if (!fromProps.login) {
+	    errors.login = 'Please enter a username or an email';
+	  }
+
+	  if (!fromProps.password) {
+	    errors.password = 'Please enter a password';
+	  }
+
+	  return errors;
+	}
+
+	exports.default = (0, _reduxForm.reduxForm)({
+	  form: 'signin',
+	  fields: ['login', 'password'],
+	  validate: validate
+	}, null, { removeErroMessage: _Actions.removeErroMessage, signinUser: _Actions.signinUser })(Signin);
+
+/***/ },
+/* 400 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(200);
+
+	var _reduxForm = __webpack_require__(269);
+
+	var _Actions = __webpack_require__(316);
+
+	var actions = _interopRequireWildcard(_Actions);
+
+	var _Alert = __webpack_require__(398);
+
+	var _Alert2 = _interopRequireDefault(_Alert);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Signup = function (_Component) {
+	  _inherits(Signup, _Component);
+
+	  function Signup() {
+	    _classCallCheck(this, Signup);
+
+	    return _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).apply(this, arguments));
+	  }
+
+	  _createClass(Signup, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.removeErroMessage();
+	    }
+	  }, {
+	    key: 'handleFormSubmit',
+	    value: function handleFormSubmit(_ref) {
+	      var username = _ref.username,
+	          email = _ref.email,
+	          password = _ref.password;
+
+	      this.props.signupUser({ username: username, email: email, password: password });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props,
+	          handleSubmit = _props.handleSubmit,
+	          _props$fields = _props.fields,
+	          username = _props$fields.username,
+	          email = _props$fields.email,
+	          password = _props$fields.password,
+	          passwordConfirm = _props$fields.passwordConfirm;
+
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'text-center' },
+	          'Create a New Account'
+	        ),
+	        _react2.default.createElement('div', { className: 'col-md-3' }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-6' },
+	          _react2.default.createElement(_Alert2.default, null),
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'username' },
+	                'Username:'
+	              ),
+	              _react2.default.createElement('input', _extends({
+	                id: 'username',
+	                className: 'form-control', placeholder: 'Username'
+	              }, username)),
+	              username.error && username.touched && _react2.default.createElement(
+	                'div',
+	                { className: 'text-danger' },
+	                username.error
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'email' },
+	                'Email:'
+	              ),
+	              _react2.default.createElement('input', _extends({
+	                id: 'email',
+	                className: 'form-control', placeholder: 'Email'
+	              }, email)),
+	              email.error && email.touched && _react2.default.createElement(
+	                'div',
+	                { className: 'text-danger' },
+	                email.error
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'password' },
+	                'Password:'
+	              ),
+	              _react2.default.createElement('input', _extends({
+	                id: 'password',
+	                className: 'form-control', type: 'password'
+	              }, password)),
+	              password.error && password.touched && _react2.default.createElement(
+	                'div',
+	                { className: 'text-danger' },
+	                password.error
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'passwordConfirm' },
+	                'Confirm Password:'
+	              ),
+	              _react2.default.createElement('input', _extends({
+	                id: 'passwordConfirm',
+	                className: 'form-control', type: 'password'
+	              }, passwordConfirm)),
+	              passwordConfirm.error && passwordConfirm.touched && _react2.default.createElement(
+	                'div',
+	                { className: 'text-danger' },
+	                passwordConfirm.error
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'submit', className: 'btn btn-success' },
+	              'Save'
+	            ),
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/', className: 'btn btn-default' },
+	              'Cancel'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement('div', { className: 'col-md-3' })
+	      );
+	    }
+	  }]);
+
+	  return Signup;
+	}(_react.Component);
+
+	//simple email validator
+
+
+	function validateEmail(email) {
+	  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	  return re.test(email);
+	}
+
+	function validate(fromProps) {
+	  var errors = {};
+
+	  if (!fromProps.username) {
+	    errors.username = 'Please enter an username';
+	  }
+
+	  if (!fromProps.email) {
+	    errors.email = 'Please enter an email';
+	  }
+
+	  if (!validateEmail(fromProps.email)) {
+	    errors.email = "It doesn't look like a valid email";
+	  }
+
+	  if (!fromProps.password) {
+	    errors.password = 'Please enter a password';
+	  }
+
+	  if (!fromProps.passwordConfirm) {
+	    errors.passwordConfirm = 'Please enter a password confirmation';
+	  }
+
+	  if (fromProps.password !== fromProps.passwordConfirm) {
+	    errors.password = 'Passwords must match!';
+	  }
+
+	  return errors;
+	}
+
+	exports.default = (0, _reduxForm.reduxForm)({
+	  form: 'signup',
+	  fields: ['username', 'email', 'password', 'passwordConfirm'],
+	  validate: validate
+	}, null, actions)(Signup);
+
+/***/ },
+/* 401 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(160);
+
+	var _Actions = __webpack_require__(316);
+
+	var actions = _interopRequireWildcard(_Actions);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Signout = function (_Component) {
+	  _inherits(Signout, _Component);
+
+	  function Signout() {
+	    _classCallCheck(this, Signout);
+
+	    return _possibleConstructorReturn(this, (Signout.__proto__ || Object.getPrototypeOf(Signout)).apply(this, arguments));
+	  }
+
+	  _createClass(Signout, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.signoutUser();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-12' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'text-center' },
+	            'Sorry you are leaving! We will miss you lots & lots!'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Signout;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)(null, actions)(Signout);
+
+/***/ },
+/* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(355);
+	var content = __webpack_require__(403);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(357)(content, {});
+	var update = __webpack_require__(405)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -36107,21 +39625,21 @@
 	}
 
 /***/ },
-/* 355 */
+/* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(356)();
+	exports = module.exports = __webpack_require__(404)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 0px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin: 12px 10px; }\n\n.index-page {\n  background-size: cover !important;\n  background: url(\"/images/landing-bg.jpg\") no-repeat fixed;\n  background-position: center center;\n  min-height: 660px;\n  position: relative; }\n\n.landing-layer {\n  background-color: rgba(199, 54, 199, 0.2);\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\n.landing-layer:hover {\n  background-color: rgba(199, 54, 199, 0.1); }\n\n.index-page .searchbar {\n  padding: 30px;\n  background: rgba(0, 0, 0, 0.6);\n  margin-top: 40%;\n  border-radius: 3px; }\n\n.index-page .searchbar input, .index-page .searchbar button {\n  height: 50px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px 10px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding: 20px;\n  margin: 0; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item .thumbnail {\n  height: 450px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 300px;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.05); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 0px -15px;\n  border-top: 1px solid #ccc;\n  min-height: 60px; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n\n.content {\n  height: 100%; }\n\n.no-padding {\n  padding: 0; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 0px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin: 12px 10px; }\n\n.index-page {\n  background-size: cover !important;\n  background: url(\"/images/landing-bg.jpg\") no-repeat fixed;\n  background-position: center center;\n  min-height: 660px;\n  position: relative; }\n\n.landing-layer {\n  background-color: rgba(199, 54, 199, 0.2);\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\n.landing-layer:hover {\n  background-color: rgba(199, 54, 199, 0.1); }\n\n.index-page .searchbar {\n  padding: 30px;\n  background: rgba(0, 0, 0, 0.6);\n  margin-top: 40%;\n  border-radius: 3px; }\n\n.index-page .searchbar input, .index-page .searchbar button {\n  height: 50px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px 10px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding: 20px;\n  margin: 0; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item .thumbnail {\n  height: 450px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 100%;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.05); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 0px -15px;\n  border-top: 1px solid #ccc;\n  min-height: 60px; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n\n.content {\n  height: 100%; }\n\n.no-padding {\n  padding: 0; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 356 */
+/* 404 */
 /***/ function(module, exports) {
 
 	/*
@@ -36177,7 +39695,7 @@
 
 
 /***/ },
-/* 357 */
+/* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -36427,30 +39945,6 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
-
-/***/ },
-/* 358 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'LIST';
-		var action = arguments[1];
-
-		switch (action.type) {
-
-			case 'CHANGE_DISPLAY_TYPE':
-				return state == 'LIST' ? 'GRID' : 'LIST';
-
-			default:
-				return state;
-		}
-	};
 
 /***/ }
 /******/ ]);

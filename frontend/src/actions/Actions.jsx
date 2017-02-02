@@ -6,7 +6,7 @@ const ROOT_URL = '/api/spots/';
 function validateParams(term,offset,sort){
 	if(typeof term != 'string' || !term)
 		return false;	
-	if(offset===''||isNaN(offset)||+offset<0||+offset>=1000)
+	if(offset===''||isNaN(offset)||+offset<0||+offset>=988)
 		return false;		
 	if(sort===''||isNaN(sort)||(+sort!==0&&+sort!=2))
 		return false;
@@ -116,3 +116,78 @@ export function removeErroMessage(){
 		type: 'REMOVE_ERROR'
 	}
 }
+
+
+export function signinUser({login, password}){	
+	
+	return function(dispatch){		
+		axios.post('/signin', {login, password})
+			.then((response)=>{				
+				//-update state to indicate user is authenticated
+				var {username, userid, token} = response.data;
+				dispatch({
+					type: 'AUTH_USER', 
+					payload: {
+						username,
+						userid
+					}
+				});
+				//-save jwt token
+				localStorage.setItem('token', token);
+				localStorage.setItem('username', username);
+				localStorage.setItem('userid', userid);
+
+				browserHistory.push('/');
+
+				dispatch(removeErroMessage());				
+			})
+			.catch(()=>{
+				//- show error message
+				dispatch(setErrorMessage('Bad Login Info'));				
+			});
+	}	
+}
+
+export function signupUser({username, email, password}){
+	//by using redux-thunk we have direct access to dispatch method
+	//also action creator now returns a function, no an object
+	//this function will immediately be called by redux thunk with dispatch method
+	
+	return function(dispatch){		
+		axios.post('/signup', {username, email, password})
+			.then((response)=>{			
+				var {username, userid, token} = response.data;	
+				//-update state to indicate user is authenticated
+				dispatch({
+					type: 'AUTH_USER', 
+					payload: {
+						username,
+						userid
+					}
+				});
+				//-save jwt token
+				localStorage.setItem('token', token);
+				localStorage.setItem('username', username);
+				localStorage.setItem('userid', userid);
+				
+				browserHistory.push('/');
+
+				dispatch(removeErroMessage());	
+			})
+			.catch((e)=>{
+				//- show error message
+				dispatch(setErrorMessage('This email or username are already in use'));				
+			});
+	}	
+}
+
+export function signoutUser(){
+	localStorage.removeItem('token');
+	localStorage.removeItem('username');
+	localStorage.removeItem('userid');
+	return {
+		type: 'UNAUTH_USER'
+	}
+}
+
+

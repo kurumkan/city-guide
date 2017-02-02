@@ -15,6 +15,11 @@ import NotFound404 from 'NotFound404';
 import IndexPage from 'IndexPage';
 import SearchPage from 'SearchPage';
 
+//auth components
+import Signin from 'Signin';
+import Signup from 'Signup';
+import Signout from 'Signout';
+
 var createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 var store = createStoreWithMiddleware(RootReducer);
 
@@ -26,6 +31,11 @@ ReactDOM.render(
 				<Route path='search' component={SearchPage}>
 					<Route path='?term=:term&page=:page&sort=:sort' component={SearchPage} />					
 				</Route>				
+				
+				<Route path='signup' component={Signup}/>
+				<Route path='signin' component={Signin}/>
+				<Route path='signout' component={Signout}/>
+
 			 	<Route path='404' component={NotFound404} />
 				<Route path='*' component={NotFound404} />
 			</Route>
