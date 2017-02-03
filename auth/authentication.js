@@ -1,6 +1,6 @@
 var jwt = require('jwt-simple');
 
-var config = require('./config');
+var config = require('../config');
 var User = require('../models/user');
 var {validateEmail} = require("../util_helpers");
 

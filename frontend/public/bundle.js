@@ -99,10 +99,6 @@
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
-	var _Signout = __webpack_require__(401);
-
-	var _Signout2 = _interopRequireDefault(_Signout);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	// App css
@@ -113,6 +109,14 @@
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
 	var store = createStoreWithMiddleware(_RootReducer2.default);
+
+	var token = localStorage.getItem('token');
+
+	if (token) {
+		var username = localStorage.getItem('username');
+		var userid = localStorage.getItem('userid');
+		store.dispatch({ type: 'AUTH_USER', payload: { username: username, userid: userid } });
+	}
 
 	_reactDom2.default.render(_react2.default.createElement(
 		_reactRedux.Provider,
@@ -131,7 +135,6 @@
 				),
 				_react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _Signup2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _Signin2.default }),
-				_react2.default.createElement(_reactRouter.Route, { path: 'signout', component: _Signout2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '404', component: _NotFound2.default }),
 				_react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
 			)
@@ -30626,8 +30629,12 @@
 					_react2.default.createElement(_Nav2.default, null),
 					_react2.default.createElement(
 						'div',
-						{ className: 'content' },
-						this.props.children
+						{ className: 'row' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'container-fluid content' },
+							this.props.children
+						)
 					),
 					_react2.default.createElement(_Footer2.default, null)
 				);
@@ -30667,6 +30674,8 @@
 
 	var _Searchbar2 = _interopRequireDefault(_Searchbar);
 
+	var _Actions = __webpack_require__(316);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30685,9 +30694,18 @@
 		}
 
 		_createClass(Nav, [{
+			key: 'handleClick',
+			value: function handleClick(e) {
+				this.props.signoutUser();
+			}
+		}, {
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(
+				var _props = this.props,
+				    authenticated = _props.authenticated,
+				    username = _props.username;
+
+				if (!authenticated) return _react2.default.createElement(
 					'nav',
 					{ className: 'navbar navbar-custom' },
 					_react2.default.createElement(
@@ -30742,6 +30760,82 @@
 							)
 						)
 					)
+				);else return _react2.default.createElement(
+					'nav',
+					{ className: 'navbar navbar-custom' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'container-fluid' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'navbar-header' },
+							_react2.default.createElement(
+								'button',
+								{ type: 'button', className: 'navbar-toggle', 'data-toggle': 'collapse', 'data-target': '#mynavbar' },
+								_react2.default.createElement('span', { className: 'icon-bar' }),
+								_react2.default.createElement('span', { className: 'icon-bar' }),
+								_react2.default.createElement('span', { className: 'icon-bar' })
+							),
+							_react2.default.createElement(
+								_reactRouter.IndexLink,
+								{ className: 'navbar-brand', to: '/' },
+								_react2.default.createElement('img', { alt: 'Brand', src: 'images/logo.png' })
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'collapse navbar-collapse', id: 'mynavbar' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'nav navbar-nav' },
+								_react2.default.createElement(
+									_NavLink2.default,
+									{ to: '/' },
+									'Home'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'navbar-left' },
+								_react2.default.createElement(_Searchbar2.default, null)
+							),
+							_react2.default.createElement(
+								'ul',
+								{ className: 'nav navbar-nav navbar-right' },
+								_react2.default.createElement(
+									'li',
+									{ className: 'dropdown' },
+									_react2.default.createElement(
+										'a',
+										{ href: '#', className: 'dropdown-toggle',
+											'data-toggle': 'dropdown', role: 'button',
+											'aria-haspopup': 'true', 'aria-expanded': 'false'
+										},
+										username,
+										' ',
+										_react2.default.createElement('span', { className: 'caret' })
+									),
+									_react2.default.createElement(
+										'ul',
+										{ className: 'dropdown-menu' },
+										_react2.default.createElement(
+											'li',
+											{ className: 'dropdown-btn-wrapper' },
+											_react2.default.createElement(
+												'button',
+												{
+													onClick: this.handleClick.bind(this),
+													className: 'btn btn-custom-danger btn-block'
+												},
+												_react2.default.createElement('span', { className: 'glyphicon glyphicon-off', 'aria-hidden': 'true' }),
+												'Sign Out'
+											)
+										)
+									)
+								)
+							)
+						)
+					)
 				);
 			}
 		}]);
@@ -30750,10 +30844,14 @@
 	}(_react.Component);
 
 	function mapStateToProps(state) {
-		return {};
+		var _state$auth = state.auth,
+		    username = _state$auth.username,
+		    authenticated = _state$auth.authenticated;
+
+		return { username: username, authenticated: authenticated };
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null, null, { pure: false })(Nav);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { signoutUser: _Actions.signoutUser }, null, { pure: false })(Nav);
 
 /***/ },
 /* 314 */
@@ -31134,6 +31232,7 @@
 		localStorage.removeItem('token');
 		localStorage.removeItem('username');
 		localStorage.removeItem('userid');
+		_reactRouter.browserHistory.push('/');
 		return {
 			type: 'UNAUTH_USER'
 		};
@@ -39211,69 +39310,94 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'row' },
+	        { className: 'row auth-wrapper' },
 	        _react2.default.createElement(
 	          'h1',
 	          { className: 'text-center' },
 	          'Sign In'
 	        ),
-	        _react2.default.createElement('div', { className: 'col-md-3' }),
+	        _react2.default.createElement('div', { className: 'col-sm-3 col-xs-2' }),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'col-md-6' },
-	          _react2.default.createElement(_Alert2.default, null),
+	          { className: 'col-sm-6 col-xs-8' },
 	          _react2.default.createElement(
-	            'form',
-	            { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	            'div',
+	            { className: 'row auth' },
+	            _react2.default.createElement(_Alert2.default, null),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'form-group' },
+	              { className: 'col-md-6 auth-form-wrapper' },
 	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'login' },
-	                'Email or Username:'
-	              ),
-	              _react2.default.createElement('input', _extends({
-	                id: 'login',
-	                className: 'form-control', placeholder: 'Email or Username'
-	              }, login)),
-	              login.error && login.touched && _react2.default.createElement(
-	                'div',
-	                { className: 'text-danger' },
-	                login.error
+	                'form',
+	                { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'form-group' },
+	                  _react2.default.createElement('input', _extends({
+	                    id: 'login',
+	                    className: 'form-control', placeholder: 'Email or Username'
+	                  }, login)),
+	                  login.error && login.touched && _react2.default.createElement(
+	                    'div',
+	                    { className: 'text-danger' },
+	                    login.error
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'form-group' },
+	                  _react2.default.createElement('input', _extends({
+	                    id: 'password',
+	                    className: 'form-control', type: 'password',
+	                    placeholder: 'Password'
+	                  }, password)),
+	                  password.error && password.touched && _react2.default.createElement(
+	                    'div',
+	                    { className: 'text-danger' },
+	                    password.error
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { type: 'submit', className: 'btn btn-custom-danger btn-block' },
+	                  'Submit'
+	                )
 	              )
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'form-group' },
+	              { className: 'col-md-6 social-wrapper' },
 	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'password' },
-	                'Password:'
-	              ),
-	              _react2.default.createElement('input', _extends({
-	                id: 'password',
-	                className: 'form-control', type: 'password'
-	              }, password)),
-	              password.error && password.touched && _react2.default.createElement(
 	                'div',
-	                { className: 'text-danger' },
-	                password.error
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'button',
-	              { type: 'submit', className: 'btn btn-success' },
-	              'Submit'
-	            ),
+	                null,
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn btn-default btn-block' },
+	                  _react2.default.createElement('i', { className: 'fa fa-facebook facebook social-icon', 'aria-hidden': 'true' }),
+	                  'Sign in with Facebook'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-default btn-block' },
+	                _react2.default.createElement('i', { className: 'fa fa-twitter twitter social-icon', 'aria-hidden': 'true' }),
+	                'Sign in with Twitter'
+	              ),
+	              _react2.default.createElement('div', null)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'Need an account? ',
 	            _react2.default.createElement(
 	              _reactRouter.Link,
-	              { to: '/', className: 'btn btn-default' },
-	              'Cancel'
+	              { to: 'signup' },
+	              'Sign Up \xBB'
 	            )
 	          )
 	        ),
-	        _react2.default.createElement('div', { className: 'col-md-3' })
+	        _react2.default.createElement('div', { className: 'col-sm-3 col-xs-2' })
 	      );
 	    }
 	  }]);
@@ -39378,105 +39502,119 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'row' },
+	        { className: 'row auth-wrapper' },
 	        _react2.default.createElement(
 	          'h1',
 	          { className: 'text-center' },
-	          'Create a New Account'
+	          'Sign Up'
 	        ),
-	        _react2.default.createElement('div', { className: 'col-md-3' }),
+	        _react2.default.createElement('div', { className: 'col-sm-3 col-xs-2' }),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'col-md-6' },
-	          _react2.default.createElement(_Alert2.default, null),
+	          { className: 'col-sm-6 col-xs-8' },
 	          _react2.default.createElement(
-	            'form',
-	            { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	            'div',
+	            { className: 'row auth' },
+	            _react2.default.createElement(_Alert2.default, null),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'form-group' },
+	              { className: 'col-md-6 auth-form-wrapper' },
 	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'username' },
-	                'Username:'
-	              ),
-	              _react2.default.createElement('input', _extends({
-	                id: 'username',
-	                className: 'form-control', placeholder: 'Username'
-	              }, username)),
-	              username.error && username.touched && _react2.default.createElement(
-	                'div',
-	                { className: 'text-danger' },
-	                username.error
+	                'form',
+	                { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'form-group' },
+	                  _react2.default.createElement('input', _extends({
+	                    id: 'username',
+	                    className: 'form-control', placeholder: 'Username'
+	                  }, username)),
+	                  username.error && username.touched && _react2.default.createElement(
+	                    'div',
+	                    { className: 'text-danger' },
+	                    username.error
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'form-group' },
+	                  _react2.default.createElement('input', _extends({
+	                    id: 'email',
+	                    className: 'form-control', placeholder: 'Email'
+	                  }, email)),
+	                  email.error && email.touched && _react2.default.createElement(
+	                    'div',
+	                    { className: 'text-danger' },
+	                    email.error
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'form-group' },
+	                  _react2.default.createElement('input', _extends({
+	                    id: 'password',
+	                    className: 'form-control', type: 'password', placeholder: 'Password'
+	                  }, password)),
+	                  password.error && password.touched && _react2.default.createElement(
+	                    'div',
+	                    { className: 'text-danger' },
+	                    password.error
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'form-group' },
+	                  _react2.default.createElement('input', _extends({
+	                    id: 'passwordConfirm',
+	                    className: 'form-control', type: 'password', placeholder: 'Password Confirm'
+	                  }, passwordConfirm)),
+	                  passwordConfirm.error && passwordConfirm.touched && _react2.default.createElement(
+	                    'div',
+	                    { className: 'text-danger' },
+	                    passwordConfirm.error
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { type: 'submit', className: 'btn btn-custom-danger btn-block' },
+	                  'Sign up'
+	                )
 	              )
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'form-group' },
+	              { className: 'col-md-6 social-wrapper' },
 	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'email' },
-	                'Email:'
-	              ),
-	              _react2.default.createElement('input', _extends({
-	                id: 'email',
-	                className: 'form-control', placeholder: 'Email'
-	              }, email)),
-	              email.error && email.touched && _react2.default.createElement(
 	                'div',
-	                { className: 'text-danger' },
-	                email.error
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'form-group' },
+	                null,
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn btn-default btn-block' },
+	                  _react2.default.createElement('i', { className: 'fa fa-facebook facebook social-icon', 'aria-hidden': 'true' }),
+	                  'Sign up with Facebook'
+	                )
+	              ),
 	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'password' },
-	                'Password:'
+	                'button',
+	                { className: 'btn btn-default btn-block' },
+	                _react2.default.createElement('i', { className: 'fa fa-twitter twitter social-icon', 'aria-hidden': 'true' }),
+	                'Sign up with Twitter'
 	              ),
-	              _react2.default.createElement('input', _extends({
-	                id: 'password',
-	                className: 'form-control', type: 'password'
-	              }, password)),
-	              password.error && password.touched && _react2.default.createElement(
-	                'div',
-	                { className: 'text-danger' },
-	                password.error
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'form-group' },
-	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'passwordConfirm' },
-	                'Confirm Password:'
-	              ),
-	              _react2.default.createElement('input', _extends({
-	                id: 'passwordConfirm',
-	                className: 'form-control', type: 'password'
-	              }, passwordConfirm)),
-	              passwordConfirm.error && passwordConfirm.touched && _react2.default.createElement(
-	                'div',
-	                { className: 'text-danger' },
-	                passwordConfirm.error
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'button',
-	              { type: 'submit', className: 'btn btn-success' },
-	              'Save'
-	            ),
+	              _react2.default.createElement('div', null)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'Already have an account? ',
 	            _react2.default.createElement(
 	              _reactRouter.Link,
-	              { to: '/', className: 'btn btn-default' },
-	              'Cancel'
+	              { to: 'signin' },
+	              'Log in \xBB'
 	            )
 	          )
 	        ),
-	        _react2.default.createElement('div', { className: 'col-md-3' })
+	        _react2.default.createElement('div', { className: 'col-sm-3 col-xs-2' })
 	      );
 	    }
 	  }]);
@@ -39529,76 +39667,7 @@
 	}, null, actions)(Signup);
 
 /***/ },
-/* 401 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(160);
-
-	var _Actions = __webpack_require__(316);
-
-	var actions = _interopRequireWildcard(_Actions);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Signout = function (_Component) {
-	  _inherits(Signout, _Component);
-
-	  function Signout() {
-	    _classCallCheck(this, Signout);
-
-	    return _possibleConstructorReturn(this, (Signout.__proto__ || Object.getPrototypeOf(Signout)).apply(this, arguments));
-	  }
-
-	  _createClass(Signout, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.props.signoutUser();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-md-12' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'text-center' },
-	            'Sorry you are leaving! We will miss you lots & lots!'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Signout;
-	}(_react.Component);
-
-	exports.default = (0, _reactRedux.connect)(null, actions)(Signout);
-
-/***/ },
+/* 401 */,
 /* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -39633,7 +39702,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 0px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle,\n.btn-custom-danger {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin: 12px 10px; }\n\n.index-page {\n  background-size: cover !important;\n  background: url(\"/images/landing-bg.jpg\") no-repeat fixed;\n  background-position: center center;\n  min-height: 660px;\n  position: relative; }\n\n.landing-layer {\n  background-color: rgba(199, 54, 199, 0.2);\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\n.landing-layer:hover {\n  background-color: rgba(199, 54, 199, 0.1); }\n\n.index-page .searchbar {\n  padding: 30px;\n  background: rgba(0, 0, 0, 0.6);\n  margin-top: 40%;\n  border-radius: 3px; }\n\n.index-page .searchbar input, .index-page .searchbar button {\n  height: 50px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px 10px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding: 20px;\n  margin: 0; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item .thumbnail {\n  height: 450px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 100%;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.05); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 0px -15px;\n  border-top: 1px solid #ccc;\n  min-height: 60px; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  background-color: #f7f7f7; }\n\n.content {\n  height: 100%; }\n\n.no-padding {\n  padding: 0; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 0px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.dropdown-btn-wrapper {\n  padding: 5px; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin: 12px 10px; }\n\n.index-page {\n  background-size: cover !important;\n  background: url(\"/images/landing-bg.jpg\") no-repeat fixed;\n  background-position: center center;\n  min-height: 660px;\n  position: relative; }\n\n.landing-layer {\n  background-color: rgba(199, 54, 199, 0.2);\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\n.landing-layer:hover {\n  background-color: rgba(199, 54, 199, 0.1); }\n\n.index-page .searchbar {\n  padding: 30px;\n  background: rgba(0, 0, 0, 0.6);\n  margin-top: 40%;\n  border-radius: 3px; }\n\n.index-page .searchbar input, .index-page .searchbar button {\n  height: 50px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px 10px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding: 20px;\n  margin: 0; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item .thumbnail {\n  height: 450px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 100%;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.05); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 0px -15px;\n  border-top: 1px solid #ccc;\n  min-height: 60px; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\n.auth-wrapper {\n  margin-top: 30px;\n  margin-bottom: 60px; }\n\n.auth {\n  margin-top: 30px;\n  margin-bottom: 20px;\n  color: #666;\n  border: 1px solid #ccc;\n  background: #fff; }\n\n.auth-form-wrapper, .social-wrapper {\n  padding: 30px; }\n\n@media (min-width: 992px) {\n  .auth-form-wrapper {\n    border-right: 1px solid #ccc; } }\n\n@media (max-width: 991px) {\n  .auth-form-wrapper {\n    border-bottom: 1px solid #ccc; } }\n\n.social-wrapper div {\n  margin-bottom: 15px; }\n\n.social-icon {\n  display: inline-block;\n  margin-right: 5px;\n  padding: 5px;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: white; }\n\n.facebook {\n  background: #415aa7; }\n\n.twitter {\n  background: #4897e0; }\n\n.social-wrapper {\n  text-align: left; }\n\n.content {\n  height: 100%;\n  background-color: #f7f7f7; }\n\nbody {\n  font-family: 'Arimo', sans-serif; }\n\n.no-padding {\n  padding: 0; }\n\n.btn-custom-danger {\n  color: #fff !important;\n  background-color: #ff5a5f; }\n\n.btn-custom-danger:hover {\n  background-color: #FF8689 !important; }\n\nh1, h2, h3 {\n  font-weight: normal; }\n", ""]);
 
 	// exports
 

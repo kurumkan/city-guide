@@ -3,7 +3,7 @@ var n = require('nonce')();
 var request = require('request');  
 var qs = require('querystring');  
 var _ = require('lodash');
-var configs = require('./yelp.config.js');
+var configs = require('./config.js');
 
 
 module.exports = {	

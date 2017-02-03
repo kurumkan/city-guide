@@ -20,10 +20,12 @@
 .nav .open > a, 
 .nav .open > a:focus, 
 .nav .open > a:hover,
-.navbar-toggle,
-.btn-custom-danger {    
+.navbar-toggle{    
     color:#ff5a5f;
     background-color: #fff;
+}
+.dropdown-btn-wrapper{
+    padding: 5px;
 }
 
 .icon-bar{

@@ -10,16 +10,26 @@
 @import "components/spot_on_map";
 @import "components/display_selector";
 @import "components/pagination";
+@import "components/signin-signup";
+@import "components/main";
 
 body{
 	font-family: 'Arimo', sans-serif;
-	background-color: #f7f7f7;	
-}
-
-.content{
-	height:100%;
 }
 
 .no-padding{
 	padding: 0;
+}
+
+.btn-custom-danger {
+    color:#fff!important;
+    background-color:#ff5a5f;    
+}
+
+.btn-custom-danger:hover {    
+    background-color: #FF8689!important;
+}
+
+h1, h2, h3{
+	font-weight: normal;
 }

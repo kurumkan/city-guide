@@ -7,8 +7,10 @@ export default class Main extends Component{
 		return (
 			<div className='container-fluid main'>
 				<Nav/>	
-				<div className='content'>
-					{this.props.children}	
+				<div className='row'>
+					<div className='container-fluid content'>
+						{this.props.children}	
+					</div>	
 				</div>	
 				<Footer/>
 			</div>	

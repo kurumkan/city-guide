@@ -18,10 +18,17 @@ import SearchPage from 'SearchPage';
 //auth components
 import Signin from 'Signin';
 import Signup from 'Signup';
-import Signout from 'Signout';
 
 var createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 var store = createStoreWithMiddleware(RootReducer);
+
+var token = localStorage.getItem('token');
+
+if(token){	
+	var username = localStorage.getItem('username');
+	var userid = localStorage.getItem('userid');
+	store.dispatch({type:'AUTH_USER', payload: {username, userid}});
+}
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -33,8 +40,7 @@ ReactDOM.render(
 				</Route>				
 				
 				<Route path='signup' component={Signup}/>
-				<Route path='signin' component={Signin}/>
-				<Route path='signout' component={Signout}/>
+				<Route path='signin' component={Signin}/>				
 
 			 	<Route path='404' component={NotFound404} />
 				<Route path='*' component={NotFound404} />

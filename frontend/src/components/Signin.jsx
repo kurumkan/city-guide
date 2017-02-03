@@ -19,35 +19,54 @@ class Signin extends Component {
   render() {
     var {handleSubmit, fields:{login, password}} = this.props;    
     return (
-      <div className="row">
+      <div className="row auth-wrapper">
         <h1 className="text-center">Sign In</h1>
-        <div className="col-md-3"></div>
-        <div className="col-md-6">    
-          <Alert />
-          <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
-            <div className="form-group">
-              <label htmlFor="login">Email or Username:</label>             
-              <input 
-                id="login"
-                className="form-control" placeholder="Email or Username" 
-                {...login}
-              />
-              {(login.error&&login.touched)&&<div className='text-danger'>{login.error}</div>}  
-            </div>                        
-            <div className="form-group">
-              <label htmlFor="password">Password:</label>             
-              <input 
-                id="password"
-                className="form-control" type="password" 
-                {...password}
-              />
-              {(password.error&&password.touched)&&<div className='text-danger'>{password.error}</div>}
-            </div>                       
-            <button type="submit" className="btn btn-success">Submit</button>           
-            <Link to="/" className="btn btn-default">Cancel</Link>      
-          </form>
+        <div className="col-sm-3 col-xs-2"></div>
+        <div className='col-sm-6 col-xs-8'>
+          <div className='row auth'>  
+            <Alert />
+            <div className="col-md-6 auth-form-wrapper">    
+              <form onSubmit={ handleSubmit(this.handleFormSubmit.bind(this)) }>
+                <div className="form-group">              
+                  <input 
+                    id="login"
+                    className="form-control" placeholder="Email or Username" 
+                    {...login}
+                  />
+                  {(login.error&&login.touched)&&<div className='text-danger'>{login.error}</div>}  
+                </div>                        
+                <div className="form-group">              
+                  <input 
+                    id="password"
+                    className="form-control" type="password" 
+                    placeholder='Password'
+                    {...password}
+                  />
+                  {(password.error&&password.touched)&&<div className='text-danger'>{password.error}</div>}
+                </div>                       
+                <button type="submit" className="btn btn-custom-danger btn-block">Submit</button>                           
+              </form>
+            </div>
+            <div className="col-md-6 social-wrapper">
+              <div>
+                <button className='btn btn-default btn-block'>
+                  <i className="fa fa-facebook facebook social-icon" aria-hidden="true"></i>
+                  Sign in with Facebook
+                </button>
+              </div>
+                <button className='btn btn-default btn-block'>
+                  <i className="fa fa-twitter twitter social-icon" aria-hidden="true"></i>
+                  Sign in with Twitter
+                </button>
+              <div>
+              </div>
+            </div>             
+           </div> 
+           <div>
+              Need an account? <Link to='signup'>Sign Up »</Link>                         
+            </div>           
         </div>
-        <div className="col-md-3"></div>
+        <div className="col-sm-3 col-xs-2"></div>
       </div>            
     );
   }

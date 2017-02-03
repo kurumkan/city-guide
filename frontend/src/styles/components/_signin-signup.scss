@@ -1,0 +1,53 @@
+.auth-wrapper{
+	margin-top: 30px;
+	margin-bottom: 60px;
+}
+.auth{
+	margin-top: 30px;	
+	margin-bottom: 20px;
+	color:#666;
+	border: 1px solid #ccc;
+	background: #fff;
+}
+
+.auth-form-wrapper, .social-wrapper{	
+	padding: 30px;	
+}
+
+@media (min-width: 992px) {
+  .auth-form-wrapper{
+    border-right: 1px solid #ccc;
+  }
+}
+
+@media (max-width: 991px) {
+  .auth-form-wrapper{
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.social-wrapper div{
+	margin-bottom: 15px;	
+}
+
+.social-icon{
+	display: inline-block;
+	margin-right: 5px;
+	padding: 5px;
+	width: 24px;
+	height: 24px;
+	font-size: 16px;
+	border-radius: 50%;		
+	color:white;
+}
+
+.facebook{	
+	background: #415aa7;
+}
+.twitter{
+	background: #4897e0;
+}
+
+.social-wrapper{
+	text-align: left;
+}

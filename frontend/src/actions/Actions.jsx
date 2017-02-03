@@ -185,6 +185,7 @@ export function signoutUser(){
 	localStorage.removeItem('token');
 	localStorage.removeItem('username');
 	localStorage.removeItem('userid');
+	browserHistory.push('/');	
 	return {
 		type: 'UNAUTH_USER'
 	}
