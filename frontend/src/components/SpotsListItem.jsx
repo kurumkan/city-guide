@@ -20,7 +20,7 @@ class SpotsListItem extends Component{
 
 		if(displayType=='GRID')
 			return (
-				<div className="col-xs-6 col-md-4 spots-list-item">
+				<div className="col-sm-6 col-md-4 spots-list-item">
 					<div className="thumbnail">
 						
 						<a href={spot.url} target='_blank' >

@@ -4,10 +4,12 @@ var config = require('../config');
 var User = require('../models/user');
 var {validateEmail} = require("../util_helpers");
 
-function getToken(user){
+var getToken = function(user){
 	var timestamp = new Date().getTime();	
 	return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
 }
+
+exports.getToken = getToken;
 
 
 exports.signup = function(request, response, next){	

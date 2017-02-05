@@ -15,7 +15,7 @@ class Signin extends Component {
   handleFormSubmit({login, password}){
     this.props.signinUser({login, password});    
   }
-
+  
   render() {
     var {handleSubmit, fields:{login, password}} = this.props;    
     return (
@@ -49,10 +49,10 @@ class Signin extends Component {
             </div>
             <div className="col-md-6 social-wrapper">
               <div>
-                <button className='btn btn-default btn-block'>
-                  <i className="fa fa-facebook facebook social-icon" aria-hidden="true"></i>
-                  Sign in with Facebook
-                </button>
+                <a href='/auth/facebook' className='btn btn-default btn-block'>
+                  <i className="fa fa-facebook facebook" aria-hidden="true"></i>
+                  Sign up with Facebook
+                </a>
               </div>
                 <button className='btn btn-default btn-block'>
                   <i className="fa fa-twitter twitter social-icon" aria-hidden="true"></i>

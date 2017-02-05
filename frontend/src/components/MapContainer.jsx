@@ -8,7 +8,7 @@ const API_KEY = 'AIzaSyBnOUUxJEsZI_9aQ3-yIF22MTbysMsEFVw';
 
 class MapContainer extends Component {
 	static defaultProps = {    
-		zoom: 12    
+		zoom: 14    
 	};  
 
 	constructor(props) {

@@ -5,7 +5,6 @@ var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 var LocalStrategy = require('passport-local');
 
-
 //setup options for local strategy
 var localOptions = {
 	usernameField: 'login'
@@ -60,12 +59,66 @@ var jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
 			done(null,false);
 		}
 	})
-})
-
+});
 
 //Tell passport to use JWT Strategy
 passport.use(jwtLogin);
-
 //Tell passport to use local strategy
-passport.use(localLogin)
+passport.use(localLogin);
 
+
+
+
+var FacebookStrategy = require('passport-facebook').Strategy;
+passport.use(new FacebookStrategy({
+        clientID: config.clientID, 
+        clientSecret: config.clientSecret, 
+        callbackURL: "http://localhost:5000/auth/facebook/callback",
+        profileFields: ['id', 'emails', 'profileUrl', 'displayName']        
+    },function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {        	
+
+        	var searchObj = null;
+        	if(profile.emails&&profile.emails.length){
+				searchObj = {'email': profile.emails[0].value};
+        	}else{
+				searchObj = {'facebook.fbid': profile.id};
+        	}
+
+            User.findOne(searchObj, function (err, user) {
+                
+                if (err) 
+                	return done(err);
+                if (user) {
+                    done(null, user);
+                } else {
+                    var user = new User();
+                    if(profile.emails)
+                    	user.email = profile.emails[0].value;                    
+                    if(profile.profileUrl)
+                    	user.facebook.profileUrl = profile.profileUrl;
+                    if(profile.id)
+                    	user.facebook.fbid = profile.id;
+
+                    user.facebook.token = accessToken;                                                            
+                    user.facebook.displayName = profile.displayName;                    
+
+                    user.save(function (err) {
+                        if (err) return done(err);
+                        done(null, user);
+                    });
+                }
+            });
+        });
+    }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+         done(err, user);
+    });
+});

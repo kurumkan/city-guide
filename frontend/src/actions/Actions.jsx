@@ -22,7 +22,8 @@ export function getSpots(term, offset, sort){
 			browserHistory.push('/');
 		}else{
 			axios.get(ROOT_URL+'?location='+term+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
-			.then((response)=>{						
+			.then((response)=>{
+				browserHistory.push('/search?term='+term+'&offset='+offset+'&sort='+sort);						
 				dispatch({
 					type: 'GET_SPOTS',
 					payload: response.data.businesses
@@ -38,8 +39,7 @@ export function getSpots(term, offset, sort){
 				dispatch(changeLoadingStatus());
 				dispatch(setSort(sort));
 				dispatch(setTerm(term));
-				dispatch(setOffset(offset));
-				browserHistory.push('/search?term='+term+'&offset='+offset+'&sort='+sort);
+				dispatch(setOffset(offset));				
 			})
 			.catch((error)=>{	
 				var {status} = error.response;
@@ -117,7 +117,6 @@ export function removeErroMessage(){
 	}
 }
 
-
 export function signinUser({login, password}){	
 	
 	return function(dispatch){		
@@ -125,21 +124,7 @@ export function signinUser({login, password}){
 			.then((response)=>{				
 				//-update state to indicate user is authenticated
 				var {username, userid, token} = response.data;
-				dispatch({
-					type: 'AUTH_USER', 
-					payload: {
-						username,
-						userid
-					}
-				});
-				//-save jwt token
-				localStorage.setItem('token', token);
-				localStorage.setItem('username', username);
-				localStorage.setItem('userid', userid);
-
-				browserHistory.push('/');
-
-				dispatch(removeErroMessage());				
+				dispatch(authUser(token, username, userid));
 			})
 			.catch(()=>{
 				//- show error message
@@ -156,28 +141,32 @@ export function signupUser({username, email, password}){
 	return function(dispatch){		
 		axios.post('/signup', {username, email, password})
 			.then((response)=>{			
-				var {username, userid, token} = response.data;	
-				//-update state to indicate user is authenticated
-				dispatch({
-					type: 'AUTH_USER', 
-					payload: {
-						username,
-						userid
-					}
-				});
-				//-save jwt token
-				localStorage.setItem('token', token);
-				localStorage.setItem('username', username);
-				localStorage.setItem('userid', userid);
-				
-				browserHistory.push('/');
-
-				dispatch(removeErroMessage());	
+				var {username, userid, token} = response.data;					
+				dispatch(authUser(token, username, userid));	
 			})
 			.catch((e)=>{
 				//- show error message
-				dispatch(setErrorMessage('This email or username are already in use'));				
+				dispatch(setErrorMessage('This email or username is already in use'));				
 			});
+	}	
+}
+
+export function authUser(token, username, userid){	
+	return function(dispatch){
+		browserHistory.push('/');	
+		dispatch(removeErroMessage());
+				
+		localStorage.setItem('token', token);
+		localStorage.setItem('username', username);
+		localStorage.setItem('userid', userid);
+		
+		dispatch({
+			type: 'AUTH_USER', 
+			payload: {
+				username,
+				userid
+			}
+		});
 	}	
 }
 

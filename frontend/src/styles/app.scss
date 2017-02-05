@@ -13,8 +13,15 @@
 @import "components/signin-signup";
 @import "components/main";
 
+
 body{
 	font-family: 'Arimo', sans-serif;
+	padding-bottom: 60px;
+	background-color: #f7f7f7;		
+}
+
+a{
+	color:#ff5a5f;    
 }
 
 .no-padding{

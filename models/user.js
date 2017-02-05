@@ -4,15 +4,14 @@ var bcrypt=require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-	username: {type: String, unique:true, lowercase: true, trim: true},
-	email: {type: String, unique:true, lowercase: true, trim: true},
+	username: {type: String, unique:true, lowercase: true, trim: true, sparse: true},
+	email: {type: String, unique:true, lowercase: true, trim: true, sparse: true},
 	password: {type: String, trim: true},	
     facebook: {
-        fbid:{type: String, trim: true},
-        token:{type: String},
-        displayName:{type: String},
-        email:{type: String},
-        profileUrl:{type: String}
+        fbid:{type: String, unique:true, trim: true, sparse: true},
+        token:{type: String, trim: true},
+        displayName:{type: String,  trim: true},        
+        profileUrl:{type: String, unique:true, trim: true, sparse: true}
     }
 });
 

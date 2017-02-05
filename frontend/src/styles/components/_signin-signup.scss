@@ -27,10 +27,14 @@
 }
 
 .social-wrapper div{
-	margin-bottom: 15px;	
+	margin-bottom: 15px;
 }
 
-.social-icon{
+.auth .form-control{
+	height: 37px;
+}
+
+.social-wrapper .fa{
 	display: inline-block;
 	margin-right: 5px;
 	padding: 5px;
@@ -38,16 +42,13 @@
 	height: 24px;
 	font-size: 16px;
 	border-radius: 50%;		
-	color:white;
+	color:white;	
 }
 
-.facebook{	
+.facebook{
 	background: #415aa7;
 }
+
 .twitter{
 	background: #4897e0;
-}
-
-.social-wrapper{
-	text-align: left;
 }

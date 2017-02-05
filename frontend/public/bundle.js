@@ -75,27 +75,27 @@
 
 	var _RootReducer2 = _interopRequireDefault(_RootReducer);
 
-	var _Main = __webpack_require__(312);
+	var _Main = __webpack_require__(313);
 
 	var _Main2 = _interopRequireDefault(_Main);
 
-	var _NotFound = __webpack_require__(343);
+	var _NotFound = __webpack_require__(344);
 
 	var _NotFound2 = _interopRequireDefault(_NotFound);
 
-	var _IndexPage = __webpack_require__(344);
+	var _IndexPage = __webpack_require__(345);
 
 	var _IndexPage2 = _interopRequireDefault(_IndexPage);
 
-	var _SearchPage = __webpack_require__(345);
+	var _SearchPage = __webpack_require__(346);
 
 	var _SearchPage2 = _interopRequireDefault(_SearchPage);
 
-	var _Signin = __webpack_require__(399);
+	var _Signin = __webpack_require__(400);
 
 	var _Signin2 = _interopRequireDefault(_Signin);
 
-	var _Signup = __webpack_require__(400);
+	var _Signup = __webpack_require__(401);
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
@@ -27672,6 +27672,7 @@
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 		var action = arguments[1];
 
+
 		switch (action.type) {
 			case 'AUTH_USER':
 				var _action$payload = action.payload,
@@ -27693,8 +27694,7 @@
 	'use strict';
 
 	exports.__esModule = true;
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	exports.untouchWithKey = exports.untouch = exports.touchWithKey = exports.touch = exports.swapArrayValues = exports.stopSubmit = exports.stopAsyncValidation = exports.startSubmit = exports.startAsyncValidation = exports.reset = exports.propTypes = exports.initializeWithKey = exports.initialize = exports.getValues = exports.removeArrayValue = exports.reduxForm = exports.reducer = exports.focus = exports.destroy = exports.changeWithKey = exports.change = exports.blur = exports.addArrayValue = exports.actionTypes = undefined;
 
 	var _react = __webpack_require__(2);
 
@@ -27706,9 +27706,14 @@
 
 	var _createAll3 = _interopRequireDefault(_createAll2);
 
-	var _createAll = _createAll3['default'](false, _react2['default'], _reactRedux.connect);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var isNative = typeof window !== 'undefined' && window.navigator && window.navigator.product && window.navigator.product === 'ReactNative';
+
+	var _createAll = (0, _createAll3.default)(isNative, _react2.default, _reactRedux.connect);
 
 	var actionTypes = _createAll.actionTypes;
+	var addArrayValue = _createAll.addArrayValue;
 	var blur = _createAll.blur;
 	var change = _createAll.change;
 	var changeWithKey = _createAll.changeWithKey;
@@ -27716,6 +27721,7 @@
 	var focus = _createAll.focus;
 	var reducer = _createAll.reducer;
 	var reduxForm = _createAll.reduxForm;
+	var removeArrayValue = _createAll.removeArrayValue;
 	var getValues = _createAll.getValues;
 	var initialize = _createAll.initialize;
 	var initializeWithKey = _createAll.initializeWithKey;
@@ -27725,11 +27731,13 @@
 	var startSubmit = _createAll.startSubmit;
 	var stopAsyncValidation = _createAll.stopAsyncValidation;
 	var stopSubmit = _createAll.stopSubmit;
+	var swapArrayValues = _createAll.swapArrayValues;
 	var touch = _createAll.touch;
 	var touchWithKey = _createAll.touchWithKey;
 	var untouch = _createAll.untouch;
 	var untouchWithKey = _createAll.untouchWithKey;
 	exports.actionTypes = actionTypes;
+	exports.addArrayValue = addArrayValue;
 	exports.blur = blur;
 	exports.change = change;
 	exports.changeWithKey = changeWithKey;
@@ -27737,6 +27745,7 @@
 	exports.focus = focus;
 	exports.reducer = reducer;
 	exports.reduxForm = reduxForm;
+	exports.removeArrayValue = removeArrayValue;
 	exports.getValues = getValues;
 	exports.initialize = initialize;
 	exports.initializeWithKey = initializeWithKey;
@@ -27746,6 +27755,7 @@
 	exports.startSubmit = startSubmit;
 	exports.stopAsyncValidation = stopAsyncValidation;
 	exports.stopSubmit = stopSubmit;
+	exports.swapArrayValues = swapArrayValues;
 	exports.touch = touch;
 	exports.touchWithKey = touchWithKey;
 	exports.untouch = untouch;
@@ -27761,17 +27771,13 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	exports['default'] = createAll;
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	exports.default = createAll;
 
 	var _reducer = __webpack_require__(271);
 
 	var _reducer2 = _interopRequireDefault(_reducer);
 
-	var _createReduxForm = __webpack_require__(281);
+	var _createReduxForm = __webpack_require__(282);
 
 	var _createReduxForm2 = _interopRequireDefault(_createReduxForm);
 
@@ -27779,11 +27785,11 @@
 
 	var _mapValues2 = _interopRequireDefault(_mapValues);
 
-	var _bindActionData = __webpack_require__(288);
+	var _bindActionData = __webpack_require__(289);
 
 	var _bindActionData2 = _interopRequireDefault(_bindActionData);
 
-	var _actions = __webpack_require__(287);
+	var _actions = __webpack_require__(288);
 
 	var actions = _interopRequireWildcard(_actions);
 
@@ -27791,7 +27797,7 @@
 
 	var actionTypes = _interopRequireWildcard(_actionTypes);
 
-	var _createPropTypes = __webpack_require__(311);
+	var _createPropTypes = __webpack_require__(312);
 
 	var _createPropTypes2 = _interopRequireDefault(_createPropTypes);
 
@@ -27799,41 +27805,45 @@
 
 	var _getValuesFromState2 = _interopRequireDefault(_getValuesFromState);
 
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	// bind form as first parameter of action creators
-	var boundActions = _extends({}, _mapValues2['default'](_extends({}, actions, {
+	var boundActions = _extends({}, (0, _mapValues2.default)(_extends({}, actions, {
 	  changeWithKey: function changeWithKey(key) {
 	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	      args[_key - 1] = arguments[_key];
 	    }
 
-	    return _bindActionData2['default'](actions.change, { key: key }).apply(undefined, args);
+	    return (0, _bindActionData2.default)(actions.change, { key: key }).apply(undefined, args);
 	  },
 	  initializeWithKey: function initializeWithKey(key) {
 	    for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
 	      args[_key2 - 1] = arguments[_key2];
 	    }
 
-	    return _bindActionData2['default'](actions.initialize, { key: key }).apply(undefined, args);
+	    return (0, _bindActionData2.default)(actions.initialize, { key: key }).apply(undefined, args);
 	  },
 	  reset: function reset(key) {
-	    return _bindActionData2['default'](actions.reset, { key: key })();
+	    return (0, _bindActionData2.default)(actions.reset, { key: key })();
 	  },
 	  touchWithKey: function touchWithKey(key) {
 	    for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
 	      args[_key3 - 1] = arguments[_key3];
 	    }
 
-	    return _bindActionData2['default'](actions.touch, { key: key }).apply(undefined, args);
+	    return (0, _bindActionData2.default)(actions.touch, { key: key }).apply(undefined, args);
 	  },
 	  untouchWithKey: function untouchWithKey(key) {
 	    for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
 	      args[_key4 - 1] = arguments[_key4];
 	    }
 
-	    return _bindActionData2['default'](actions.untouch, { key: key }).apply(undefined, args);
+	    return (0, _bindActionData2.default)(actions.untouch, { key: key }).apply(undefined, args);
 	  },
 	  destroy: function destroy(key) {
-	    return _bindActionData2['default'](actions.destroy, { key: key })();
+	    return (0, _bindActionData2.default)(actions.destroy, { key: key })();
 	  }
 	}), function (action) {
 	  return function (form) {
@@ -27841,10 +27851,11 @@
 	      args[_key5 - 1] = arguments[_key5];
 	    }
 
-	    return _bindActionData2['default'](action, { form: form }).apply(undefined, args);
+	    return (0, _bindActionData2.default)(action, { form: form }).apply(undefined, args);
 	  };
 	}));
 
+	var addArrayValue = boundActions.addArrayValue;
 	var blur = boundActions.blur;
 	var change = boundActions.change;
 	var changeWithKey = boundActions.changeWithKey;
@@ -27852,12 +27863,14 @@
 	var focus = boundActions.focus;
 	var initialize = boundActions.initialize;
 	var initializeWithKey = boundActions.initializeWithKey;
+	var removeArrayValue = boundActions.removeArrayValue;
 	var reset = boundActions.reset;
 	var startAsyncValidation = boundActions.startAsyncValidation;
 	var startSubmit = boundActions.startSubmit;
 	var stopAsyncValidation = boundActions.stopAsyncValidation;
 	var stopSubmit = boundActions.stopSubmit;
 	var submitFailed = boundActions.submitFailed;
+	var swapArrayValues = boundActions.swapArrayValues;
 	var touch = boundActions.touch;
 	var touchWithKey = boundActions.touchWithKey;
 	var untouch = boundActions.untouch;
@@ -27866,31 +27879,32 @@
 	function createAll(isReactNative, React, connect) {
 	  return {
 	    actionTypes: actionTypes,
+	    addArrayValue: addArrayValue,
 	    blur: blur,
 	    change: change,
 	    changeWithKey: changeWithKey,
 	    destroy: destroy,
 	    focus: focus,
-	    getValues: _getValuesFromState2['default'],
+	    getValues: _getValuesFromState2.default,
 	    initialize: initialize,
 	    initializeWithKey: initializeWithKey,
-	    propTypes: _createPropTypes2['default'](React),
-	    reduxForm: _createReduxForm2['default'](isReactNative, React, connect),
-	    reducer: _reducer2['default'],
+	    propTypes: (0, _createPropTypes2.default)(React),
+	    reduxForm: (0, _createReduxForm2.default)(isReactNative, React, connect),
+	    reducer: _reducer2.default,
+	    removeArrayValue: removeArrayValue,
 	    reset: reset,
 	    startAsyncValidation: startAsyncValidation,
 	    startSubmit: startSubmit,
 	    stopAsyncValidation: stopAsyncValidation,
 	    stopSubmit: stopSubmit,
 	    submitFailed: submitFailed,
+	    swapArrayValues: swapArrayValues,
 	    touch: touch,
 	    touchWithKey: touchWithKey,
 	    untouch: untouch,
 	    untouchWithKey: untouchWithKey
 	  };
 	}
-
-	module.exports = exports['default'];
 
 /***/ },
 /* 271 */
@@ -27899,14 +27913,11 @@
 	'use strict';
 
 	exports.__esModule = true;
+	exports.initialState = exports.globalErrorKey = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _initialState, _behaviors;
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 	var _actionTypes = __webpack_require__(272);
 
@@ -27940,30 +27951,37 @@
 
 	var _fieldValue = __webpack_require__(277);
 
-	var globalErrorKey = '_error';
+	var _normalizeFields = __webpack_require__(281);
 
-	exports.globalErrorKey = globalErrorKey;
-	var initialState = (_initialState = {
+	var _normalizeFields2 = _interopRequireDefault(_normalizeFields);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	var globalErrorKey = exports.globalErrorKey = '_error';
+
+	var initialState = exports.initialState = (_initialState = {
 	  _active: undefined,
 	  _asyncValidating: false
 	}, _initialState[globalErrorKey] = undefined, _initialState._initialized = false, _initialState._submitting = false, _initialState._submitFailed = false, _initialState);
 
-	exports.initialState = initialState;
 	var behaviors = (_behaviors = {}, _behaviors[_actionTypes.ADD_ARRAY_VALUE] = function (state, _ref) {
 	  var path = _ref.path;
 	  var index = _ref.index;
 	  var value = _ref.value;
+	  var fields = _ref.fields;
 
-	  var array = _read2['default'](path, state);
+	  var array = (0, _read2.default)(path, state);
 	  var stateCopy = _extends({}, state);
 	  var arrayCopy = array ? [].concat(array) : [];
-	  var newValue = value !== null && typeof value === 'object' ? _initializeState2['default'](value, Object.keys(value)) : _fieldValue.makeFieldValue({ value: value });
+	  var newValue = value !== null && typeof value === 'object' ? (0, _initializeState2.default)(value, fields || Object.keys(value)) : (0, _fieldValue.makeFieldValue)({ value: value });
 	  if (index === undefined) {
 	    arrayCopy.push(newValue);
 	  } else {
 	    arrayCopy.splice(index, 0, newValue);
 	  }
-	  return _write2['default'](path, arrayCopy, stateCopy);
+	  return (0, _write2.default)(path, arrayCopy, stateCopy);
 	}, _behaviors[_actionTypes.BLUR] = function (state, _ref2) {
 	  var field = _ref2.field;
 	  var value = _ref2.value;
@@ -27972,10 +27990,10 @@
 	  // remove _active from state
 	  var _active = state._active;
 
-	  var stateCopy = _objectWithoutProperties(state, ['_active']);
+	  var stateCopy = _objectWithoutProperties(state, ['_active']); // eslint-disable-line prefer-const
 
-	  // eslint-disable-line prefer-const
-	  return _write2['default'](field, function (previous) {
+
+	  return (0, _write2.default)(field, function (previous) {
 	    var result = _extends({}, previous);
 	    if (value !== undefined) {
 	      result.value = value;
@@ -27983,33 +28001,33 @@
 	    if (touch) {
 	      result.touched = true;
 	    }
-	    return _fieldValue.makeFieldValue(result);
+	    return (0, _fieldValue.makeFieldValue)(result);
 	  }, stateCopy);
 	}, _behaviors[_actionTypes.CHANGE] = function (state, _ref3) {
 	  var field = _ref3.field;
 	  var value = _ref3.value;
 	  var touch = _ref3.touch;
 
-	  return _write2['default'](field, function (previous) {
-	    var _extends13 = _extends({}, previous, { value: value });
+	  return (0, _write2.default)(field, function (previous) {
+	    var _previous$value = _extends({}, previous, { value: value });
 
-	    var asyncError = _extends13.asyncError;
-	    var submitError = _extends13.submitError;
+	    var asyncError = _previous$value.asyncError;
+	    var submitError = _previous$value.submitError;
 
-	    var result = _objectWithoutProperties(_extends13, ['asyncError', 'submitError']);
+	    var result = _objectWithoutProperties(_previous$value, ['asyncError', 'submitError']);
 
 	    if (touch) {
 	      result.touched = true;
 	    }
-	    return _fieldValue.makeFieldValue(result);
+	    return (0, _fieldValue.makeFieldValue)(result);
 	  }, state);
 	}, _behaviors[_actionTypes.DESTROY] = function () {
 	  return undefined;
 	}, _behaviors[_actionTypes.FOCUS] = function (state, _ref4) {
 	  var field = _ref4.field;
 
-	  var stateCopy = _write2['default'](field, function (previous) {
-	    return _fieldValue.makeFieldValue(_extends({}, previous, { visited: true }));
+	  var stateCopy = (0, _write2.default)(field, function (previous) {
+	    return (0, _fieldValue.makeFieldValue)(_extends({}, previous, { visited: true }));
 	  }, state);
 	  stateCopy._active = field;
 	  return stateCopy;
@@ -28019,7 +28037,7 @@
 	  var data = _ref5.data;
 	  var fields = _ref5.fields;
 
-	  return _extends({}, _initializeState2['default'](data, fields, state), (_extends2 = {
+	  return _extends({}, (0, _initializeState2.default)(data, fields, state), (_extends2 = {
 	    _asyncValidating: false,
 	    _active: undefined
 	  }, _extends2[globalErrorKey] = undefined, _extends2._initialized = true, _extends2._submitting = false, _extends2._submitFailed = false, _extends2));
@@ -28027,7 +28045,7 @@
 	  var path = _ref6.path;
 	  var index = _ref6.index;
 
-	  var array = _read2['default'](path, state);
+	  var array = (0, _read2.default)(path, state);
 	  var stateCopy = _extends({}, state);
 	  var arrayCopy = array ? [].concat(array) : [];
 	  if (index === undefined) {
@@ -28037,11 +28055,11 @@
 	  } else {
 	    arrayCopy.splice(index, 1);
 	  }
-	  return _write2['default'](path, arrayCopy, stateCopy);
+	  return (0, _write2.default)(path, arrayCopy, stateCopy);
 	}, _behaviors[_actionTypes.RESET] = function (state) {
 	  var _extends3;
 
-	  return _extends({}, _resetState2['default'](state), (_extends3 = {
+	  return _extends({}, (0, _resetState2.default)(state), (_extends3 = {
 	    _active: undefined,
 	    _asyncValidating: false
 	  }, _extends3[globalErrorKey] = undefined, _extends3._initialized = state._initialized, _extends3._submitting = false, _extends3._submitFailed = false, _extends3));
@@ -28060,7 +28078,7 @@
 
 	  var errors = _ref8.errors;
 
-	  return _extends({}, _setErrors2['default'](state, errors, 'asyncError'), (_extends4 = {
+	  return _extends({}, (0, _setErrors2.default)(state, errors, 'asyncError'), (_extends4 = {
 	    _asyncValidating: false
 	  }, _extends4[globalErrorKey] = errors && errors[globalErrorKey], _extends4));
 	}, _behaviors[_actionTypes.STOP_SUBMIT] = function (state, _ref9) {
@@ -28068,7 +28086,7 @@
 
 	  var errors = _ref9.errors;
 
-	  return _extends({}, _setErrors2['default'](state, errors, 'submitError'), (_extends5 = {}, _extends5[globalErrorKey] = errors && errors[globalErrorKey], _extends5._submitting = false, _extends5._submitFailed = !!(errors && Object.keys(errors).length), _extends5));
+	  return _extends({}, (0, _setErrors2.default)(state, errors, 'submitError'), (_extends5 = {}, _extends5[globalErrorKey] = errors && errors[globalErrorKey], _extends5._submitting = false, _extends5._submitFailed = !!(errors && Object.keys(errors).length), _extends5));
 	}, _behaviors[_actionTypes.SUBMIT_FAILED] = function (state) {
 	  return _extends({}, state, {
 	    _submitFailed: true
@@ -28078,7 +28096,7 @@
 	  var indexA = _ref10.indexA;
 	  var indexB = _ref10.indexB;
 
-	  var array = _read2['default'](path, state);
+	  var array = (0, _read2.default)(path, state);
 	  var arrayLength = array.length;
 	  if (indexA === indexB || isNaN(indexA) || isNaN(indexB) || indexA >= arrayLength || indexB >= arrayLength) {
 	    return state; // do nothing
@@ -28087,28 +28105,28 @@
 	  var arrayCopy = [].concat(array);
 	  arrayCopy[indexA] = array[indexB];
 	  arrayCopy[indexB] = array[indexA];
-	  return _write2['default'](path, arrayCopy, stateCopy);
+	  return (0, _write2.default)(path, arrayCopy, stateCopy);
 	}, _behaviors[_actionTypes.TOUCH] = function (state, _ref11) {
 	  var fields = _ref11.fields;
 
 	  return _extends({}, state, fields.reduce(function (accumulator, field) {
-	    return _write2['default'](field, function (value) {
-	      return _fieldValue.makeFieldValue(_extends({}, value, { touched: true }));
+	    return (0, _write2.default)(field, function (value) {
+	      return (0, _fieldValue.makeFieldValue)(_extends({}, value, { touched: true }));
 	    }, accumulator);
 	  }, state));
 	}, _behaviors[_actionTypes.UNTOUCH] = function (state, _ref12) {
 	  var fields = _ref12.fields;
 
 	  return _extends({}, state, fields.reduce(function (accumulator, field) {
-	    return _write2['default'](field, function (value) {
+	    return (0, _write2.default)(field, function (value) {
 	      if (value) {
 	        var touched = value.touched;
 
 	        var rest = _objectWithoutProperties(value, ['touched']);
 
-	        return _fieldValue.makeFieldValue(rest);
+	        return (0, _fieldValue.makeFieldValue)(rest);
 	      }
-	      return _fieldValue.makeFieldValue(value);
+	      return (0, _fieldValue.makeFieldValue)(value);
 	    }, accumulator);
 	  }, state));
 	}, _behaviors);
@@ -28122,17 +28140,16 @@
 	};
 
 	function formReducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
 	  var _extends11;
 
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	  var form = action.form;
 	  var key = action.key;
 
-	  var rest = _objectWithoutProperties(action, ['form', 'key']);
+	  var rest = _objectWithoutProperties(action, ['form', 'key']); // eslint-disable-line no-redeclare
 
-	  // eslint-disable-line no-redeclare
+
 	  if (!form) {
 	    return state;
 	  }
@@ -28173,7 +28190,7 @@
 	      var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
 	      var result = _this(state, action);
-	      return _extends({}, result, _mapValues2['default'](reducers, function (pluginReducer, key) {
+	      return _extends({}, result, (0, _mapValues2.default)(reducers, function (pluginReducer, key) {
 	        return pluginReducer(result[key] || initialState, action);
 	      }));
 	    });
@@ -28188,18 +28205,12 @@
 	      var action = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
 	      var result = _this2(state, action);
-	      return _extends({}, result, _mapValues2['default'](normalizers, function (formNormalizers, form) {
+	      return _extends({}, result, (0, _mapValues2.default)(normalizers, function (formNormalizers, form) {
 	        var runNormalize = function runNormalize(previous, currentResult) {
-	          var previousValues = _getValuesFromState2['default'](_extends({}, initialState, previous));
+	          var previousValues = (0, _getValuesFromState2.default)(_extends({}, initialState, previous));
 	          var formResult = _extends({}, initialState, currentResult);
-	          return _extends({}, formResult, _mapValues2['default'](formNormalizers, function (fieldNormalizer, field) {
-	            return _extends({}, formResult[field], {
-	              value: _fieldValue.makeFieldValue(fieldNormalizer(formResult[field] ? formResult[field].value : undefined, // value
-	              previous && previous[field] ? previous[field].value : undefined, // previous value
-	              _getValuesFromState2['default'](formResult), // all field values
-	              previousValues)) // all previous field values
-	            });
-	          }));
+	          var values = (0, _getValuesFromState2.default)(formResult);
+	          return (0, _normalizeFields2.default)(formNormalizers, formResult, previous, values, previousValues);
 	        };
 	        if (action.key) {
 	          var _extends12;
@@ -28214,7 +28225,7 @@
 	  return target;
 	}
 
-	exports['default'] = decorate(formReducer);
+	exports.default = decorate(formReducer);
 
 /***/ },
 /* 272 */
@@ -28223,54 +28234,37 @@
 	'use strict';
 
 	exports.__esModule = true;
-	var ADD_ARRAY_VALUE = 'redux-form/ADD_ARRAY_VALUE';
-	exports.ADD_ARRAY_VALUE = ADD_ARRAY_VALUE;
-	var BLUR = 'redux-form/BLUR';
-	exports.BLUR = BLUR;
-	var CHANGE = 'redux-form/CHANGE';
-	exports.CHANGE = CHANGE;
-	var DESTROY = 'redux-form/DESTROY';
-	exports.DESTROY = DESTROY;
-	var FOCUS = 'redux-form/FOCUS';
-	exports.FOCUS = FOCUS;
-	var INITIALIZE = 'redux-form/INITIALIZE';
-	exports.INITIALIZE = INITIALIZE;
-	var REMOVE_ARRAY_VALUE = 'redux-form/REMOVE_ARRAY_VALUE';
-	exports.REMOVE_ARRAY_VALUE = REMOVE_ARRAY_VALUE;
-	var RESET = 'redux-form/RESET';
-	exports.RESET = RESET;
-	var START_ASYNC_VALIDATION = 'redux-form/START_ASYNC_VALIDATION';
-	exports.START_ASYNC_VALIDATION = START_ASYNC_VALIDATION;
-	var START_SUBMIT = 'redux-form/START_SUBMIT';
-	exports.START_SUBMIT = START_SUBMIT;
-	var STOP_ASYNC_VALIDATION = 'redux-form/STOP_ASYNC_VALIDATION';
-	exports.STOP_ASYNC_VALIDATION = STOP_ASYNC_VALIDATION;
-	var STOP_SUBMIT = 'redux-form/STOP_SUBMIT';
-	exports.STOP_SUBMIT = STOP_SUBMIT;
-	var SUBMIT_FAILED = 'redux-form/SUBMIT_FAILED';
-	exports.SUBMIT_FAILED = SUBMIT_FAILED;
-	var SWAP_ARRAY_VALUES = 'redux-form/SWAP_ARRAY_VALUES';
-	exports.SWAP_ARRAY_VALUES = SWAP_ARRAY_VALUES;
-	var TOUCH = 'redux-form/TOUCH';
-	exports.TOUCH = TOUCH;
-	var UNTOUCH = 'redux-form/UNTOUCH';
-	exports.UNTOUCH = UNTOUCH;
+	var ADD_ARRAY_VALUE = exports.ADD_ARRAY_VALUE = 'redux-form/ADD_ARRAY_VALUE';
+	var BLUR = exports.BLUR = 'redux-form/BLUR';
+	var CHANGE = exports.CHANGE = 'redux-form/CHANGE';
+	var DESTROY = exports.DESTROY = 'redux-form/DESTROY';
+	var FOCUS = exports.FOCUS = 'redux-form/FOCUS';
+	var INITIALIZE = exports.INITIALIZE = 'redux-form/INITIALIZE';
+	var REMOVE_ARRAY_VALUE = exports.REMOVE_ARRAY_VALUE = 'redux-form/REMOVE_ARRAY_VALUE';
+	var RESET = exports.RESET = 'redux-form/RESET';
+	var START_ASYNC_VALIDATION = exports.START_ASYNC_VALIDATION = 'redux-form/START_ASYNC_VALIDATION';
+	var START_SUBMIT = exports.START_SUBMIT = 'redux-form/START_SUBMIT';
+	var STOP_ASYNC_VALIDATION = exports.STOP_ASYNC_VALIDATION = 'redux-form/STOP_ASYNC_VALIDATION';
+	var STOP_SUBMIT = exports.STOP_SUBMIT = 'redux-form/STOP_SUBMIT';
+	var SUBMIT_FAILED = exports.SUBMIT_FAILED = 'redux-form/SUBMIT_FAILED';
+	var SWAP_ARRAY_VALUES = exports.SWAP_ARRAY_VALUES = 'redux-form/SWAP_ARRAY_VALUES';
+	var TOUCH = exports.TOUCH = 'redux-form/TOUCH';
+	var UNTOUCH = exports.UNTOUCH = 'redux-form/UNTOUCH';
 
 /***/ },
 /* 273 */
 /***/ function(module, exports) {
 
-	/**
-	 * Maps all the values in the given object through the given function and saves them, by key, to a result object
-	 */
 	"use strict";
 
 	exports.__esModule = true;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	exports["default"] = mapValues;
-
+	exports.default = mapValues;
+	/**
+	 * Maps all the values in the given object through the given function and saves them, by key, to a result object
+	 */
 	function mapValues(obj, fn) {
 	  return obj ? Object.keys(obj).reduce(function (accumulator, key) {
 	    var _extends2;
@@ -28279,200 +28273,157 @@
 	  }, {}) : obj;
 	}
 
-	module.exports = exports["default"];
-
 /***/ },
 /* 274 */
 /***/ function(module, exports) {
 
-	/**
-	 * Reads any potentially deep value from an object using dot and array syntax
-	 */
 	'use strict';
 
 	exports.__esModule = true;
-	var read = function read(_x, _x2) {
-	  var _again = true;
-
-	  _function: while (_again) {
-	    var path = _x,
-	        object = _x2;
-	    _again = false;
-
-	    if (!path || !object) {
-	      return object;
-	    }
-	    var dotIndex = path.indexOf('.');
-	    if (dotIndex === 0) {
-	      _x = path.substring(1);
-	      _x2 = object;
-	      _again = true;
-	      dotIndex = undefined;
-	      continue _function;
-	    }
-	    var openIndex = path.indexOf('[');
-	    var closeIndex = path.indexOf(']');
-	    if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
-	      // iterate down object tree
-	      _x = path.substring(dotIndex + 1);
-	      _x2 = object[path.substring(0, dotIndex)];
-	      _again = true;
-	      dotIndex = openIndex = closeIndex = undefined;
-	      continue _function;
-	    }
-	    if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
-	      if (closeIndex < 0) {
-	        throw new Error('found [ but no ]');
-	      }
-	      var key = path.substring(0, openIndex);
-	      var index = path.substring(openIndex + 1, closeIndex);
-	      if (!index.length) {
-	        return object[key];
-	      }
-	      if (openIndex === 0) {
-	        _x = path.substring(closeIndex + 1);
-	        _x2 = object[index];
-	        _again = true;
-	        dotIndex = openIndex = closeIndex = key = index = undefined;
-	        continue _function;
-	      }
-	      if (!object[key]) {
-	        return undefined;
-	      }
-	      _x = path.substring(closeIndex + 1);
-	      _x2 = object[key][index];
-	      _again = true;
-	      dotIndex = openIndex = closeIndex = key = index = undefined;
-	      continue _function;
-	    }
-	    return object[path];
+	/**
+	 * Reads any potentially deep value from an object using dot and array syntax
+	 */
+	var read = function read(path, object) {
+	  if (!path || !object) {
+	    return object;
 	  }
+	  var dotIndex = path.indexOf('.');
+	  if (dotIndex === 0) {
+	    return read(path.substring(1), object);
+	  }
+	  var openIndex = path.indexOf('[');
+	  var closeIndex = path.indexOf(']');
+	  if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
+	    // iterate down object tree
+	    return read(path.substring(dotIndex + 1), object[path.substring(0, dotIndex)]);
+	  }
+	  if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	    if (closeIndex < 0) {
+	      throw new Error('found [ but no ]');
+	    }
+	    var key = path.substring(0, openIndex);
+	    var index = path.substring(openIndex + 1, closeIndex);
+	    if (!index.length) {
+	      return object[key];
+	    }
+	    if (openIndex === 0) {
+	      return read(path.substring(closeIndex + 1), object[index]);
+	    }
+	    if (!object[key]) {
+	      return undefined;
+	    }
+	    return read(path.substring(closeIndex + 1), object[key][index]);
+	  }
+	  return object[path];
 	};
 
-	exports['default'] = read;
-	module.exports = exports['default'];
+	exports.default = read;
 
 /***/ },
 /* 275 */
 /***/ function(module, exports) {
 
-	/**
-	 * Writes any potentially deep value from an object using dot and array syntax,
-	 * and returns a new copy of the object.
-	 */
 	'use strict';
 
 	exports.__esModule = true;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var write = function write(_x, _x2, _x3) {
-	  var _again = true;
+	/**
+	 * Writes any potentially deep value from an object using dot and array syntax,
+	 * and returns a new copy of the object.
+	 */
+	var write = function write(path, value, object) {
+	  var _extends7;
 
-	  _function: while (_again) {
-	    var path = _x,
-	        value = _x2,
-	        object = _x3;
+	  var dotIndex = path.indexOf('.');
+	  if (dotIndex === 0) {
+	    return write(path.substring(1), value, object);
+	  }
+	  var openIndex = path.indexOf('[');
+	  var closeIndex = path.indexOf(']');
+	  if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
+	    var _extends2;
 
-	    var _extends7;
-
-	    _again = false;
-
-	    var dotIndex = path.indexOf('.');
-	    if (dotIndex === 0) {
-	      _x = path.substring(1);
-	      _x2 = value;
-	      _x3 = object;
-	      _again = true;
-	      _extends7 = dotIndex = undefined;
-	      continue _function;
-	    }
-	    var openIndex = path.indexOf('[');
-	    var closeIndex = path.indexOf(']');
-	    if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
-	      var _extends2;
-
-	      // is dot notation
-	      var key = path.substring(0, dotIndex);
-	      return _extends({}, object, (_extends2 = {}, _extends2[key] = write(path.substring(dotIndex + 1), value, object[key] || {}), _extends2));
-	    }
-	    if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	    // is dot notation
+	    var key = path.substring(0, dotIndex);
+	    return _extends({}, object, (_extends2 = {}, _extends2[key] = write(path.substring(dotIndex + 1), value, object[key] || {}), _extends2));
+	  }
+	  if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	    var _ret = function () {
 	      var _extends6;
 
-	      var _extends4;
+	      // is array notation
+	      if (closeIndex < 0) {
+	        throw new Error('found [ but no ]');
+	      }
+	      var key = path.substring(0, openIndex);
+	      var index = path.substring(openIndex + 1, closeIndex);
+	      var array = object[key] || [];
+	      var rest = path.substring(closeIndex + 1);
+	      if (index) {
+	        var _extends4;
 
-	      var _extends3;
-
-	      var _extends5;
-
-	      var _ret = (function () {
-	        // is array notation
-	        if (closeIndex < 0) {
-	          throw new Error('found [ but no ]');
-	        }
-	        var key = path.substring(0, openIndex);
-	        var index = path.substring(openIndex + 1, closeIndex);
-	        var array = object[key] || [];
-	        var rest = path.substring(closeIndex + 1);
-	        if (index) {
-	          // indexed array
-	          if (rest.length) {
-	            // need to keep recursing
-	            var dest = array[index] || {};
-	            var arrayCopy = [].concat(array);
-	            arrayCopy[index] = write(rest, value, dest);
-	            return {
-	              v: _extends({}, object || {}, (_extends3 = {}, _extends3[key] = arrayCopy, _extends3))
-	            };
-	          }
-	          var copy = [].concat(array);
-	          copy[index] = typeof value === 'function' ? value(copy[index]) : value;
-	          return {
-	            v: _extends({}, object || {}, (_extends4 = {}, _extends4[key] = copy, _extends4))
-	          };
-	        }
-	        // indexless array
+	        // indexed array
 	        if (rest.length) {
+	          var _extends3;
+
 	          // need to keep recursing
-	          if ((!array || !array.length) && typeof value === 'function') {
-	            return {
-	              v: object
-	            }; // don't even set a value under [key]
-	          }
-	          var arrayCopy = array.map(function (dest) {
-	            return write(rest, value, dest);
-	          });
+	          var dest = array[index] || {};
+	          var arrayCopy = [].concat(array);
+	          arrayCopy[index] = write(rest, value, dest);
 	          return {
-	            v: _extends({}, object || {}, (_extends5 = {}, _extends5[key] = arrayCopy, _extends5))
+	            v: _extends({}, object || {}, (_extends3 = {}, _extends3[key] = arrayCopy, _extends3))
 	          };
 	        }
-	        var result = undefined;
-	        if (Array.isArray(value)) {
-	          result = value;
-	        } else if (object[key]) {
-	          result = array.map(function (dest) {
-	            return typeof value === 'function' ? value(dest) : value;
-	          });
-	        } else if (typeof value === 'function') {
+	        var copy = [].concat(array);
+	        copy[index] = typeof value === 'function' ? value(copy[index]) : value;
+	        return {
+	          v: _extends({}, object || {}, (_extends4 = {}, _extends4[key] = copy, _extends4))
+	        };
+	      }
+	      // indexless array
+	      if (rest.length) {
+	        var _extends5;
+
+	        // need to keep recursing
+	        if ((!array || !array.length) && typeof value === 'function') {
 	          return {
 	            v: object
 	          }; // don't even set a value under [key]
-	        } else {
-	            result = value;
-	          }
+	        }
+	        var _arrayCopy = array.map(function (dest) {
+	          return write(rest, value, dest);
+	        });
 	        return {
-	          v: _extends({}, object || {}, (_extends6 = {}, _extends6[key] = result, _extends6))
+	          v: _extends({}, object || {}, (_extends5 = {}, _extends5[key] = _arrayCopy, _extends5))
 	        };
-	      })();
+	      }
+	      var result = void 0;
+	      if (Array.isArray(value)) {
+	        result = value;
+	      } else if (object[key]) {
+	        result = array.map(function (dest) {
+	          return typeof value === 'function' ? value(dest) : value;
+	        });
+	      } else if (typeof value === 'function') {
+	        return {
+	          v: object
+	        }; // don't even set a value under [key]
+	      } else {
+	          result = value;
+	        }
+	      return {
+	        v: _extends({}, object || {}, (_extends6 = {}, _extends6[key] = result, _extends6))
+	      };
+	    }();
 
-	      if (typeof _ret === 'object') return _ret.v;
-	    }
-	    return _extends({}, object, (_extends7 = {}, _extends7[path] = typeof value === 'function' ? value(object[path]) : value, _extends7));
+	    if (typeof _ret === "object") return _ret.v;
 	  }
+	  return _extends({}, object, (_extends7 = {}, _extends7[path] = typeof value === 'function' ? value(object[path]) : value, _extends7));
 	};
 
-	exports['default'] = write;
-	module.exports = exports['default'];
+	exports.default = write;
 
 /***/ },
 /* 276 */
@@ -28504,7 +28455,7 @@
 	        }
 	      } else if (Array.isArray(field)) {
 	        accumulator[key] = field.map(function (arrayField) {
-	          return _fieldValue.isFieldValue(arrayField) ? arrayField.value : getValuesFromState(arrayField);
+	          return (0, _fieldValue.isFieldValue)(arrayField) ? arrayField.value : getValuesFromState(arrayField);
 	        });
 	      } else if (typeof field === 'object') {
 	        var result = getValuesFromState(field);
@@ -28518,8 +28469,7 @@
 	  }, {});
 	};
 
-	exports['default'] = getValuesFromState;
-	module.exports = exports['default'];
+	exports.default = getValuesFromState;
 
 /***/ },
 /* 277 */
@@ -28559,7 +28509,7 @@
 	var _fieldValue = __webpack_require__(277);
 
 	var makeEntry = function makeEntry(value) {
-	  return _fieldValue.makeFieldValue(value === undefined ? {} : { initial: value, value: value });
+	  return (0, _fieldValue.makeFieldValue)(value === undefined ? {} : { initial: value, value: value });
 	};
 
 	/**
@@ -28574,69 +28524,54 @@
 	  if (!values || !fields.length) {
 	    return state;
 	  }
-	  var initializeField = function initializeField(_x2, _x3, _x4) {
-	    var _again = true;
-
-	    _function: while (_again) {
-	      var path = _x2,
-	          src = _x3,
-	          dest = _x4;
-	      _again = false;
-
-	      var dotIndex = path.indexOf('.');
-	      if (dotIndex === 0) {
-	        _x2 = path.substring(1);
-	        _x3 = src;
-	        _x4 = dest;
-	        _again = true;
-	        dotIndex = undefined;
-	        continue _function;
-	      }
-	      var openIndex = path.indexOf('[');
-	      var closeIndex = path.indexOf(']');
-	      var result = dest || {};
-	      if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
-	        // is dot notation
-	        var key = path.substring(0, dotIndex);
-	        result[key] = src[key] && initializeField(path.substring(dotIndex + 1), src[key], result[key] || {});
-	      } else if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
-	        (function () {
-	          // is array notation
-	          if (closeIndex < 0) {
-	            throw new Error('found \'[\' but no \']\': \'' + path + '\'');
-	          }
-	          var key = path.substring(0, openIndex);
-	          var srcArray = src[key];
-	          var destArray = result[key];
-	          var rest = path.substring(closeIndex + 1);
-	          if (Array.isArray(srcArray)) {
-	            if (rest.length) {
-	              // need to keep recursing
-	              result[key] = srcArray.map(function (srcValue, srcIndex) {
-	                return initializeField(rest, srcValue, destArray && destArray[srcIndex]);
-	              });
-	            } else {
-	              result[key] = srcArray.map(function (srcValue) {
-	                return makeEntry(srcValue);
-	              });
-	            }
-	          } else {
-	            result[key] = [];
-	          }
-	        })();
-	      } else {
-	        result[path] = makeEntry(src && src[path]);
-	      }
-	      return result;
+	  var initializeField = function initializeField(path, src, dest) {
+	    var dotIndex = path.indexOf('.');
+	    if (dotIndex === 0) {
+	      return initializeField(path.substring(1), src, dest);
 	    }
+	    var openIndex = path.indexOf('[');
+	    var closeIndex = path.indexOf(']');
+	    var result = _extends({}, dest) || {};
+	    if (dotIndex >= 0 && (openIndex < 0 || dotIndex < openIndex)) {
+	      // is dot notation
+	      var key = path.substring(0, dotIndex);
+	      result[key] = src[key] && initializeField(path.substring(dotIndex + 1), src[key], result[key] || {});
+	    } else if (openIndex >= 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	      (function () {
+	        // is array notation
+	        if (closeIndex < 0) {
+	          throw new Error('found \'[\' but no \']\': \'' + path + '\'');
+	        }
+	        var key = path.substring(0, openIndex);
+	        var srcArray = src[key];
+	        var destArray = result[key];
+	        var rest = path.substring(closeIndex + 1);
+	        if (Array.isArray(srcArray)) {
+	          if (rest.length) {
+	            // need to keep recursing
+	            result[key] = srcArray.map(function (srcValue, srcIndex) {
+	              return initializeField(rest, srcValue, destArray && destArray[srcIndex]);
+	            });
+	          } else {
+	            result[key] = srcArray.map(function (srcValue) {
+	              return makeEntry(srcValue);
+	            });
+	          }
+	        } else {
+	          result[key] = [];
+	        }
+	      })();
+	    } else {
+	      result[path] = makeEntry(src && src[path]);
+	    }
+	    return result;
 	  };
 	  return fields.reduce(function (accumulator, field) {
 	    return initializeField(field, values, accumulator);
 	  }, _extends({}, state));
 	};
 
-	exports['default'] = initializeState;
-	module.exports = exports['default'];
+	exports.default = initializeState;
 
 /***/ },
 /* 279 */
@@ -28649,7 +28584,7 @@
 	var _fieldValue = __webpack_require__(277);
 
 	var reset = function reset(value) {
-	  return _fieldValue.makeFieldValue(value === undefined || value && value.initial === undefined ? {} : { initial: value.initial, value: value.initial });
+	  return (0, _fieldValue.makeFieldValue)(value === undefined || value && value.initial === undefined ? {} : { initial: value.initial, value: value.initial });
 	};
 
 	/**
@@ -28660,10 +28595,10 @@
 	    var value = values[key];
 	    if (Array.isArray(value)) {
 	      accumulator[key] = value.map(function (item) {
-	        return _fieldValue.isFieldValue(item) ? reset(item) : resetState(item);
+	        return (0, _fieldValue.isFieldValue)(item) ? reset(item) : resetState(item);
 	      });
 	    } else if (value) {
-	      if (_fieldValue.isFieldValue(value)) {
+	      if ((0, _fieldValue.isFieldValue)(value)) {
 	        accumulator[key] = reset(value);
 	      } else if (typeof value === 'object' && value !== null) {
 	        accumulator[key] = resetState(value);
@@ -28675,8 +28610,7 @@
 	  }, {}) : values;
 	};
 
-	exports['default'] = resetState;
-	module.exports = exports['default'];
+	exports.default = resetState;
 
 /***/ },
 /* 280 */
@@ -28697,93 +28631,77 @@
 	/**
 	 * Sets an error on a field deep in the tree, returning a new copy of the state
 	 */
-	var setErrors = function setErrors(_x, _x2, _x3) {
-	  var _again = true;
-
-	  _function: while (_again) {
-	    var state = _x,
-	        errors = _x2,
-	        destKey = _x3;
-	    _again = false;
-
-	    var clear = function clear() {
-	      if (Array.isArray(state)) {
-	        return state.map(function (stateItem, index) {
-	          return setErrors(stateItem, errors && errors[index], destKey);
-	        });
-	      }
-	      if (state && typeof state === 'object') {
-	        var result = Object.keys(state).reduce(function (accumulator, key) {
-	          var _extends2;
-
-	          return isMetaKey(key) ? accumulator : _extends({}, accumulator, (_extends2 = {}, _extends2[key] = setErrors(state[key], errors && errors[key], destKey), _extends2));
-	        }, state);
-	        if (_fieldValue.isFieldValue(state)) {
-	          _fieldValue.makeFieldValue(result);
-	        }
-	        return result;
-	      }
-	      return _fieldValue.makeFieldValue(state);
-	    };
-	    if (!errors) {
-	      if (!state) {
-	        return state;
-	      }
-	      if (state[destKey]) {
-	        var copy = _extends({}, state);
-	        delete copy[destKey];
-	        return _fieldValue.makeFieldValue(copy);
-	      }
-	      return clear();
+	var setErrors = function setErrors(state, errors, destKey) {
+	  var clear = function clear() {
+	    if (Array.isArray(state)) {
+	      return state.map(function (stateItem, index) {
+	        return setErrors(stateItem, errors && errors[index], destKey);
+	      });
 	    }
-	    if (typeof errors === 'string') {
-	      var _extends3;
+	    if (state && typeof state === 'object') {
+	      var result = Object.keys(state).reduce(function (accumulator, key) {
+	        var _extends2;
 
-	      return _fieldValue.makeFieldValue(_extends({}, state, (_extends3 = {}, _extends3[destKey] = errors, _extends3)));
-	    }
-	    if (Array.isArray(errors)) {
-	      if (!state || Array.isArray(state)) {
-	        var _ret = (function () {
-	          var copy = (state || []).map(function (stateItem, index) {
-	            return setErrors(stateItem, errors[index], destKey);
-	          });
-	          errors.forEach(function (errorItem, index) {
-	            return copy[index] = setErrors(copy[index], errorItem, destKey);
-	          });
-	          return {
-	            v: copy
-	          };
-	        })();
-
-	        if (typeof _ret === 'object') return _ret.v;
+	        return isMetaKey(key) ? accumulator : _extends({}, accumulator, (_extends2 = {}, _extends2[key] = setErrors(state[key], errors && errors[key], destKey), _extends2));
+	      }, state);
+	      if ((0, _fieldValue.isFieldValue)(state)) {
+	        (0, _fieldValue.makeFieldValue)(result);
 	      }
-	      _x = state;
-	      _x2 = errors[0];
-	      _x3 = destKey;
-	      _again = true;
-	      clear = copy = _extends3 = _ret = undefined;
-	      continue _function;
-	      // use first error
+	      return result;
 	    }
-	    if (_fieldValue.isFieldValue(state)) {
-	      var _extends4;
-
-	      return _fieldValue.makeFieldValue(_extends({}, state, (_extends4 = {}, _extends4[destKey] = errors, _extends4)));
-	    }
-	    var errorKeys = Object.keys(errors);
-	    if (!errorKeys.length && !state) {
+	    return (0, _fieldValue.makeFieldValue)(state);
+	  };
+	  if (!errors) {
+	    if (!state) {
 	      return state;
 	    }
-	    return errorKeys.reduce(function (accumulator, key) {
-	      var _extends5;
-
-	      return isMetaKey(key) ? accumulator : _extends({}, accumulator, (_extends5 = {}, _extends5[key] = setErrors(state && state[key], errors[key], destKey), _extends5));
-	    }, clear() || {});
+	    if (state[destKey]) {
+	      var copy = _extends({}, state);
+	      delete copy[destKey];
+	      return (0, _fieldValue.makeFieldValue)(copy);
+	    }
+	    return clear();
 	  }
+	  if (typeof errors === 'string') {
+	    var _extends3;
+
+	    return (0, _fieldValue.makeFieldValue)(_extends({}, state, (_extends3 = {}, _extends3[destKey] = errors, _extends3)));
+	  }
+	  if (Array.isArray(errors)) {
+	    if (!state || Array.isArray(state)) {
+	      var _ret = function () {
+	        var copy = (state || []).map(function (stateItem, index) {
+	          return setErrors(stateItem, errors[index], destKey);
+	        });
+	        errors.forEach(function (errorItem, index) {
+	          return copy[index] = setErrors(copy[index], errorItem, destKey);
+	        });
+	        return {
+	          v: copy
+	        };
+	      }();
+
+	      if (typeof _ret === "object") return _ret.v;
+	    }
+	    return setErrors(state, errors[0], destKey); // use first error
+	  }
+	  if ((0, _fieldValue.isFieldValue)(state)) {
+	    var _extends4;
+
+	    return (0, _fieldValue.makeFieldValue)(_extends({}, state, (_extends4 = {}, _extends4[destKey] = errors, _extends4)));
+	  }
+	  var errorKeys = Object.keys(errors);
+	  if (!errorKeys.length && !state) {
+	    return state;
+	  }
+	  return errorKeys.reduce(function (accumulator, key) {
+	    var _extends5;
+
+	    return isMetaKey(key) ? accumulator : _extends({}, accumulator, (_extends5 = {}, _extends5[key] = setErrors(state && state[key], errors[key], destKey), _extends5));
+	  }, clear() || {});
 	};
 
-	exports['default'] = setErrors;
-	module.exports = exports['default'];
+	exports.default = setErrors;
 
 /***/ },
 /* 281 */
@@ -28795,59 +28713,92 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	exports.default = normalizeFields;
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _fieldValue = __webpack_require__(277);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function extractKey(field) {
+	  var dotIndex = field.indexOf('.');
+	  var openIndex = field.indexOf('[');
+	  var closeIndex = field.indexOf(']');
 
-	var _createReduxFormConnector = __webpack_require__(282);
+	  if (openIndex > 0 && closeIndex !== openIndex + 1) {
+	    throw new Error('found [ not followed by ]');
+	  }
 
-	var _createReduxFormConnector2 = _interopRequireDefault(_createReduxFormConnector);
+	  var isArray = openIndex > 0 && (dotIndex < 0 || openIndex < dotIndex);
+	  var key = void 0;
+	  var nestedPath = void 0;
 
-	var _hoistNonReactStatics = __webpack_require__(198);
+	  if (isArray) {
+	    key = field.substring(0, openIndex);
+	    nestedPath = field.substring(closeIndex + 1);
 
-	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
+	    if (nestedPath[0] === '.') {
+	      nestedPath = nestedPath.substring(1);
+	    }
+	  } else if (dotIndex > 0) {
+	    key = field.substring(0, dotIndex);
+	    nestedPath = field.substring(dotIndex + 1);
+	  } else {
+	    key = field;
+	  }
 
-	/**
-	 * The decorator that is the main API to redux-form
-	 */
-	var createReduxForm = function createReduxForm(isReactNative, React, connect) {
-	  var Component = React.Component;
+	  return { isArray: isArray, key: key, nestedPath: nestedPath };
+	}
 
-	  var reduxFormConnector = _createReduxFormConnector2['default'](isReactNative, React, connect);
-	  return function (config, mapStateToProps, mapDispatchToProps, mergeProps, options) {
-	    return function (WrappedComponent) {
-	      var ReduxFormConnector = reduxFormConnector(WrappedComponent, mapStateToProps, mapDispatchToProps, mergeProps, options);
-	      var configWithDefaults = _extends({
-	        touchOnBlur: true,
-	        touchOnChange: false,
-	        destroyOnUnmount: true
-	      }, config);
+	function normalizeField(field, fullFieldPath, state, previousState, values, previousValues, normalizers) {
+	  if (field.isArray) {
+	    if (field.nestedPath) {
+	      var _ret = function () {
+	        var array = state && state[field.key] || [];
+	        var previousArray = previousState && previousState[field.key] || [];
+	        var nestedField = extractKey(field.nestedPath);
 
-	      var ConnectedForm = (function (_Component) {
-	        _inherits(ConnectedForm, _Component);
+	        return {
+	          v: array.map(function (nestedState, i) {
+	            nestedState[nestedField.key] = normalizeField(nestedField, fullFieldPath, nestedState, previousArray[i], values, previousValues, normalizers);
 
-	        function ConnectedForm() {
-	          _classCallCheck(this, ConnectedForm);
-
-	          _Component.apply(this, arguments);
-	        }
-
-	        ConnectedForm.prototype.render = function render() {
-	          return React.createElement(ReduxFormConnector, _extends({}, configWithDefaults, this.props));
+	            return nestedState;
+	          })
 	        };
+	      }();
 
-	        return ConnectedForm;
-	      })(Component);
+	      if (typeof _ret === "object") return _ret.v;
+	    }
 
-	      return _hoistNonReactStatics2['default'](ConnectedForm, WrappedComponent);
-	    };
-	  };
-	};
+	    var _normalizer = normalizers[fullFieldPath];
 
-	exports['default'] = createReduxForm;
-	module.exports = exports['default'];
+	    var result = _normalizer(state && state[field.key], previousState && previousState[field.key], values, previousValues);
+	    return field.isArray ? result && result.map(_fieldValue.makeFieldValue) : result;
+	  } else if (field.nestedPath) {
+	    var nestedState = state && state[field.key] || {};
+	    var nestedField = extractKey(field.nestedPath);
+
+	    nestedState[nestedField.key] = normalizeField(nestedField, fullFieldPath, nestedState, previousState && previousState[field.key], values, previousValues, normalizers);
+
+	    return nestedState;
+	  }
+
+	  var finalField = state && state[field.key] || {};
+	  var normalizer = normalizers[fullFieldPath];
+
+	  finalField.value = normalizer(finalField.value, previousState && previousState[field.key] && previousState[field.key].value, values, previousValues);
+
+	  return (0, _fieldValue.makeFieldValue)(finalField);
+	}
+
+	function normalizeFields(normalizers, state, previousState, values, previousValues) {
+	  var newState = Object.keys(normalizers).reduce(function (accumulator, field) {
+	    var extracted = extractKey(field);
+
+	    accumulator[extracted.key] = normalizeField(extracted, field, state, previousState, values, previousValues, normalizers);
+
+	    return accumulator;
+	  }, {});
+
+	  return _extends({}, state, newState);
+	}
 
 /***/ },
 /* 282 */
@@ -28857,25 +28808,97 @@
 
 	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	var _createReduxFormConnector = __webpack_require__(283);
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	var _createReduxFormConnector2 = _interopRequireDefault(_createReduxFormConnector);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _hoistNonReactStatics = __webpack_require__(198);
 
-	var _reactLazyCacheNoGetters = __webpack_require__(283);
+	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
-	var _reactLazyCacheNoGetters2 = _interopRequireDefault(_reactLazyCacheNoGetters);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _getDisplayName = __webpack_require__(285);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * The decorator that is the main API to redux-form
+	 */
+	var createReduxForm = function createReduxForm(isReactNative, React, connect) {
+	  var Component = React.Component;
+
+	  var reduxFormConnector = (0, _createReduxFormConnector2.default)(isReactNative, React, connect);
+	  return function (config, mapStateToProps, mapDispatchToProps, mergeProps, options) {
+	    return function (WrappedComponent) {
+	      var ReduxFormConnector = reduxFormConnector(WrappedComponent, mapStateToProps, mapDispatchToProps, mergeProps, options);
+	      var configWithDefaults = _extends({
+	        touchOnBlur: true,
+	        touchOnChange: false,
+	        destroyOnUnmount: true
+	      }, config);
+
+	      var ConnectedForm = function (_Component) {
+	        _inherits(ConnectedForm, _Component);
+
+	        function ConnectedForm() {
+	          _classCallCheck(this, ConnectedForm);
+
+	          return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+	        }
+
+	        ConnectedForm.prototype.render = function render() {
+	          var _this2 = this;
+
+	          return React.createElement(ReduxFormConnector, _extends({}, configWithDefaults, this.props, {
+	            submitPassback: function submitPassback(submit) {
+	              return _this2.submit = submit;
+	            } }));
+	        };
+
+	        return ConnectedForm;
+	      }(Component);
+
+	      return (0, _hoistNonReactStatics2.default)(ConnectedForm, WrappedComponent);
+	    };
+	  };
+	};
+
+	exports.default = createReduxForm;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _noGetters = __webpack_require__(284);
+
+	var _noGetters2 = _interopRequireDefault(_noGetters);
+
+	var _getDisplayName = __webpack_require__(286);
 
 	var _getDisplayName2 = _interopRequireDefault(_getDisplayName);
 
-	var _createHigherOrderComponent = __webpack_require__(286);
+	var _createHigherOrderComponent = __webpack_require__(287);
 
 	var _createHigherOrderComponent2 = _interopRequireDefault(_createHigherOrderComponent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	/**
 	 * This component tracks props that affect how the form is mounted to the store. Normally these should not change,
@@ -28886,21 +28909,23 @@
 	    var Component = React.Component;
 	    var PropTypes = React.PropTypes;
 
-	    var ReduxFormConnector = (function (_Component) {
+	    var ReduxFormConnector = function (_Component) {
 	      _inherits(ReduxFormConnector, _Component);
 
 	      function ReduxFormConnector(props) {
 	        _classCallCheck(this, ReduxFormConnector);
 
-	        _Component.call(this, props);
-	        this.cache = new _reactLazyCacheNoGetters2['default'](this, {
+	        var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+	        _this.cache = new _noGetters2.default(_this, {
 	          ReduxForm: {
 	            params: [
 	            // props that effect how redux-form connects to the redux store
 	            'reduxMountPoint', 'form', 'formKey', 'getFormState'],
-	            fn: _createHigherOrderComponent2['default'](props, isReactNative, React, connect, WrappedComponent, mapStateToProps, mapDispatchToProps, mergeProps, options)
+	            fn: (0, _createHigherOrderComponent2.default)(props, isReactNative, React, connect, WrappedComponent, mapStateToProps, mapDispatchToProps, mergeProps, options)
 	          }
 	        });
+	        return _this;
 	      }
 
 	      ReduxFormConnector.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
@@ -28918,16 +28943,16 @@
 	        var touchOnBlur = _props.touchOnBlur;
 	        var touchOnChange = _props.touchOnChange;
 
-	        var passableProps = _objectWithoutProperties(_props, ['reduxMountPoint', 'destroyOnUnmount', 'form', 'getFormState', 'touchOnBlur', 'touchOnChange']);
+	        var passableProps = _objectWithoutProperties(_props, ['reduxMountPoint', 'destroyOnUnmount', 'form', 'getFormState', 'touchOnBlur', 'touchOnChange']); // eslint-disable-line no-redeclare
 
-	        // eslint-disable-line no-redeclare
+
 	        return React.createElement(ReduxForm, passableProps);
 	      };
 
 	      return ReduxFormConnector;
-	    })(Component);
+	    }(Component);
 
-	    ReduxFormConnector.displayName = 'ReduxFormConnector(' + _getDisplayName2['default'](WrappedComponent) + ')';
+	    ReduxFormConnector.displayName = 'ReduxFormConnector(' + (0, _getDisplayName2.default)(WrappedComponent) + ')';
 	    ReduxFormConnector.WrappedComponent = WrappedComponent;
 	    ReduxFormConnector.propTypes = {
 	      destroyOnUnmount: PropTypes.bool,
@@ -28948,18 +28973,17 @@
 	  };
 	};
 
-	exports['default'] = createReduxFormConnector;
-	module.exports = exports['default'];
-
-/***/ },
-/* 283 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(284);
-
+	exports.default = createReduxFormConnector;
 
 /***/ },
 /* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(285);
+
+
+/***/ },
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29054,22 +29078,19 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	exports.__esModule = true;
-	exports['default'] = getDisplayName;
-
+	exports.default = getDisplayName;
 	function getDisplayName(Comp) {
 	  return Comp.displayName || Comp.name || 'Component';
 	}
 
-	module.exports = exports['default'];
-
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29078,21 +29099,11 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _actions = __webpack_require__(287);
+	var _actions = __webpack_require__(288);
 
 	var importedActions = _interopRequireWildcard(_actions);
 
-	var _getDisplayName = __webpack_require__(285);
+	var _getDisplayName = __webpack_require__(286);
 
 	var _getDisplayName2 = _interopRequireDefault(_getDisplayName);
 
@@ -29102,45 +29113,57 @@
 
 	var _deepEqual2 = _interopRequireDefault(_deepEqual);
 
-	var _bindActionData = __webpack_require__(288);
+	var _bindActionData = __webpack_require__(289);
 
 	var _bindActionData2 = _interopRequireDefault(_bindActionData);
 
-	var _getValues = __webpack_require__(289);
+	var _getValues = __webpack_require__(290);
 
 	var _getValues2 = _interopRequireDefault(_getValues);
 
-	var _isValid = __webpack_require__(290);
+	var _isValid = __webpack_require__(291);
 
 	var _isValid2 = _interopRequireDefault(_isValid);
 
-	var _readFields = __webpack_require__(291);
+	var _readFields = __webpack_require__(292);
 
 	var _readFields2 = _interopRequireDefault(_readFields);
 
-	var _handleSubmit2 = __webpack_require__(305);
+	var _handleSubmit2 = __webpack_require__(306);
 
 	var _handleSubmit3 = _interopRequireDefault(_handleSubmit2);
 
-	var _asyncValidation = __webpack_require__(306);
+	var _asyncValidation = __webpack_require__(307);
 
 	var _asyncValidation2 = _interopRequireDefault(_asyncValidation);
 
-	var _eventsSilenceEvents = __webpack_require__(307);
+	var _silenceEvents = __webpack_require__(308);
 
-	var _eventsSilenceEvents2 = _interopRequireDefault(_eventsSilenceEvents);
+	var _silenceEvents2 = _interopRequireDefault(_silenceEvents);
 
-	var _eventsSilenceEvent = __webpack_require__(308);
+	var _silenceEvent = __webpack_require__(309);
 
-	var _eventsSilenceEvent2 = _interopRequireDefault(_eventsSilenceEvent);
+	var _silenceEvent2 = _interopRequireDefault(_silenceEvent);
 
-	var _wrapMapDispatchToProps = __webpack_require__(309);
+	var _wrapMapDispatchToProps = __webpack_require__(310);
 
 	var _wrapMapDispatchToProps2 = _interopRequireDefault(_wrapMapDispatchToProps);
 
-	var _wrapMapStateToProps = __webpack_require__(310);
+	var _wrapMapStateToProps = __webpack_require__(311);
 
 	var _wrapMapStateToProps2 = _interopRequireDefault(_wrapMapStateToProps);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	/**
 	 * Creates a HOC that knows how to create redux-connected sub-components.
@@ -29150,17 +29173,25 @@
 	  var PropTypes = React.PropTypes;
 
 	  return function (reduxMountPoint, formName, formKey, getFormState) {
-	    var ReduxForm = (function (_Component) {
+	    var ReduxForm = function (_Component) {
 	      _inherits(ReduxForm, _Component);
 
 	      function ReduxForm(props) {
 	        _classCallCheck(this, ReduxForm);
 
-	        _Component.call(this, props);
 	        // bind functions
-	        this.asyncValidate = this.asyncValidate.bind(this);
-	        this.handleSubmit = this.handleSubmit.bind(this);
-	        this.fields = _readFields2['default'](props, {}, {}, this.asyncValidate, isReactNative);
+
+	        var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+
+	        _this.asyncValidate = _this.asyncValidate.bind(_this);
+	        _this.handleSubmit = _this.handleSubmit.bind(_this);
+	        _this.fields = (0, _readFields2.default)(props, {}, {}, _this.asyncValidate, isReactNative);
+	        var submitPassback = _this.props.submitPassback;
+
+	        submitPassback(function () {
+	          return _this.handleSubmit();
+	        }); // wrapped in function to disallow params
+	        return _this;
 	      }
 
 	      ReduxForm.prototype.componentWillMount = function componentWillMount() {
@@ -29176,10 +29207,10 @@
 	      };
 
 	      ReduxForm.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	        if (!_deepEqual2['default'](this.props.fields, nextProps.fields) || !_deepEqual2['default'](this.props.form, nextProps.form, { strict: true })) {
-	          this.fields = _readFields2['default'](nextProps, this.props, this.fields, this.asyncValidate, isReactNative);
+	        if (!(0, _deepEqual2.default)(this.props.fields, nextProps.fields) || !(0, _deepEqual2.default)(this.props.form, nextProps.form, { strict: true })) {
+	          this.fields = (0, _readFields2.default)(nextProps, this.props, this.fields, this.asyncValidate, isReactNative);
 	        }
-	        if (!_deepEqual2['default'](this.props.initialValues, nextProps.initialValues)) {
+	        if (!(0, _deepEqual2.default)(this.props.initialValues, nextProps.initialValues)) {
 	          this.props.initialize(nextProps.initialValues, nextProps.fields);
 	        }
 	      };
@@ -29191,7 +29222,7 @@
 	      };
 
 	      ReduxForm.prototype.asyncValidate = function asyncValidate(name, value) {
-	        var _this = this;
+	        var _this2 = this;
 
 	        var _props2 = this.props;
 	        var asyncValidate = _props2.asyncValidate;
@@ -29202,30 +29233,36 @@
 	        var stopAsyncValidation = _props2.stopAsyncValidation;
 	        var validate = _props2.validate;
 
+	        var isSubmitting = !name;
 	        if (asyncValidate) {
-	          var _ret = (function () {
-	            var values = _getValues2['default'](fields, form);
+	          var _ret = function () {
+	            var values = (0, _getValues2.default)(fields, form);
 	            if (name) {
 	              values[name] = value;
 	            }
-	            var syncErrors = validate(values, _this.props);
+	            var syncErrors = validate(values, _this2.props);
+	            var allPristine = _this2.fields._meta.allPristine;
+
+	            var initialized = form._initialized;
 
 	            // if blur validating, only run async validate if sync validation passes
-	            if (!name || _isValid2['default'](syncErrors[name])) {
+	            // and submitting (not blur validation) or form is dirty or form was never initialized
+	            var syncValidationPasses = isSubmitting || (0, _isValid2.default)(syncErrors[name]);
+	            if (syncValidationPasses && (isSubmitting || !allPristine || !initialized)) {
 	              return {
-	                v: _asyncValidation2['default'](function () {
-	                  return asyncValidate(values, dispatch, _this.props);
+	                v: (0, _asyncValidation2.default)(function () {
+	                  return asyncValidate(values, dispatch, _this2.props);
 	                }, startAsyncValidation, stopAsyncValidation, name)
 	              };
 	            }
-	          })();
+	          }();
 
-	          if (typeof _ret === 'object') return _ret.v;
+	          if (typeof _ret === "object") return _ret.v;
 	        }
 	      };
 
 	      ReduxForm.prototype.handleSubmit = function handleSubmit(submitOrEvent) {
-	        var _this2 = this;
+	        var _this3 = this;
 
 	        var _props3 = this.props;
 	        var onSubmit = _props3.onSubmit;
@@ -29238,19 +29275,18 @@
 	          }
 	          return submit;
 	        };
-	        return !submitOrEvent || _eventsSilenceEvent2['default'](submitOrEvent) ?
+	        return !submitOrEvent || (0, _silenceEvent2.default)(submitOrEvent) ?
 	        // submitOrEvent is an event: fire submit
-	        _handleSubmit3['default'](check(onSubmit), _getValues2['default'](fields, form), this.props, this.asyncValidate) :
+	        (0, _handleSubmit3.default)(check(onSubmit), (0, _getValues2.default)(fields, form), this.props, this.asyncValidate) :
 	        // submitOrEvent is the submit function: return deferred submit thunk
-	        _eventsSilenceEvents2['default'](function (event) {
-	          _eventsSilenceEvent2['default'](event);
-	          _handleSubmit3['default'](check(submitOrEvent), _getValues2['default'](fields, form), _this2.props, _this2.asyncValidate);
+	        (0, _silenceEvents2.default)(function () {
+	          return (0, _handleSubmit3.default)(check(submitOrEvent), (0, _getValues2.default)(fields, form), _this3.props, _this3.asyncValidate);
 	        });
 	      };
 
 	      ReduxForm.prototype.render = function render() {
-	        var _ref,
-	            _this3 = this;
+	        var _this4 = this,
+	            _ref;
 
 	        var allFields = this.fields;
 	        var _props4 = this.props;
@@ -29279,15 +29315,16 @@
 	        var untouch = _props4.untouch;
 	        var validate = _props4.validate;
 
-	        var passableProps = _objectWithoutProperties(_props4, ['addArrayValue', 'asyncBlurFields', 'blur', 'change', 'destroy', 'focus', 'fields', 'form', 'initialValues', 'initialize', 'onSubmit', 'propNamespace', 'reset', 'removeArrayValue', 'returnRejectedSubmitPromise', 'startAsyncValidation', 'startSubmit', 'stopAsyncValidation', 'stopSubmit', 'submitFailed', 'swapArrayValues', 'touch', 'untouch', 'validate']);
+	        var passableProps = _objectWithoutProperties(_props4, ['addArrayValue', 'asyncBlurFields', 'blur', 'change', 'destroy', 'focus', 'fields', 'form', 'initialValues', 'initialize', 'onSubmit', 'propNamespace', 'reset', 'removeArrayValue', 'returnRejectedSubmitPromise', 'startAsyncValidation', 'startSubmit', 'stopAsyncValidation', 'stopSubmit', 'submitFailed', 'swapArrayValues', 'touch', 'untouch', 'validate']); // eslint-disable-line no-redeclare
 
-	        // eslint-disable-line no-redeclare
+
 	        var _allFields$_meta = allFields._meta;
 	        var allPristine = _allFields$_meta.allPristine;
 	        var allValid = _allFields$_meta.allValid;
 	        var errors = _allFields$_meta.errors;
 	        var formError = _allFields$_meta.formError;
 	        var values = _allFields$_meta.values;
+
 
 	        var props = {
 	          // State:
@@ -29306,26 +29343,26 @@
 	          values: values,
 
 	          // Actions:
-	          asyncValidate: _eventsSilenceEvents2['default'](function () {
-	            return _this3.asyncValidate();
+	          asyncValidate: (0, _silenceEvents2.default)(function () {
+	            return _this4.asyncValidate();
 	          }),
 	          // ^ doesn't just pass this.asyncValidate to disallow values passing
-	          destroyForm: _eventsSilenceEvents2['default'](destroy),
+	          destroyForm: (0, _silenceEvents2.default)(destroy),
 	          handleSubmit: this.handleSubmit,
-	          initializeForm: _eventsSilenceEvents2['default'](function (initValues) {
+	          initializeForm: (0, _silenceEvents2.default)(function (initValues) {
 	            return initialize(initValues, fields);
 	          }),
-	          resetForm: _eventsSilenceEvents2['default'](reset),
-	          touch: _eventsSilenceEvents2['default'](function () {
+	          resetForm: (0, _silenceEvents2.default)(reset),
+	          touch: (0, _silenceEvents2.default)(function () {
 	            return touch.apply(undefined, arguments);
 	          }),
-	          touchAll: _eventsSilenceEvents2['default'](function () {
+	          touchAll: (0, _silenceEvents2.default)(function () {
 	            return touch.apply(undefined, fields);
 	          }),
-	          untouch: _eventsSilenceEvents2['default'](function () {
+	          untouch: (0, _silenceEvents2.default)(function () {
 	            return untouch.apply(undefined, arguments);
 	          }),
-	          untouchAll: _eventsSilenceEvents2['default'](function () {
+	          untouchAll: (0, _silenceEvents2.default)(function () {
 	            return untouch.apply(undefined, fields);
 	          })
 	        };
@@ -29334,9 +29371,9 @@
 	      };
 
 	      return ReduxForm;
-	    })(Component);
+	    }(Component);
 
-	    ReduxForm.displayName = 'ReduxForm(' + _getDisplayName2['default'](WrappedComponent) + ')';
+	    ReduxForm.displayName = 'ReduxForm(' + (0, _getDisplayName2.default)(WrappedComponent) + ')';
 	    ReduxForm.WrappedComponent = WrappedComponent;
 	    ReduxForm.propTypes = {
 	      // props:
@@ -29350,6 +29387,7 @@
 	      propNamespace: PropTypes.string,
 	      readonly: PropTypes.bool,
 	      returnRejectedSubmitPromise: PropTypes.bool,
+	      submitPassback: PropTypes.func.isRequired,
 	      validate: PropTypes.func,
 
 	      // actions:
@@ -29382,137 +29420,37 @@
 
 	    // bind touch flags to blur and change
 	    var unboundActions = _extends({}, importedActions, {
-	      blur: _bindActionData2['default'](importedActions.blur, {
+	      blur: (0, _bindActionData2.default)(importedActions.blur, {
 	        touch: !!config.touchOnBlur
 	      }),
-	      change: _bindActionData2['default'](importedActions.change, {
+	      change: (0, _bindActionData2.default)(importedActions.change, {
 	        touch: !!config.touchOnChange
 	      })
 	    });
 
 	    // make redux connector with or without form key
-	    var decorate = formKey !== undefined && formKey !== null ? connect(_wrapMapStateToProps2['default'](mapStateToProps, function (state) {
+	    var decorate = formKey !== undefined && formKey !== null ? connect((0, _wrapMapStateToProps2.default)(mapStateToProps, function (state) {
 	      var formState = getFormState(state, reduxMountPoint);
 	      if (!formState) {
 	        throw new Error('You need to mount the redux-form reducer at "' + reduxMountPoint + '"');
 	      }
 	      return formState && formState[formName] && formState[formName][formKey];
-	    }), _wrapMapDispatchToProps2['default'](mapDispatchToProps, _bindActionData2['default'](unboundActions, { form: formName, key: formKey })), mergeProps, options) : connect(_wrapMapStateToProps2['default'](mapStateToProps, function (state) {
+	    }), (0, _wrapMapDispatchToProps2.default)(mapDispatchToProps, (0, _bindActionData2.default)(unboundActions, {
+	      form: formName,
+	      key: formKey
+	    })), mergeProps, options) : connect((0, _wrapMapStateToProps2.default)(mapStateToProps, function (state) {
 	      var formState = getFormState(state, reduxMountPoint);
 	      if (!formState) {
 	        throw new Error('You need to mount the redux-form reducer at "' + reduxMountPoint + '"');
 	      }
 	      return formState && formState[formName];
-	    }), _wrapMapDispatchToProps2['default'](mapDispatchToProps, _bindActionData2['default'](unboundActions, { form: formName })), mergeProps, options);
+	    }), (0, _wrapMapDispatchToProps2.default)(mapDispatchToProps, (0, _bindActionData2.default)(unboundActions, { form: formName })), mergeProps, options);
 
 	    return decorate(ReduxForm);
 	  };
 	};
 
-	exports['default'] = createHigherOrderComponent;
-	module.exports = exports['default'];
-	// contains dispatch
-
-/***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _actionTypes = __webpack_require__(272);
-
-	var addArrayValue = function addArrayValue(path, value, index) {
-	  return { type: _actionTypes.ADD_ARRAY_VALUE, path: path, value: value, index: index };
-	};
-
-	exports.addArrayValue = addArrayValue;
-	var blur = function blur(field, value) {
-	  return { type: _actionTypes.BLUR, field: field, value: value };
-	};
-
-	exports.blur = blur;
-	var change = function change(field, value) {
-	  return { type: _actionTypes.CHANGE, field: field, value: value };
-	};
-
-	exports.change = change;
-	var destroy = function destroy() {
-	  return { type: _actionTypes.DESTROY };
-	};
-
-	exports.destroy = destroy;
-	var focus = function focus(field) {
-	  return { type: _actionTypes.FOCUS, field: field };
-	};
-
-	exports.focus = focus;
-	var initialize = function initialize(data, fields) {
-	  if (!Array.isArray(fields)) {
-	    throw new Error('must provide fields array to initialize() action creator');
-	  }
-	  return { type: _actionTypes.INITIALIZE, data: data, fields: fields };
-	};
-
-	exports.initialize = initialize;
-	var removeArrayValue = function removeArrayValue(path, index) {
-	  return { type: _actionTypes.REMOVE_ARRAY_VALUE, path: path, index: index };
-	};
-
-	exports.removeArrayValue = removeArrayValue;
-	var reset = function reset() {
-	  return { type: _actionTypes.RESET };
-	};
-
-	exports.reset = reset;
-	var startAsyncValidation = function startAsyncValidation(field) {
-	  return { type: _actionTypes.START_ASYNC_VALIDATION, field: field };
-	};
-
-	exports.startAsyncValidation = startAsyncValidation;
-	var startSubmit = function startSubmit() {
-	  return { type: _actionTypes.START_SUBMIT };
-	};
-
-	exports.startSubmit = startSubmit;
-	var stopAsyncValidation = function stopAsyncValidation(errors) {
-	  return { type: _actionTypes.STOP_ASYNC_VALIDATION, errors: errors };
-	};
-
-	exports.stopAsyncValidation = stopAsyncValidation;
-	var stopSubmit = function stopSubmit(errors) {
-	  return { type: _actionTypes.STOP_SUBMIT, errors: errors };
-	};
-
-	exports.stopSubmit = stopSubmit;
-	var submitFailed = function submitFailed() {
-	  return { type: _actionTypes.SUBMIT_FAILED };
-	};
-
-	exports.submitFailed = submitFailed;
-	var swapArrayValues = function swapArrayValues(path, indexA, indexB) {
-	  return { type: _actionTypes.SWAP_ARRAY_VALUES, path: path, indexA: indexA, indexB: indexB };
-	};
-
-	exports.swapArrayValues = swapArrayValues;
-	var touch = function touch() {
-	  for (var _len = arguments.length, fields = Array(_len), _key = 0; _key < _len; _key++) {
-	    fields[_key] = arguments[_key];
-	  }
-
-	  return { type: _actionTypes.TOUCH, fields: fields };
-	};
-
-	exports.touch = touch;
-	var untouch = function untouch() {
-	  for (var _len2 = arguments.length, fields = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-	    fields[_key2] = arguments[_key2];
-	  }
-
-	  return { type: _actionTypes.UNTOUCH, fields: fields };
-	};
-	exports.untouch = untouch;
+	exports.default = createHigherOrderComponent;
 
 /***/ },
 /* 288 */
@@ -29521,21 +29459,106 @@
 	'use strict';
 
 	exports.__esModule = true;
+	exports.untouch = exports.touch = exports.swapArrayValues = exports.submitFailed = exports.stopSubmit = exports.stopAsyncValidation = exports.startSubmit = exports.startAsyncValidation = exports.reset = exports.removeArrayValue = exports.initialize = exports.focus = exports.destroy = exports.change = exports.blur = exports.addArrayValue = undefined;
+
+	var _actionTypes = __webpack_require__(272);
+
+	var addArrayValue = exports.addArrayValue = function addArrayValue(path, value, index, fields) {
+	  return { type: _actionTypes.ADD_ARRAY_VALUE, path: path, value: value, index: index, fields: fields };
+	};
+
+	var blur = exports.blur = function blur(field, value) {
+	  return { type: _actionTypes.BLUR, field: field, value: value };
+	};
+
+	var change = exports.change = function change(field, value) {
+	  return { type: _actionTypes.CHANGE, field: field, value: value };
+	};
+
+	var destroy = exports.destroy = function destroy() {
+	  return { type: _actionTypes.DESTROY };
+	};
+
+	var focus = exports.focus = function focus(field) {
+	  return { type: _actionTypes.FOCUS, field: field };
+	};
+
+	var initialize = exports.initialize = function initialize(data, fields) {
+	  if (!Array.isArray(fields)) {
+	    throw new Error('must provide fields array to initialize() action creator');
+	  }
+	  return { type: _actionTypes.INITIALIZE, data: data, fields: fields };
+	};
+
+	var removeArrayValue = exports.removeArrayValue = function removeArrayValue(path, index) {
+	  return { type: _actionTypes.REMOVE_ARRAY_VALUE, path: path, index: index };
+	};
+
+	var reset = exports.reset = function reset() {
+	  return { type: _actionTypes.RESET };
+	};
+
+	var startAsyncValidation = exports.startAsyncValidation = function startAsyncValidation(field) {
+	  return { type: _actionTypes.START_ASYNC_VALIDATION, field: field };
+	};
+
+	var startSubmit = exports.startSubmit = function startSubmit() {
+	  return { type: _actionTypes.START_SUBMIT };
+	};
+
+	var stopAsyncValidation = exports.stopAsyncValidation = function stopAsyncValidation(errors) {
+	  return { type: _actionTypes.STOP_ASYNC_VALIDATION, errors: errors };
+	};
+
+	var stopSubmit = exports.stopSubmit = function stopSubmit(errors) {
+	  return { type: _actionTypes.STOP_SUBMIT, errors: errors };
+	};
+
+	var submitFailed = exports.submitFailed = function submitFailed() {
+	  return { type: _actionTypes.SUBMIT_FAILED };
+	};
+
+	var swapArrayValues = exports.swapArrayValues = function swapArrayValues(path, indexA, indexB) {
+	  return { type: _actionTypes.SWAP_ARRAY_VALUES, path: path, indexA: indexA, indexB: indexB };
+	};
+
+	var touch = exports.touch = function touch() {
+	  for (var _len = arguments.length, fields = Array(_len), _key = 0; _key < _len; _key++) {
+	    fields[_key] = arguments[_key];
+	  }
+
+	  return { type: _actionTypes.TOUCH, fields: fields };
+	};
+
+	var untouch = exports.untouch = function untouch() {
+	  for (var _len2 = arguments.length, fields = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	    fields[_key2] = arguments[_key2];
+	  }
+
+	  return { type: _actionTypes.UNTOUCH, fields: fields };
+	};
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	exports['default'] = bindActionData;
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	exports.default = bindActionData;
 
 	var _mapValues = __webpack_require__(273);
 
 	var _mapValues2 = _interopRequireDefault(_mapValues);
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	/**
 	 * Adds additional properties to the results of the function or map of functions passed
 	 */
-
 	function bindActionData(action, data) {
 	  if (typeof action === 'function') {
 	    return function () {
@@ -29543,17 +29566,15 @@
 	    };
 	  }
 	  if (typeof action === 'object') {
-	    return _mapValues2['default'](action, function (value) {
+	    return (0, _mapValues2.default)(action, function (value) {
 	      return bindActionData(value, data);
 	    });
 	  }
 	  return action;
 	}
 
-	module.exports = exports['default'];
-
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29587,7 +29608,7 @@
 	        });
 	      } else {
 	        dest[key] = array.map(function (item) {
-	          return item.value;
+	          return item && item.value;
 	        });
 	      }
 	    })();
@@ -29611,18 +29632,16 @@
 	  }, {});
 	};
 
-	exports['default'] = getValues;
-	module.exports = exports['default'];
+	exports.default = getValues;
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	exports.__esModule = true;
-	exports['default'] = isValid;
-
+	exports.default = isValid;
 	function isValid(error) {
 	  if (Array.isArray(error)) {
 	    return error.reduce(function (valid, errorValue) {
@@ -29637,10 +29656,8 @@
 	  return !error;
 	}
 
-	module.exports = exports['default'];
-
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29649,9 +29666,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _readField = __webpack_require__(292);
+	var _readField = __webpack_require__(293);
 
 	var _readField2 = _interopRequireDefault(_readField);
 
@@ -29659,13 +29674,15 @@
 
 	var _write2 = _interopRequireDefault(_write);
 
-	var _getValues = __webpack_require__(289);
+	var _getValues = __webpack_require__(290);
 
 	var _getValues2 = _interopRequireDefault(_getValues);
 
-	var _removeField = __webpack_require__(304);
+	var _removeField = __webpack_require__(305);
 
 	var _removeField2 = _interopRequireDefault(_removeField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
 	 * Reads props and generates (or updates) field structure
@@ -29676,7 +29693,7 @@
 	  var validate = props.validate;
 
 	  var previousFields = previousProps.fields;
-	  var values = _getValues2['default'](fields, form);
+	  var values = (0, _getValues2.default)(fields, form);
 	  var syncErrors = validate(values, props);
 	  var errors = {};
 	  var formError = syncErrors._error || form._error;
@@ -29684,7 +29701,7 @@
 	  var allPristine = true;
 	  var tally = function tally(field) {
 	    if (field.error) {
-	      errors = _write2['default'](field.name, field.error, errors);
+	      errors = (0, _write2.default)(field.name, field.error, errors);
 	      allValid = false;
 	    }
 	    if (field.dirty) {
@@ -29692,10 +29709,10 @@
 	    }
 	  };
 	  var fieldObjects = previousFields ? previousFields.reduce(function (accumulator, previousField) {
-	    return ~fields.indexOf(previousField) ? accumulator : _removeField2['default'](accumulator, previousField);
+	    return ~fields.indexOf(previousField) ? accumulator : (0, _removeField2.default)(accumulator, previousField);
 	  }, _extends({}, myFields)) : _extends({}, myFields);
 	  fields.forEach(function (name) {
-	    _readField2['default'](form, name, undefined, fieldObjects, syncErrors, asyncValidate, isReactNative, props, tally);
+	    (0, _readField2.default)(form, name, undefined, fieldObjects, syncErrors, asyncValidate, isReactNative, props, tally);
 	  });
 	  Object.defineProperty(fieldObjects, '_meta', {
 	    value: {
@@ -29708,188 +29725,7 @@
 	  });
 	  return fieldObjects;
 	};
-	exports['default'] = readFields;
-	module.exports = exports['default'];
-
-/***/ },
-/* 292 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _eventsCreateOnBlur = __webpack_require__(293);
-
-	var _eventsCreateOnBlur2 = _interopRequireDefault(_eventsCreateOnBlur);
-
-	var _eventsCreateOnChange = __webpack_require__(296);
-
-	var _eventsCreateOnChange2 = _interopRequireDefault(_eventsCreateOnChange);
-
-	var _eventsCreateOnDragStart = __webpack_require__(297);
-
-	var _eventsCreateOnDragStart2 = _interopRequireDefault(_eventsCreateOnDragStart);
-
-	var _eventsCreateOnDrop = __webpack_require__(298);
-
-	var _eventsCreateOnDrop2 = _interopRequireDefault(_eventsCreateOnDrop);
-
-	var _eventsCreateOnFocus = __webpack_require__(299);
-
-	var _eventsCreateOnFocus2 = _interopRequireDefault(_eventsCreateOnFocus);
-
-	var _silencePromise = __webpack_require__(300);
-
-	var _silencePromise2 = _interopRequireDefault(_silencePromise);
-
-	var _read = __webpack_require__(274);
-
-	var _read2 = _interopRequireDefault(_read);
-
-	var _updateField = __webpack_require__(302);
-
-	var _updateField2 = _interopRequireDefault(_updateField);
-
-	var readField = function readField(_x2, _x3, _x4, _x5, _x6, _x7, _x8, _x9) {
-	  var _arguments = arguments;
-	  var _again = true;
-
-	  _function: while (_again) {
-	    var state = _x2,
-	        fieldName = _x3,
-	        pathToHere = _x4,
-	        fields = _x5,
-	        syncErrors = _x6,
-	        asyncValidate = _x7,
-	        isReactNative = _x8,
-	        props = _x9;
-	    if (pathToHere === undefined) pathToHere = '';
-	    _again = false;
-	    var callback = _arguments.length <= 8 || _arguments[8] === undefined ? function () {
-	      return null;
-	    } : _arguments[8];
-	    var asyncBlurFields = props.asyncBlurFields;
-	    var blur = props.blur;
-	    var change = props.change;
-	    var focus = props.focus;
-	    var form = props.form;
-	    var initialValues = props.initialValues;
-	    var readonly = props.readonly;
-	    var addArrayValue = props.addArrayValue;
-	    var removeArrayValue = props.removeArrayValue;
-	    var swapArrayValues = props.swapArrayValues;
-
-	    var dotIndex = fieldName.indexOf('.');
-	    var openIndex = fieldName.indexOf('[');
-	    var closeIndex = fieldName.indexOf(']');
-	    if (openIndex > 0 && closeIndex !== openIndex + 1) {
-	      throw new Error('found [ not followed by ]');
-	    }
-	    if (openIndex > 0 && (dotIndex < 0 || openIndex < dotIndex)) {
-	      var _ret = (function () {
-	        // array field
-	        var key = fieldName.substring(0, openIndex);
-	        var rest = fieldName.substring(closeIndex + 1);
-	        if (rest[0] === '.') {
-	          rest = rest.substring(1);
-	        }
-	        var stateArray = state && state[key] || [];
-	        if (!fields[key]) {
-	          fields[key] = [];
-	          Object.defineProperty(fields[key], 'addField', {
-	            value: function value(_value, index) {
-	              return addArrayValue(pathToHere + key, _value, index);
-	            }
-	          });
-	          Object.defineProperty(fields[key], 'removeField', {
-	            value: function value(index) {
-	              return removeArrayValue(pathToHere + key, index);
-	            }
-	          });
-	          Object.defineProperty(fields[key], 'swapFields', {
-	            value: function value(indexA, indexB) {
-	              return swapArrayValues(pathToHere + key, indexA, indexB);
-	            }
-	          });
-	        }
-	        var fieldArray = fields[key];
-	        stateArray.forEach(function (fieldState, index) {
-	          if (rest && !fieldArray[index]) {
-	            fieldArray[index] = {};
-	          }
-	          var dest = rest ? fieldArray[index] : {};
-	          var result = readField(fieldState, rest, '' + pathToHere + key + '[' + index + ']' + (rest ? '.' : ''), dest, syncErrors, asyncValidate, isReactNative, props, callback);
-	          if (!rest) {
-	            // if nothing after [] in field name, assign directly to array
-	            fieldArray[index] = result;
-	          }
-	        });
-	        if (fieldArray.length > stateArray.length) {
-	          // remove extra items that aren't in state array
-	          fieldArray.splice(stateArray.length, fieldArray.length - stateArray.length);
-	        }
-	        return {
-	          v: fieldArray
-	        };
-	      })();
-
-	      if (typeof _ret === 'object') return _ret.v;
-	    }
-	    if (dotIndex > 0) {
-	      // subobject field
-	      var key = fieldName.substring(0, dotIndex);
-	      var rest = fieldName.substring(dotIndex + 1);
-	      if (!fields[key]) {
-	        fields[key] = {};
-	      }
-	      _arguments = [_x2 = state[key] || {}, _x3 = rest, _x4 = pathToHere + key + '.', _x5 = fields[key], _x6 = syncErrors, _x7 = asyncValidate, _x8 = isReactNative, _x9 = props, callback];
-	      _again = true;
-	      callback = asyncBlurFields = blur = change = focus = form = initialValues = readonly = addArrayValue = removeArrayValue = swapArrayValues = dotIndex = openIndex = closeIndex = _ret = key = rest = undefined;
-	      continue _function;
-	    }
-	    var name = pathToHere + fieldName;
-	    var field = fields[fieldName] || {};
-	    if (field.name !== name) {
-	      var onChange = _eventsCreateOnChange2['default'](name, change, isReactNative);
-	      var initialFormValue = _read2['default'](name + '.initial', form);
-	      var initialValue = initialFormValue || _read2['default'](name, initialValues);
-	      field.name = name;
-	      field.defaultChecked = initialValue === true;
-	      field.defaultValue = initialValue;
-	      field.initialValue = initialValue;
-	      if (!readonly) {
-	        field.onBlur = _eventsCreateOnBlur2['default'](name, blur, isReactNative, ~asyncBlurFields.indexOf(name) && function (blurName, blurValue) {
-	          return _silencePromise2['default'](asyncValidate(blurName, blurValue));
-	        });
-	        field.onChange = onChange;
-	        field.onDragStart = _eventsCreateOnDragStart2['default'](name, function () {
-	          return field.value;
-	        });
-	        field.onDrop = _eventsCreateOnDrop2['default'](name, change);
-	        field.onFocus = _eventsCreateOnFocus2['default'](name, focus);
-	        field.onUpdate = onChange; // alias to support belle. https://github.com/nikgraf/belle/issues/58
-	      }
-	      field.valid = true;
-	      field.invalid = false;
-	      Object.defineProperty(field, '_isField', { value: true });
-	    }
-
-	    var fieldState = (fieldName ? state[fieldName] : state) || {};
-	    var syncError = _read2['default'](name, syncErrors);
-	    var updated = _updateField2['default'](field, fieldState, name === form._active, syncError);
-	    if (fieldName || fields[fieldName] !== updated) {
-	      fields[fieldName] = updated;
-	    }
-	    callback(updated);
-	    return updated;
-	  }
-	};
-
-	exports['default'] = readField;
-	module.exports = exports['default'];
+	exports.default = readFields;
 
 /***/ },
 /* 293 */
@@ -29899,23 +29735,209 @@
 
 	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _getValue = __webpack_require__(294);
+	var _createOnBlur = __webpack_require__(294);
 
-	var _getValue2 = _interopRequireDefault(_getValue);
+	var _createOnBlur2 = _interopRequireDefault(_createOnBlur);
 
-	var createOnBlur = function createOnBlur(name, blur, isReactNative, afterBlur) {
-	  return function (event) {
-	    var value = _getValue2['default'](event, isReactNative);
-	    blur(name, value);
-	    if (afterBlur) {
-	      afterBlur(name, value);
-	    }
-	  };
+	var _createOnChange = __webpack_require__(297);
+
+	var _createOnChange2 = _interopRequireDefault(_createOnChange);
+
+	var _createOnDragStart = __webpack_require__(298);
+
+	var _createOnDragStart2 = _interopRequireDefault(_createOnDragStart);
+
+	var _createOnDrop = __webpack_require__(299);
+
+	var _createOnDrop2 = _interopRequireDefault(_createOnDrop);
+
+	var _createOnFocus = __webpack_require__(300);
+
+	var _createOnFocus2 = _interopRequireDefault(_createOnFocus);
+
+	var _silencePromise = __webpack_require__(301);
+
+	var _silencePromise2 = _interopRequireDefault(_silencePromise);
+
+	var _read = __webpack_require__(274);
+
+	var _read2 = _interopRequireDefault(_read);
+
+	var _updateField = __webpack_require__(303);
+
+	var _updateField2 = _interopRequireDefault(_updateField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function getSuffix(input, closeIndex) {
+	  var suffix = input.substring(closeIndex + 1);
+	  if (suffix[0] === '.') {
+	    suffix = suffix.substring(1);
+	  }
+	  return suffix;
+	}
+
+	var getNextKey = function getNextKey(path) {
+	  var dotIndex = path.indexOf('.');
+	  var openIndex = path.indexOf('[');
+	  if (openIndex > 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	    return path.substring(0, openIndex);
+	  }
+	  return dotIndex > 0 ? path.substring(0, dotIndex) : path;
 	};
-	exports['default'] = createOnBlur;
-	module.exports = exports['default'];
+
+	var readField = function readField(state, fieldName) {
+	  var pathToHere = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+	  var fields = arguments[3];
+	  var syncErrors = arguments[4];
+	  var asyncValidate = arguments[5];
+	  var isReactNative = arguments[6];
+	  var props = arguments[7];
+	  var callback = arguments.length <= 8 || arguments[8] === undefined ? function () {
+	    return null;
+	  } : arguments[8];
+	  var prefix = arguments.length <= 9 || arguments[9] === undefined ? '' : arguments[9];
+	  var asyncBlurFields = props.asyncBlurFields;
+	  var blur = props.blur;
+	  var change = props.change;
+	  var focus = props.focus;
+	  var form = props.form;
+	  var initialValues = props.initialValues;
+	  var readonly = props.readonly;
+	  var addArrayValue = props.addArrayValue;
+	  var removeArrayValue = props.removeArrayValue;
+	  var swapArrayValues = props.swapArrayValues;
+
+	  var dotIndex = fieldName.indexOf('.');
+	  var openIndex = fieldName.indexOf('[');
+	  var closeIndex = fieldName.indexOf(']');
+	  if (openIndex > 0 && closeIndex !== openIndex + 1) {
+	    throw new Error('found [ not followed by ]');
+	  }
+
+	  if (openIndex > 0 && (dotIndex < 0 || openIndex < dotIndex)) {
+	    var _ret = function () {
+	      // array field
+	      var key = fieldName.substring(0, openIndex);
+	      var rest = getSuffix(fieldName, closeIndex);
+	      var stateArray = state && state[key] || [];
+	      var fullPrefix = prefix + fieldName.substring(0, closeIndex + 1);
+	      var subfields = props.fields.reduce(function (accumulator, field) {
+	        if (field.indexOf(fullPrefix) === 0) {
+	          accumulator.push(field);
+	        }
+	        return accumulator;
+	      }, []).map(function (field) {
+	        return getSuffix(field, prefix.length + closeIndex);
+	      });
+	      var addMethods = function addMethods(dest) {
+	        Object.defineProperty(dest, 'addField', {
+	          value: function value(_value, index) {
+	            return addArrayValue(pathToHere + key, _value, index, subfields);
+	          }
+	        });
+	        Object.defineProperty(dest, 'removeField', {
+	          value: function value(index) {
+	            return removeArrayValue(pathToHere + key, index);
+	          }
+	        });
+	        Object.defineProperty(dest, 'swapFields', {
+	          value: function value(indexA, indexB) {
+	            return swapArrayValues(pathToHere + key, indexA, indexB);
+	          }
+	        });
+	        return dest;
+	      };
+	      if (!fields[key] || fields[key].length !== stateArray.length) {
+	        fields[key] = fields[key] ? [].concat(fields[key]) : [];
+	        addMethods(fields[key]);
+	      }
+	      var fieldArray = fields[key];
+	      var changed = false;
+	      stateArray.forEach(function (fieldState, index) {
+	        if (rest && !fieldArray[index]) {
+	          fieldArray[index] = {};
+	          changed = true;
+	        }
+	        var dest = rest ? fieldArray[index] : {};
+	        var nextPath = '' + pathToHere + key + '[' + index + ']' + (rest ? '.' : '');
+	        var nextPrefix = '' + prefix + key + '[]' + (rest ? '.' : '');
+
+	        var result = readField(fieldState, rest, nextPath, dest, syncErrors, asyncValidate, isReactNative, props, callback, nextPrefix);
+	        if (!rest && fieldArray[index] !== result) {
+	          // if nothing after [] in field name, assign directly to array
+	          fieldArray[index] = result;
+	          changed = true;
+	        }
+	      });
+	      if (fieldArray.length > stateArray.length) {
+	        // remove extra items that aren't in state array
+	        fieldArray.splice(stateArray.length, fieldArray.length - stateArray.length);
+	      }
+	      return {
+	        v: changed ? addMethods([].concat(fieldArray)) : fieldArray
+	      };
+	    }();
+
+	    if (typeof _ret === "object") return _ret.v;
+	  }
+	  if (dotIndex > 0) {
+	    // subobject field
+	    var key = fieldName.substring(0, dotIndex);
+	    var rest = fieldName.substring(dotIndex + 1);
+	    var subobject = fields[key] || {};
+	    var nextPath = pathToHere + key + '.';
+	    var nextKey = getNextKey(rest);
+	    var previous = subobject[nextKey];
+	    var result = readField(state[key] || {}, rest, nextPath, subobject, syncErrors, asyncValidate, isReactNative, props, callback, nextPath);
+	    if (result !== previous) {
+	      var _extends2;
+
+	      subobject = _extends({}, subobject, (_extends2 = {}, _extends2[nextKey] = result, _extends2));
+	    }
+	    fields[key] = subobject;
+	    return subobject;
+	  }
+	  var name = pathToHere + fieldName;
+	  var field = fields[fieldName] || {};
+	  if (field.name !== name) {
+	    var onChange = (0, _createOnChange2.default)(name, change, isReactNative);
+	    var initialFormValue = (0, _read2.default)(name + '.initial', form);
+	    var initialValue = initialFormValue || (0, _read2.default)(name, initialValues);
+	    field.name = name;
+	    field.defaultChecked = initialValue === true;
+	    field.defaultValue = initialValue;
+	    field.initialValue = initialValue;
+	    if (!readonly) {
+	      field.onBlur = (0, _createOnBlur2.default)(name, blur, isReactNative, ~asyncBlurFields.indexOf(name) && function (blurName, blurValue) {
+	        return (0, _silencePromise2.default)(asyncValidate(blurName, blurValue));
+	      });
+	      field.onChange = onChange;
+	      field.onDragStart = (0, _createOnDragStart2.default)(name, function () {
+	        return field.value;
+	      });
+	      field.onDrop = (0, _createOnDrop2.default)(name, change);
+	      field.onFocus = (0, _createOnFocus2.default)(name, focus);
+	      field.onUpdate = onChange; // alias to support belle. https://github.com/nikgraf/belle/issues/58
+	    }
+	    field.valid = true;
+	    field.invalid = false;
+	    Object.defineProperty(field, '_isField', { value: true });
+	  }
+
+	  var fieldState = (fieldName ? state[fieldName] : state) || {};
+	  var syncError = (0, _read2.default)(name, syncErrors);
+	  var updated = (0, _updateField2.default)(field, fieldState, name === form._active, syncError);
+	  if (fieldName || fields[fieldName] !== updated) {
+	    fields[fieldName] = updated;
+	  }
+	  callback(updated);
+	  return updated;
+	};
+
+	exports.default = readField;
 
 /***/ },
 /* 294 */
@@ -29925,11 +29947,36 @@
 
 	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _getValue = __webpack_require__(295);
 
-	var _isEvent = __webpack_require__(295);
+	var _getValue2 = _interopRequireDefault(_getValue);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var createOnBlur = function createOnBlur(name, blur, isReactNative, afterBlur) {
+	  return function (event) {
+	    var value = (0, _getValue2.default)(event, isReactNative);
+	    blur(name, value);
+	    if (afterBlur) {
+	      afterBlur(name, value);
+	    }
+	  };
+	};
+	exports.default = createOnBlur;
+
+/***/ },
+/* 295 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _isEvent = __webpack_require__(296);
 
 	var _isEvent2 = _interopRequireDefault(_isEvent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var getSelectedValues = function getSelectedValues(options) {
 	  var result = [];
@@ -29945,7 +29992,7 @@
 	};
 
 	var getValue = function getValue(event, isReactNative) {
-	  if (_isEvent2['default'](event)) {
+	  if ((0, _isEvent2.default)(event)) {
 	    if (!isReactNative && event.nativeEvent && event.nativeEvent.text !== undefined) {
 	      return event.nativeEvent.text;
 	    }
@@ -29975,11 +30022,10 @@
 	  event;
 	};
 
-	exports['default'] = getValue;
-	module.exports = exports['default'];
+	exports.default = getValue;
 
 /***/ },
-/* 295 */
+/* 296 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29989,68 +30035,64 @@
 	  return !!(candidate && candidate.stopPropagation && candidate.preventDefault);
 	};
 
-	exports["default"] = isEvent;
-	module.exports = exports["default"];
+	exports.default = isEvent;
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _getValue = __webpack_require__(294);
+	var _getValue = __webpack_require__(295);
 
 	var _getValue2 = _interopRequireDefault(_getValue);
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	var createOnChange = function createOnChange(name, change, isReactNative) {
 	  return function (event) {
-	    return change(name, _getValue2['default'](event, isReactNative));
+	    return change(name, (0, _getValue2.default)(event, isReactNative));
 	  };
 	};
-	exports['default'] = createOnChange;
-	module.exports = exports['default'];
+	exports.default = createOnChange;
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	exports.__esModule = true;
-	var dataKey = 'value';
-	exports.dataKey = dataKey;
+	var dataKey = exports.dataKey = 'value';
 	var createOnDragStart = function createOnDragStart(name, getValue) {
 	  return function (event) {
 	    event.dataTransfer.setData(dataKey, getValue());
 	  };
 	};
 
-	exports['default'] = createOnDragStart;
+	exports.default = createOnDragStart;
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	var _createOnDragStart = __webpack_require__(297);
+	var _createOnDragStart = __webpack_require__(298);
 
 	var createOnDrop = function createOnDrop(name, change) {
 	  return function (event) {
 	    change(name, event.dataTransfer.getData(_createOnDragStart.dataKey));
 	  };
 	};
-	exports['default'] = createOnDrop;
-	module.exports = exports['default'];
+	exports.default = createOnDrop;
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -30061,36 +30103,34 @@
 	    return focus(name);
 	  };
 	};
-	exports["default"] = createOnFocus;
-	module.exports = exports["default"];
+	exports.default = createOnFocus;
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _isPromise = __webpack_require__(301);
+	var _isPromise = __webpack_require__(302);
 
 	var _isPromise2 = _interopRequireDefault(_isPromise);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var noop = function noop() {
 	  return undefined;
 	};
 
 	var silencePromise = function silencePromise(promise) {
-	  return _isPromise2['default'](promise) ? promise.then(noop, noop) : promise;
+	  return (0, _isPromise2.default)(promise) ? promise.then(noop, noop) : promise;
 	};
 
-	exports['default'] = silencePromise;
-	module.exports = exports['default'];
+	exports.default = silencePromise;
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports) {
 
 	module.exports = isPromise;
@@ -30101,7 +30141,7 @@
 
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30110,15 +30150,15 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _isPristine = __webpack_require__(303);
+	var _isPristine = __webpack_require__(304);
 
 	var _isPristine2 = _interopRequireDefault(_isPristine);
 
-	var _isValid = __webpack_require__(290);
+	var _isValid = __webpack_require__(291);
 
 	var _isValid2 = _interopRequireDefault(_isValid);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
 	 * Updates a field object from the store values
@@ -30133,7 +30173,7 @@
 	  }
 
 	  // update dirty/pristine
-	  var pristine = _isPristine2['default'](formField.value, formField.initial);
+	  var pristine = (0, _isPristine2.default)(formField.value, formField.initial);
 	  if (field.pristine !== pristine) {
 	    diff.dirty = !pristine;
 	    diff.pristine = pristine;
@@ -30144,7 +30184,7 @@
 	  if (error !== field.error) {
 	    diff.error = error;
 	  }
-	  var valid = _isValid2['default'](error);
+	  var valid = (0, _isValid2.default)(error);
 	  if (field.valid !== valid) {
 	    diff.invalid = !valid;
 	    diff.valid = valid;
@@ -30162,7 +30202,7 @@
 	    diff.visited = visited;
 	  }
 
-	  if (formField.initial && formField.initial !== field.initialValue) {
+	  if ('initial' in formField && formField.initial !== field.initialValue) {
 	    field.defaultChecked = formField.initial === true;
 	    field.defaultValue = formField.initial;
 	    field.initialValue = formField.initial;
@@ -30170,18 +30210,16 @@
 
 	  return Object.keys(diff).length ? _extends({}, field, diff) : field;
 	};
-	exports['default'] = updateField;
-	module.exports = exports['default'];
+	exports.default = updateField;
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	exports.__esModule = true;
-	exports['default'] = isPristine;
-
+	exports.default = isPristine;
 	function isPristine(initial, data) {
 	  if (initial === data) {
 	    return true;
@@ -30212,10 +30250,8 @@
 	  return true;
 	}
 
-	module.exports = exports['default'];
-
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30238,9 +30274,7 @@
 	    throw new Error('found [ not followed by ]');
 	  }
 	  if (openIndex > 0 && (dotIndex < 0 || openIndex < dotIndex)) {
-	    var _extends2;
-
-	    var _ret = (function () {
+	    var _ret = function () {
 	      // array field
 	      var key = path.substring(0, openIndex);
 	      if (!Array.isArray(fields[key])) {
@@ -30253,7 +30287,9 @@
 	        rest = rest.substring(1);
 	      }
 	      if (rest) {
-	        var _ret2 = (function () {
+	        var _ret2 = function () {
+	          var _extends2;
+
 	          var copy = [];
 	          fields[key].forEach(function (item, index) {
 	            var result = removeField(item, rest);
@@ -30266,16 +30302,16 @@
 	              v: copy.length ? _extends({}, fields, (_extends2 = {}, _extends2[key] = copy, _extends2)) : without(fields, key)
 	            }
 	          };
-	        })();
+	        }();
 
-	        if (typeof _ret2 === 'object') return _ret2.v;
+	        if (typeof _ret2 === "object") return _ret2.v;
 	      }
 	      return {
 	        v: without(fields, key)
 	      };
-	    })();
+	    }();
 
-	    if (typeof _ret === 'object') return _ret.v;
+	    if (typeof _ret === "object") return _ret.v;
 	  }
 	  if (dotIndex > 0) {
 	    var _extends3;
@@ -30292,26 +30328,25 @@
 	  return without(fields, path);
 	};
 
-	exports['default'] = removeField;
-	module.exports = exports['default'];
+	exports.default = removeField;
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _isPromise = __webpack_require__(301);
+	var _isPromise = __webpack_require__(302);
 
 	var _isPromise2 = _interopRequireDefault(_isPromise);
 
-	var _isValid = __webpack_require__(290);
+	var _isValid = __webpack_require__(291);
 
 	var _isValid2 = _interopRequireDefault(_isValid);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var handleSubmit = function handleSubmit(submit, values, props, asyncValidate) {
 	  var dispatch = props.dispatch;
@@ -30325,10 +30360,10 @@
 
 	  var syncErrors = validate(values, props);
 	  touch.apply(undefined, fields); // touch all fields
-	  if (_isValid2['default'](syncErrors)) {
+	  if ((0, _isValid2.default)(syncErrors)) {
 	    var doSubmit = function doSubmit() {
 	      var result = submit(values, dispatch);
-	      if (_isPromise2['default'](result)) {
+	      if ((0, _isPromise2.default)(result)) {
 	        startSubmit();
 	        return result.then(function (submitResult) {
 	          stopSubmit();
@@ -30343,7 +30378,7 @@
 	      return result;
 	    };
 	    var asyncValidateResult = asyncValidate();
-	    return _isPromise2['default'](asyncValidateResult) ?
+	    return (0, _isPromise2.default)(asyncValidateResult) ?
 	    // asyncValidateResult will be rejected if async validation failed
 	    asyncValidateResult.then(doSubmit, function () {
 	      submitFailed();
@@ -30351,38 +30386,41 @@
 	    }) : doSubmit(); // no async validation, so submit
 	  }
 	  submitFailed();
+
+	  if (returnRejectedSubmitPromise) {
+	    return Promise.reject(syncErrors);
+	  }
 	};
 
-	exports['default'] = handleSubmit;
-	module.exports = exports['default'];
+	exports.default = handleSubmit;
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _isPromise = __webpack_require__(301);
+	var _isPromise = __webpack_require__(302);
 
 	var _isPromise2 = _interopRequireDefault(_isPromise);
 
-	var _isValid = __webpack_require__(290);
+	var _isValid = __webpack_require__(291);
 
 	var _isValid2 = _interopRequireDefault(_isValid);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var asyncValidation = function asyncValidation(fn, start, stop, field) {
 	  start(field);
 	  var promise = fn();
-	  if (!_isPromise2['default'](promise)) {
+	  if (!(0, _isPromise2.default)(promise)) {
 	    throw new Error('asyncValidate function passed to reduxForm must return a promise');
 	  }
 	  var handleErrors = function handleErrors(rejected) {
 	    return function (errors) {
-	      if (!_isValid2['default'](errors)) {
+	      if (!(0, _isValid2.default)(errors)) {
 	        stop(errors);
 	        return Promise.reject();
 	      } else if (rejected) {
@@ -30396,35 +30434,7 @@
 	  return promise.then(handleErrors(false), handleErrors(true));
 	};
 
-	exports['default'] = asyncValidation;
-	module.exports = exports['default'];
-
-/***/ },
-/* 307 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _silenceEvent = __webpack_require__(308);
-
-	var _silenceEvent2 = _interopRequireDefault(_silenceEvent);
-
-	var silenceEvents = function silenceEvents(fn) {
-	  return function (event) {
-	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	      args[_key - 1] = arguments[_key];
-	    }
-
-	    return _silenceEvent2['default'](event) ? fn.apply(undefined, args) : fn.apply(undefined, [event].concat(args));
-	  };
-	};
-
-	exports['default'] = silenceEvents;
-	module.exports = exports['default'];
+	exports.default = asyncValidation;
 
 /***/ },
 /* 308 */
@@ -30434,25 +30444,50 @@
 
 	exports.__esModule = true;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _silenceEvent = __webpack_require__(309);
 
-	var _isEvent = __webpack_require__(295);
+	var _silenceEvent2 = _interopRequireDefault(_silenceEvent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var silenceEvents = function silenceEvents(fn) {
+	  return function (event) {
+	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      args[_key - 1] = arguments[_key];
+	    }
+
+	    return (0, _silenceEvent2.default)(event) ? fn.apply(undefined, args) : fn.apply(undefined, [event].concat(args));
+	  };
+	};
+
+	exports.default = silenceEvents;
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _isEvent = __webpack_require__(296);
 
 	var _isEvent2 = _interopRequireDefault(_isEvent);
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	var silenceEvent = function silenceEvent(event) {
-	  var is = _isEvent2['default'](event);
+	  var is = (0, _isEvent2.default)(event);
 	  if (is) {
 	    event.preventDefault();
 	  }
 	  return is;
 	};
 
-	exports['default'] = silenceEvent;
-	module.exports = exports['default'];
+	exports.default = silenceEvent;
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30470,33 +30505,32 @@
 	        return function (dispatch, ownProps) {
 	          return _extends({
 	            dispatch: dispatch
-	          }, mapDispatchToProps(dispatch, ownProps), _redux.bindActionCreators(actionCreators, dispatch));
+	          }, mapDispatchToProps(dispatch, ownProps), (0, _redux.bindActionCreators)(actionCreators, dispatch));
 	        };
 	      }
 	      return function (dispatch) {
 	        return _extends({
 	          dispatch: dispatch
-	        }, mapDispatchToProps(dispatch), _redux.bindActionCreators(actionCreators, dispatch));
+	        }, mapDispatchToProps(dispatch), (0, _redux.bindActionCreators)(actionCreators, dispatch));
 	      };
 	    }
 	    return function (dispatch) {
 	      return _extends({
 	        dispatch: dispatch
-	      }, _redux.bindActionCreators(mapDispatchToProps, dispatch), _redux.bindActionCreators(actionCreators, dispatch));
+	      }, (0, _redux.bindActionCreators)(mapDispatchToProps, dispatch), (0, _redux.bindActionCreators)(actionCreators, dispatch));
 	    };
 	  }
 	  return function (dispatch) {
 	    return _extends({
 	      dispatch: dispatch
-	    }, _redux.bindActionCreators(actionCreators, dispatch));
+	    }, (0, _redux.bindActionCreators)(actionCreators, dispatch));
 	  };
 	};
 
-	exports['default'] = wrapMapDispatchToProps;
-	module.exports = exports['default'];
+	exports.default = wrapMapDispatchToProps;
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30530,11 +30564,10 @@
 	  };
 	};
 
-	exports['default'] = wrapMapStateToProps;
-	module.exports = exports['default'];
+	exports.default = wrapMapStateToProps;
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -30576,11 +30609,10 @@
 	  };
 	};
 
-	exports["default"] = createPropTypes;
-	module.exports = exports["default"];
+	exports.default = createPropTypes;
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30595,13 +30627,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Nav = __webpack_require__(313);
+	var _reactRedux = __webpack_require__(160);
+
+	var _Nav = __webpack_require__(314);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
-	var _Footer = __webpack_require__(342);
+	var _Footer = __webpack_require__(343);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
+
+	var _Actions = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30621,6 +30657,16 @@
 		}
 
 		_createClass(Main, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var _props$location$query = this.props.location.query,
+				    token = _props$location$query.token,
+				    username = _props$location$query.username,
+				    userid = _props$location$query.userid;
+
+				if (token && username && userid) this.props.authUser(token, username, userid);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -30644,10 +30690,10 @@
 		return Main;
 	}(_react.Component);
 
-	exports.default = Main;
+	exports.default = (0, _reactRedux.connect)(null, { authUser: _Actions.authUser })(Main);
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30666,15 +30712,15 @@
 
 	var _reactRouter = __webpack_require__(200);
 
-	var _NavLink = __webpack_require__(314);
+	var _NavLink = __webpack_require__(315);
 
 	var _NavLink2 = _interopRequireDefault(_NavLink);
 
-	var _Searchbar = __webpack_require__(315);
+	var _Searchbar = __webpack_require__(316);
 
 	var _Searchbar2 = _interopRequireDefault(_Searchbar);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30854,7 +30900,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { signoutUser: _Actions.signoutUser }, null, { pure: false })(Nav);
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30915,7 +30961,7 @@
 	exports.default = NavLink;
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30932,7 +30978,7 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31015,7 +31061,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(Searchbar);
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31035,9 +31081,10 @@
 	exports.removeErroMessage = removeErroMessage;
 	exports.signinUser = signinUser;
 	exports.signupUser = signupUser;
+	exports.authUser = authUser;
 	exports.signoutUser = signoutUser;
 
-	var _axios = __webpack_require__(317);
+	var _axios = __webpack_require__(318);
 
 	var _axios2 = _interopRequireDefault(_axios);
 
@@ -31063,6 +31110,7 @@
 				_reactRouter.browserHistory.push('/');
 			} else {
 				_axios2.default.get(ROOT_URL + '?location=' + term + '&offset=' + offset + '&sort=' + sort + '&category_filter=bars').then(function (response) {
+					_reactRouter.browserHistory.push('/search?term=' + term + '&offset=' + offset + '&sort=' + sort);
 					dispatch({
 						type: 'GET_SPOTS',
 						payload: response.data.businesses
@@ -31079,7 +31127,6 @@
 					dispatch(setSort(sort));
 					dispatch(setTerm(term));
 					dispatch(setOffset(offset));
-					_reactRouter.browserHistory.push('/search?term=' + term + '&offset=' + offset + '&sort=' + sort);
 				}).catch(function (error) {
 					var status = error.response.status;
 
@@ -31167,21 +31214,7 @@
 				    userid = _response$data.userid,
 				    token = _response$data.token;
 
-				dispatch({
-					type: 'AUTH_USER',
-					payload: {
-						username: username,
-						userid: userid
-					}
-				});
-				//-save jwt token
-				localStorage.setItem('token', token);
-				localStorage.setItem('username', username);
-				localStorage.setItem('userid', userid);
-
-				_reactRouter.browserHistory.push('/');
-
-				dispatch(removeErroMessage());
+				dispatch(authUser(token, username, userid));
 			}).catch(function () {
 				//- show error message
 				dispatch(setErrorMessage('Bad Login Info'));
@@ -31204,26 +31237,30 @@
 				    username = _response$data2.username,
 				    userid = _response$data2.userid,
 				    token = _response$data2.token;
-				//-update state to indicate user is authenticated
 
-				dispatch({
-					type: 'AUTH_USER',
-					payload: {
-						username: username,
-						userid: userid
-					}
-				});
-				//-save jwt token
-				localStorage.setItem('token', token);
-				localStorage.setItem('username', username);
-				localStorage.setItem('userid', userid);
-
-				_reactRouter.browserHistory.push('/');
-
-				dispatch(removeErroMessage());
+				dispatch(authUser(token, username, userid));
 			}).catch(function (e) {
 				//- show error message
-				dispatch(setErrorMessage('This email or username are already in use'));
+				dispatch(setErrorMessage('This email or username is already in use'));
+			});
+		};
+	}
+
+	function authUser(token, username, userid) {
+		return function (dispatch) {
+			_reactRouter.browserHistory.push('/');
+			dispatch(removeErroMessage());
+
+			localStorage.setItem('token', token);
+			localStorage.setItem('username', username);
+			localStorage.setItem('userid', userid);
+
+			dispatch({
+				type: 'AUTH_USER',
+				payload: {
+					username: username,
+					userid: userid
+				}
 			});
 		};
 	}
@@ -31239,21 +31276,21 @@
 	}
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(318);
+	module.exports = __webpack_require__(319);
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
-	var bind = __webpack_require__(320);
-	var Axios = __webpack_require__(321);
-	var defaults = __webpack_require__(322);
+	var utils = __webpack_require__(320);
+	var bind = __webpack_require__(321);
+	var Axios = __webpack_require__(322);
+	var defaults = __webpack_require__(323);
 
 	/**
 	 * Create an instance of Axios
@@ -31286,15 +31323,15 @@
 	};
 
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(339);
-	axios.CancelToken = __webpack_require__(340);
-	axios.isCancel = __webpack_require__(336);
+	axios.Cancel = __webpack_require__(340);
+	axios.CancelToken = __webpack_require__(341);
+	axios.isCancel = __webpack_require__(337);
 
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(341);
+	axios.spread = __webpack_require__(342);
 
 	module.exports = axios;
 
@@ -31303,12 +31340,12 @@
 
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var bind = __webpack_require__(320);
+	var bind = __webpack_require__(321);
 
 	/*global toString:true*/
 
@@ -31608,7 +31645,7 @@
 
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31625,17 +31662,17 @@
 
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(322);
-	var utils = __webpack_require__(319);
-	var InterceptorManager = __webpack_require__(333);
-	var dispatchRequest = __webpack_require__(334);
-	var isAbsoluteURL = __webpack_require__(337);
-	var combineURLs = __webpack_require__(338);
+	var defaults = __webpack_require__(323);
+	var utils = __webpack_require__(320);
+	var InterceptorManager = __webpack_require__(334);
+	var dispatchRequest = __webpack_require__(335);
+	var isAbsoluteURL = __webpack_require__(338);
+	var combineURLs = __webpack_require__(339);
 
 	/**
 	 * Create a new instance of Axios
@@ -31716,13 +31753,13 @@
 
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(319);
-	var normalizeHeaderName = __webpack_require__(323);
+	var utils = __webpack_require__(320);
+	var normalizeHeaderName = __webpack_require__(324);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -31739,10 +31776,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(324);
+	    adapter = __webpack_require__(325);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(324);
+	    adapter = __webpack_require__(325);
 	  }
 	  return adapter;
 	}
@@ -31816,12 +31853,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
+	var utils = __webpack_require__(320);
 
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -31834,18 +31871,18 @@
 
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(319);
-	var settle = __webpack_require__(325);
-	var buildURL = __webpack_require__(328);
-	var parseHeaders = __webpack_require__(329);
-	var isURLSameOrigin = __webpack_require__(330);
-	var createError = __webpack_require__(326);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(331);
+	var utils = __webpack_require__(320);
+	var settle = __webpack_require__(326);
+	var buildURL = __webpack_require__(329);
+	var parseHeaders = __webpack_require__(330);
+	var isURLSameOrigin = __webpack_require__(331);
+	var createError = __webpack_require__(327);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(332);
 
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -31941,7 +31978,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(332);
+	      var cookies = __webpack_require__(333);
 
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -32018,12 +32055,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var createError = __webpack_require__(326);
+	var createError = __webpack_require__(327);
 
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -32049,12 +32086,12 @@
 
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var enhanceError = __webpack_require__(327);
+	var enhanceError = __webpack_require__(328);
 
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -32072,7 +32109,7 @@
 
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32097,12 +32134,12 @@
 
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
+	var utils = __webpack_require__(320);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -32171,12 +32208,12 @@
 
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
+	var utils = __webpack_require__(320);
 
 	/**
 	 * Parse headers into an object
@@ -32214,12 +32251,12 @@
 
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
+	var utils = __webpack_require__(320);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -32288,7 +32325,7 @@
 
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32330,12 +32367,12 @@
 
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
+	var utils = __webpack_require__(320);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -32389,12 +32426,12 @@
 
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
+	var utils = __webpack_require__(320);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -32447,15 +32484,15 @@
 
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
-	var transformData = __webpack_require__(335);
-	var isCancel = __webpack_require__(336);
-	var defaults = __webpack_require__(322);
+	var utils = __webpack_require__(320);
+	var transformData = __webpack_require__(336);
+	var isCancel = __webpack_require__(337);
+	var defaults = __webpack_require__(323);
 
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -32532,12 +32569,12 @@
 
 
 /***/ },
-/* 335 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(319);
+	var utils = __webpack_require__(320);
 
 	/**
 	 * Transform the data for a request or a response
@@ -32558,7 +32595,7 @@
 
 
 /***/ },
-/* 336 */
+/* 337 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32569,7 +32606,7 @@
 
 
 /***/ },
-/* 337 */
+/* 338 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32589,7 +32626,7 @@
 
 
 /***/ },
-/* 338 */
+/* 339 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32607,7 +32644,7 @@
 
 
 /***/ },
-/* 339 */
+/* 340 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32632,12 +32669,12 @@
 
 
 /***/ },
-/* 340 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Cancel = __webpack_require__(339);
+	var Cancel = __webpack_require__(340);
 
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -32695,7 +32732,7 @@
 
 
 /***/ },
-/* 341 */
+/* 342 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32728,7 +32765,7 @@
 
 
 /***/ },
-/* 342 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32765,7 +32802,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ className: 'footer' },
+					{ className: 'footer navbar navbar-fixed-bottom' },
 					'\u24B8 2017 Built by ',
 					_react2.default.createElement(
 						'a',
@@ -32788,7 +32825,7 @@
 	exports.default = Footer;
 
 /***/ },
-/* 343 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32864,7 +32901,7 @@
 	exports.default = NotFound404;
 
 /***/ },
-/* 344 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32879,7 +32916,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Searchbar = __webpack_require__(315);
+	var _Searchbar = __webpack_require__(316);
 
 	var _Searchbar2 = _interopRequireDefault(_Searchbar);
 
@@ -32927,7 +32964,7 @@
 	exports.default = IndexPage;
 
 /***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32946,17 +32983,17 @@
 
 	var _reactRouter = __webpack_require__(200);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
-	var _SpotsList = __webpack_require__(346);
+	var _SpotsList = __webpack_require__(347);
 
 	var _SpotsList2 = _interopRequireDefault(_SpotsList);
 
-	var _MapContainer = __webpack_require__(351);
+	var _MapContainer = __webpack_require__(352);
 
 	var _MapContainer2 = _interopRequireDefault(_MapContainer);
 
-	var _Alert = __webpack_require__(398);
+	var _Alert = __webpack_require__(399);
 
 	var _Alert2 = _interopRequireDefault(_Alert);
 
@@ -33029,7 +33066,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, setTerm: _Actions.setTerm, setOffset: _Actions.setOffset, setErrorMessage: _Actions.setErrorMessage })(SearchPage);
 
 /***/ },
-/* 346 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33046,19 +33083,19 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _SpotsListItem = __webpack_require__(347);
+	var _SpotsListItem = __webpack_require__(348);
 
 	var _SpotsListItem2 = _interopRequireDefault(_SpotsListItem);
 
-	var _Loader = __webpack_require__(348);
+	var _Loader = __webpack_require__(349);
 
 	var _Loader2 = _interopRequireDefault(_Loader);
 
-	var _DisplaySelector = __webpack_require__(349);
+	var _DisplaySelector = __webpack_require__(350);
 
 	var _DisplaySelector2 = _interopRequireDefault(_DisplaySelector);
 
-	var _Pagination = __webpack_require__(350);
+	var _Pagination = __webpack_require__(351);
 
 	var _Pagination2 = _interopRequireDefault(_Pagination);
 
@@ -33136,7 +33173,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(SpotsList);
 
 /***/ },
-/* 347 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33153,7 +33190,7 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33198,7 +33235,7 @@
 
 				if (displayType == 'GRID') return _react2.default.createElement(
 					'div',
-					{ className: 'col-xs-6 col-md-4 spots-list-item' },
+					{ className: 'col-sm-6 col-md-4 spots-list-item' },
 					_react2.default.createElement(
 						'div',
 						{ className: 'thumbnail' },
@@ -33358,7 +33395,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot, setMapCenter: _Actions.setMapCenter })(SpotsListItem);
 
 /***/ },
-/* 348 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -33414,7 +33451,7 @@
 	exports.default = Loader;
 
 /***/ },
-/* 349 */
+/* 350 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33431,7 +33468,7 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33558,7 +33595,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, changeDisplayType: _Actions.changeDisplayType })(DisplaySelector);
 
 /***/ },
-/* 350 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33577,7 +33614,7 @@
 
 	var _reactRouter = __webpack_require__(200);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33730,7 +33767,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots })(Pagination);
 
 /***/ },
-/* 351 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33747,15 +33784,15 @@
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _function = __webpack_require__(352);
+	var _function = __webpack_require__(353);
 
 	var _function2 = _interopRequireDefault(_function);
 
-	var _googleMapReact = __webpack_require__(354);
+	var _googleMapReact = __webpack_require__(355);
 
 	var _googleMapReact2 = _interopRequireDefault(_googleMapReact);
 
-	var _SpotOnMap = __webpack_require__(378);
+	var _SpotOnMap = __webpack_require__(379);
 
 	var _SpotOnMap2 = _interopRequireDefault(_SpotOnMap);
 
@@ -33853,7 +33890,7 @@
 	}(_react.Component);
 
 	MapContainer.defaultProps = {
-		zoom: 12
+		zoom: 14
 	};
 
 
@@ -33868,7 +33905,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(MapContainer);
 
 /***/ },
-/* 352 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33878,7 +33915,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _shallowEqual = __webpack_require__(353);
+	var _shallowEqual = __webpack_require__(354);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
@@ -33889,7 +33926,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 353 */
+/* 354 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33927,7 +33964,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 354 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33937,7 +33974,7 @@
 	});
 	exports.default = undefined;
 
-	var _google_map = __webpack_require__(355);
+	var _google_map = __webpack_require__(356);
 
 	var _google_map2 = _interopRequireDefault(_google_map);
 
@@ -33946,7 +33983,7 @@
 	exports.default = _google_map2.default;
 
 /***/ },
-/* 355 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -33967,67 +34004,67 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _shallowEqual = __webpack_require__(356);
+	var _shallowEqual = __webpack_require__(357);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _marker_dispatcher = __webpack_require__(357);
+	var _marker_dispatcher = __webpack_require__(358);
 
 	var _marker_dispatcher2 = _interopRequireDefault(_marker_dispatcher);
 
-	var _google_map_map = __webpack_require__(359);
+	var _google_map_map = __webpack_require__(360);
 
 	var _google_map_map2 = _interopRequireDefault(_google_map_map);
 
-	var _google_map_markers = __webpack_require__(360);
+	var _google_map_markers = __webpack_require__(361);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
-	var _google_map_markers_prerender = __webpack_require__(362);
+	var _google_map_markers_prerender = __webpack_require__(363);
 
 	var _google_map_markers_prerender2 = _interopRequireDefault(_google_map_markers_prerender);
 
-	var _google_map_loader = __webpack_require__(363);
+	var _google_map_loader = __webpack_require__(364);
 
 	var _google_map_loader2 = _interopRequireDefault(_google_map_loader);
 
-	var _detect = __webpack_require__(365);
+	var _detect = __webpack_require__(366);
 
 	var _detect2 = _interopRequireDefault(_detect);
 
-	var _geo = __webpack_require__(366);
+	var _geo = __webpack_require__(367);
 
 	var _geo2 = _interopRequireDefault(_geo);
 
-	var _array_helper = __webpack_require__(371);
+	var _array_helper = __webpack_require__(372);
 
 	var _array_helper2 = _interopRequireDefault(_array_helper);
 
-	var _is_plain_object = __webpack_require__(372);
+	var _is_plain_object = __webpack_require__(373);
 
 	var _is_plain_object2 = _interopRequireDefault(_is_plain_object);
 
-	var _pick = __webpack_require__(373);
+	var _pick = __webpack_require__(374);
 
 	var _pick2 = _interopRequireDefault(_pick);
 
-	var _raf = __webpack_require__(374);
+	var _raf = __webpack_require__(375);
 
 	var _raf2 = _interopRequireDefault(_raf);
 
-	var _log = __webpack_require__(375);
+	var _log = __webpack_require__(376);
 
 	var _log2 = _interopRequireDefault(_log);
 
-	var _isNumber = __webpack_require__(376);
+	var _isNumber = __webpack_require__(377);
 
 	var _isNumber2 = _interopRequireDefault(_isNumber);
 
-	var _omit = __webpack_require__(361);
+	var _omit = __webpack_require__(362);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
-	var _detectElementResize = __webpack_require__(377);
+	var _detectElementResize = __webpack_require__(378);
 
 	var _detectElementResize2 = _interopRequireDefault(_detectElementResize);
 
@@ -35006,7 +35043,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 356 */
+/* 357 */
 /***/ function(module, exports) {
 
 	/**
@@ -35078,7 +35115,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 357 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35089,7 +35126,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _eventemitter = __webpack_require__(358);
+	var _eventemitter = __webpack_require__(359);
 
 	var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
@@ -35142,7 +35179,7 @@
 	exports.default = MarkerDispatcher;
 
 /***/ },
-/* 358 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35437,7 +35474,7 @@
 
 
 /***/ },
-/* 359 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35497,7 +35534,7 @@
 	exports.default = GoogleMapMap;
 
 /***/ },
-/* 360 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35514,11 +35551,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _shallowEqual = __webpack_require__(356);
+	var _shallowEqual = __webpack_require__(357);
 
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 
-	var _omit = __webpack_require__(361);
+	var _omit = __webpack_require__(362);
 
 	var _omit2 = _interopRequireDefault(_omit);
 
@@ -35832,7 +35869,7 @@
 	exports.default = GoogleMapMarkers;
 
 /***/ },
-/* 361 */
+/* 362 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -35859,7 +35896,7 @@
 	exports.default = omit;
 
 /***/ },
-/* 362 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35882,7 +35919,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _google_map_markers = __webpack_require__(360);
+	var _google_map_markers = __webpack_require__(361);
 
 	var _google_map_markers2 = _interopRequireDefault(_google_map_markers);
 
@@ -35900,7 +35937,7 @@
 	};
 
 /***/ },
-/* 363 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -35921,7 +35958,7 @@
 	// TODO add libraries language and other map options
 	function googleMapLoader(bootstrapURLKeys) {
 	  if (!$script_) {
-	    $script_ = __webpack_require__(364); // eslint-disable-line
+	    $script_ = __webpack_require__(365); // eslint-disable-line
 	  }
 
 	  // call from outside google-map-react
@@ -35978,7 +36015,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 364 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -36107,7 +36144,7 @@
 
 
 /***/ },
-/* 365 */
+/* 366 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36156,7 +36193,7 @@
 	}
 
 /***/ },
-/* 366 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36169,15 +36206,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(367);
+	var _lat_lng = __webpack_require__(368);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(369);
+	var _pointGeometry = __webpack_require__(370);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _transform = __webpack_require__(370);
+	var _transform = __webpack_require__(371);
 
 	var _transform2 = _interopRequireDefault(_transform);
 
@@ -36315,7 +36352,7 @@
 	exports.default = Geo;
 
 /***/ },
-/* 367 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36326,7 +36363,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _wrap2 = __webpack_require__(368);
+	var _wrap2 = __webpack_require__(369);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -36370,7 +36407,7 @@
 	exports.default = LatLng;
 
 /***/ },
-/* 368 */
+/* 369 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36385,7 +36422,7 @@
 	}
 
 /***/ },
-/* 369 */
+/* 370 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36522,7 +36559,7 @@
 
 
 /***/ },
-/* 370 */
+/* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36533,15 +36570,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lat_lng = __webpack_require__(367);
+	var _lat_lng = __webpack_require__(368);
 
 	var _lat_lng2 = _interopRequireDefault(_lat_lng);
 
-	var _pointGeometry = __webpack_require__(369);
+	var _pointGeometry = __webpack_require__(370);
 
 	var _pointGeometry2 = _interopRequireDefault(_pointGeometry);
 
-	var _wrap = __webpack_require__(368);
+	var _wrap = __webpack_require__(369);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36702,7 +36739,7 @@
 	exports.default = Transform;
 
 /***/ },
-/* 371 */
+/* 372 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36724,7 +36761,7 @@
 	}
 
 /***/ },
-/* 372 */
+/* 373 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36762,7 +36799,7 @@
 	}
 
 /***/ },
-/* 373 */
+/* 374 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36783,7 +36820,7 @@
 	}
 
 /***/ },
-/* 374 */
+/* 375 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36803,7 +36840,7 @@
 	}
 
 /***/ },
-/* 375 */
+/* 376 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -36819,7 +36856,7 @@
 	exports.default = log2;
 
 /***/ },
-/* 376 */
+/* 377 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -36844,7 +36881,7 @@
 	}
 
 /***/ },
-/* 377 */
+/* 378 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37022,7 +37059,7 @@
 	};
 
 /***/ },
-/* 378 */
+/* 379 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37033,17 +37070,17 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _addons = __webpack_require__(379);
+	var _addons = __webpack_require__(380);
 
 	var _addons2 = _interopRequireDefault(_addons);
 
 	var _reactRedux = __webpack_require__(160);
 
-	var _function = __webpack_require__(352);
+	var _function = __webpack_require__(353);
 
 	var _function2 = _interopRequireDefault(_function);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37114,7 +37151,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot })(SpotOnMap);
 
 /***/ },
-/* 379 */
+/* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37129,11 +37166,11 @@
 	  'Access using require' + "('react-addons-{addon}') instead."
 	);
 
-	module.exports = __webpack_require__(380);
+	module.exports = __webpack_require__(381);
 
 
 /***/ },
-/* 380 */
+/* 381 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -37156,17 +37193,17 @@
 
 	'use strict';
 
-	var LinkedStateMixin = __webpack_require__(381);
+	var LinkedStateMixin = __webpack_require__(382);
 	var React = __webpack_require__(3);
-	var ReactComponentWithPureRenderMixin = __webpack_require__(384);
-	var ReactCSSTransitionGroup = __webpack_require__(386);
-	var ReactFragment = __webpack_require__(392);
-	var ReactTransitionGroup = __webpack_require__(387);
+	var ReactComponentWithPureRenderMixin = __webpack_require__(385);
+	var ReactCSSTransitionGroup = __webpack_require__(387);
+	var ReactFragment = __webpack_require__(393);
+	var ReactTransitionGroup = __webpack_require__(388);
 	var ReactUpdates = __webpack_require__(55);
 
-	var cloneWithProps = __webpack_require__(393);
-	var shallowCompare = __webpack_require__(385);
-	var update = __webpack_require__(396);
+	var cloneWithProps = __webpack_require__(394);
+	var shallowCompare = __webpack_require__(386);
+	var update = __webpack_require__(397);
 	var warning = __webpack_require__(26);
 
 	var warnedAboutBatchedUpdates = false;
@@ -37192,14 +37229,14 @@
 
 	if (process.env.NODE_ENV !== 'production') {
 	  React.addons.Perf = __webpack_require__(143);
-	  React.addons.TestUtils = __webpack_require__(397);
+	  React.addons.TestUtils = __webpack_require__(398);
 	}
 
 	module.exports = React;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 381 */
+/* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37216,8 +37253,8 @@
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(382);
-	var ReactStateSetters = __webpack_require__(383);
+	var ReactLink = __webpack_require__(383);
+	var ReactStateSetters = __webpack_require__(384);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -37240,7 +37277,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 382 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37314,7 +37351,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 383 */
+/* 384 */
 /***/ function(module, exports) {
 
 	/**
@@ -37423,7 +37460,7 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
-/* 384 */
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37439,7 +37476,7 @@
 
 	'use strict';
 
-	var shallowCompare = __webpack_require__(385);
+	var shallowCompare = __webpack_require__(386);
 
 	/**
 	 * If your React component's render function is "pure", e.g. it will render the
@@ -37474,7 +37511,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ },
-/* 385 */
+/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37503,7 +37540,7 @@
 	module.exports = shallowCompare;
 
 /***/ },
-/* 386 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37524,8 +37561,8 @@
 
 	var assign = __webpack_require__(40);
 
-	var ReactTransitionGroup = __webpack_require__(387);
-	var ReactCSSTransitionGroupChild = __webpack_require__(389);
+	var ReactTransitionGroup = __webpack_require__(388);
+	var ReactCSSTransitionGroupChild = __webpack_require__(390);
 
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -37591,7 +37628,7 @@
 	module.exports = ReactCSSTransitionGroup;
 
 /***/ },
-/* 387 */
+/* 388 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37608,7 +37645,7 @@
 	'use strict';
 
 	var React = __webpack_require__(3);
-	var ReactTransitionChildMapping = __webpack_require__(388);
+	var ReactTransitionChildMapping = __webpack_require__(389);
 
 	var assign = __webpack_require__(40);
 	var emptyFunction = __webpack_require__(16);
@@ -37801,7 +37838,7 @@
 	module.exports = ReactTransitionGroup;
 
 /***/ },
-/* 388 */
+/* 389 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37904,7 +37941,7 @@
 	module.exports = ReactTransitionChildMapping;
 
 /***/ },
-/* 389 */
+/* 390 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37924,8 +37961,8 @@
 	var React = __webpack_require__(3);
 	var ReactDOM = __webpack_require__(4);
 
-	var CSSCore = __webpack_require__(390);
-	var ReactTransitionEvents = __webpack_require__(391);
+	var CSSCore = __webpack_require__(391);
+	var ReactTransitionEvents = __webpack_require__(392);
 
 	var onlyChild = __webpack_require__(157);
 
@@ -38074,7 +38111,7 @@
 	module.exports = ReactCSSTransitionGroupChild;
 
 /***/ },
-/* 390 */
+/* 391 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -38177,7 +38214,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 391 */
+/* 392 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38291,7 +38328,7 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 392 */
+/* 393 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -38361,7 +38398,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 393 */
+/* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -38379,7 +38416,7 @@
 	'use strict';
 
 	var ReactElement = __webpack_require__(43);
-	var ReactPropTransferer = __webpack_require__(394);
+	var ReactPropTransferer = __webpack_require__(395);
 
 	var keyOf = __webpack_require__(80);
 	var warning = __webpack_require__(26);
@@ -38421,7 +38458,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 394 */
+/* 395 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38439,7 +38476,7 @@
 
 	var assign = __webpack_require__(40);
 	var emptyFunction = __webpack_require__(16);
-	var joinClasses = __webpack_require__(395);
+	var joinClasses = __webpack_require__(396);
 
 	/**
 	 * Creates a transfer strategy that will merge prop values using the supplied
@@ -38534,7 +38571,7 @@
 	module.exports = ReactPropTransferer;
 
 /***/ },
-/* 395 */
+/* 396 */
 /***/ function(module, exports) {
 
 	/**
@@ -38578,7 +38615,7 @@
 	module.exports = joinClasses;
 
 /***/ },
-/* 396 */
+/* 397 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -38691,7 +38728,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 397 */
+/* 398 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -39174,7 +39211,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 398 */
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39242,7 +39279,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Alert);
 
 /***/ },
-/* 399 */
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39263,9 +39300,9 @@
 
 	var _reduxForm = __webpack_require__(269);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
-	var _Alert = __webpack_require__(398);
+	var _Alert = __webpack_require__(399);
 
 	var _Alert2 = _interopRequireDefault(_Alert);
 
@@ -39371,10 +39408,10 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(
-	                  'button',
-	                  { className: 'btn btn-default btn-block' },
-	                  _react2.default.createElement('i', { className: 'fa fa-facebook facebook social-icon', 'aria-hidden': 'true' }),
-	                  'Sign in with Facebook'
+	                  'a',
+	                  { href: '/auth/facebook', className: 'btn btn-default btn-block' },
+	                  _react2.default.createElement('i', { className: 'fa fa-facebook facebook', 'aria-hidden': 'true' }),
+	                  'Sign up with Facebook'
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -39426,7 +39463,7 @@
 	}, null, { removeErroMessage: _Actions.removeErroMessage, signinUser: _Actions.signinUser })(Signin);
 
 /***/ },
-/* 400 */
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39447,11 +39484,11 @@
 
 	var _reduxForm = __webpack_require__(269);
 
-	var _Actions = __webpack_require__(316);
+	var _Actions = __webpack_require__(317);
 
 	var actions = _interopRequireWildcard(_Actions);
 
-	var _Alert = __webpack_require__(398);
+	var _Alert = __webpack_require__(399);
 
 	var _Alert2 = _interopRequireDefault(_Alert);
 
@@ -39486,6 +39523,7 @@
 	          email = _ref.email,
 	          password = _ref.password;
 
+	      console.log('formsubmit');
 	      this.props.signupUser({ username: username, email: email, password: password });
 	    }
 	  }, {
@@ -39508,10 +39546,10 @@
 	          { className: 'text-center' },
 	          'Sign Up'
 	        ),
-	        _react2.default.createElement('div', { className: 'col-sm-3 col-xs-2' }),
+	        _react2.default.createElement('div', { className: 'col-md-3 col-sm-2' }),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'col-sm-6 col-xs-8' },
+	          { className: 'col-md-6 col-sm-8' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'row auth' },
@@ -39588,19 +39626,18 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(
-	                  'button',
-	                  { className: 'btn btn-default btn-block' },
-	                  _react2.default.createElement('i', { className: 'fa fa-facebook facebook social-icon', 'aria-hidden': 'true' }),
+	                  'a',
+	                  { href: '/auth/facebook', className: 'btn btn-default btn-block' },
+	                  _react2.default.createElement('i', { className: 'fa fa-facebook facebook', 'aria-hidden': 'true' }),
 	                  'Sign up with Facebook'
 	                )
 	              ),
 	              _react2.default.createElement(
 	                'button',
 	                { className: 'btn btn-default btn-block' },
-	                _react2.default.createElement('i', { className: 'fa fa-twitter twitter social-icon', 'aria-hidden': 'true' }),
+	                _react2.default.createElement('i', { className: 'fa fa-twitter twitter', 'aria-hidden': 'true' }),
 	                'Sign up with Twitter'
-	              ),
-	              _react2.default.createElement('div', null)
+	              )
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -39614,7 +39651,7 @@
 	            )
 	          )
 	        ),
-	        _react2.default.createElement('div', { className: 'col-sm-3 col-xs-2' })
+	        _react2.default.createElement('div', { className: 'col-md-3 col-sm-2' })
 	      );
 	    }
 	  }]);
@@ -39667,7 +39704,6 @@
 	}, null, actions)(Signup);
 
 /***/ },
-/* 401 */,
 /* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -39702,7 +39738,7 @@
 
 
 	// module
-	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 0px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.dropdown-btn-wrapper {\n  padding: 5px; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin: 12px 10px; }\n\n.index-page {\n  background-size: cover !important;\n  background: url(\"/images/landing-bg.jpg\") no-repeat fixed;\n  background-position: center center;\n  min-height: 660px;\n  position: relative; }\n\n.landing-layer {\n  background-color: rgba(199, 54, 199, 0.2);\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\n.landing-layer:hover {\n  background-color: rgba(199, 54, 199, 0.1); }\n\n.index-page .searchbar {\n  padding: 30px;\n  background: rgba(0, 0, 0, 0.6);\n  margin-top: 40%;\n  border-radius: 3px; }\n\n.index-page .searchbar input, .index-page .searchbar button {\n  height: 50px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px 10px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding: 20px;\n  margin: 0; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item .thumbnail {\n  height: 450px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 100%;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.05); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: #fff;\n  padding: 20px 30px;\n  margin: 0px -15px;\n  border-top: 1px solid #ccc;\n  min-height: 60px; }\n\n.footer a {\n  color: #ff5a5f; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\n.auth-wrapper {\n  margin-top: 30px;\n  margin-bottom: 60px; }\n\n.auth {\n  margin-top: 30px;\n  margin-bottom: 20px;\n  color: #666;\n  border: 1px solid #ccc;\n  background: #fff; }\n\n.auth-form-wrapper, .social-wrapper {\n  padding: 30px; }\n\n@media (min-width: 992px) {\n  .auth-form-wrapper {\n    border-right: 1px solid #ccc; } }\n\n@media (max-width: 991px) {\n  .auth-form-wrapper {\n    border-bottom: 1px solid #ccc; } }\n\n.social-wrapper div {\n  margin-bottom: 15px; }\n\n.social-icon {\n  display: inline-block;\n  margin-right: 5px;\n  padding: 5px;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: white; }\n\n.facebook {\n  background: #415aa7; }\n\n.twitter {\n  background: #4897e0; }\n\n.social-wrapper {\n  text-align: left; }\n\n.content {\n  height: 100%;\n  background-color: #f7f7f7; }\n\nbody {\n  font-family: 'Arimo', sans-serif; }\n\n.no-padding {\n  padding: 0; }\n\n.btn-custom-danger {\n  color: #fff !important;\n  background-color: #ff5a5f; }\n\n.btn-custom-danger:hover {\n  background-color: #FF8689 !important; }\n\nh1, h2, h3 {\n  font-weight: normal; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n.alert-custom {\n  color: #537099;\n  background-color: #afc1d9;\n  border-color: #7a98bf;\n  margin: 10px; }\n\n.navbar-custom {\n  color: #666;\n  border-radius: 0;\n  min-height: 60px;\n  border-bottom: 1px solid #ccc;\n  background-color: #fff;\n  margin: 0px -15px; }\n\n.navbar-custom .navbar-nav > li > a {\n  color: #666;\n  line-height: 30px; }\n\n.navbar-custom .navbar-nav > .active > a,\n.navbar-nav > .active > a:hover,\n.navbar-nav > .active > a:focus,\n.nav > li > a:focus,\n.nav > li > a:hover,\n.nav .open > a,\n.nav .open > a:focus,\n.nav .open > a:hover,\n.navbar-toggle {\n  color: #ff5a5f;\n  background-color: #fff; }\n\n.dropdown-btn-wrapper {\n  padding: 5px; }\n\n.icon-bar {\n  background: #ff5a5f; }\n\n.btn-search {\n  background-color: #ff5a5f;\n  color: #fff;\n  margin-left: 5px; }\n\n.btn-search:hover {\n  color: #fff;\n  background-color: #FF8689; }\n\n.searchbar {\n  margin: 12px 10px; }\n\n.index-page {\n  background-size: cover !important;\n  background: url(\"/images/landing-bg.jpg\") no-repeat fixed;\n  background-position: center center;\n  min-height: 660px;\n  position: relative; }\n\n.landing-layer {\n  background-color: rgba(199, 54, 199, 0.2);\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  position: absolute; }\n\n.landing-layer:hover {\n  background-color: rgba(199, 54, 199, 0.1); }\n\n.index-page .searchbar {\n  padding: 30px;\n  background: rgba(0, 0, 0, 0.6);\n  margin-top: 40%;\n  border-radius: 3px; }\n\n.index-page .searchbar input, .index-page .searchbar button {\n  height: 50px; }\n\n@media (min-width: 768px) {\n  #right {\n    height: 80vh;\n    overflow-y: scroll;\n    border-left: 1px solid #ccc; } }\n\n.spots-list {\n  padding: 1px 10px; }\n\n.spots-list-wrapper {\n  border-top: 1px solid #ccc;\n  padding: 20px;\n  margin: 0; }\n\n.spots-list h2, p {\n  padding-left: 40px; }\n\n.spots-list-item .thumbnail {\n  height: 450px; }\n\n.spots-list-item img {\n  transition: all .2s ease-in-out;\n  width: 100%;\n  height: auto; }\n\n.spots-list-item img:hover {\n  transform: scale(1.05); }\n\n.spots-list-item .glyphicon {\n  color: #aaa;\n  display: inline-block;\n  margin-right: 5px; }\n\n.spots-list-item h3 {\n  margin-top: 0px;\n  font-size: 21px; }\n\n.btn-go, .btn-go .glyphicon, .spots-list-item a {\n  color: #ff5a5f; }\n\n.btn-go {\n  background-color: transparent;\n  padding: 10px 0; }\n\n.stars-container {\n  font-size: 24px;\n  position: relative;\n  display: inline-block;\n  color: transparent; }\n\n.stars-container:before {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: lightgray; }\n\n.stars-container:after {\n  position: absolute;\n  top: 0;\n  left: 0;\n  content: '\\2605\\2605\\2605\\2605\\2605';\n  color: #F0B74A;\n  overflow: hidden; }\n\n.stars-0:after {\n  width: 0%; }\n\n.stars-10:after {\n  width: 10%; }\n\n.stars-20:after {\n  width: 20%; }\n\n.stars-30:after {\n  width: 30%; }\n\n.stars-40:after {\n  width: 40%; }\n\n.stars-50:after {\n  width: 50%; }\n\n.stars-60:after {\n  width: 60%; }\n\n.stars-70:after {\n  width: 70%; }\n\n.stars-80:after {\n  width: 80%; }\n\n.stars-90:after {\n  width: 90%; }\n\n.stars-100:after {\n  width: 100; }\n\n.map-container {\n  height: 80vh;\n  padding: 1px; }\n\n.footer {\n  background: white;\n  padding: 20px 30px;\n  margin: 0px -15px;\n  border-top: 1px solid #ccc;\n  height: 68px; }\n\n#loader {\n  position: relative;\n  width: 234px;\n  height: 28px;\n  margin: auto;\n  margin-top: 25%; }\n\n.fountainG {\n  position: absolute;\n  top: 0;\n  background-color: #ccc;\n  width: 28px;\n  height: 28px;\n  animation-name: bounce_fountainG;\n  -o-animation-name: bounce_fountainG;\n  -ms-animation-name: bounce_fountainG;\n  -webkit-animation-name: bounce_fountainG;\n  -moz-animation-name: bounce_fountainG;\n  animation-duration: 1.5s;\n  -o-animation-duration: 1.5s;\n  -ms-animation-duration: 1.5s;\n  -webkit-animation-duration: 1.5s;\n  -moz-animation-duration: 1.5s;\n  animation-iteration-count: infinite;\n  -o-animation-iteration-count: infinite;\n  -ms-animation-iteration-count: infinite;\n  -webkit-animation-iteration-count: infinite;\n  -moz-animation-iteration-count: infinite;\n  animation-direction: normal;\n  -o-animation-direction: normal;\n  -ms-animation-direction: normal;\n  -webkit-animation-direction: normal;\n  -moz-animation-direction: normal;\n  transform: scale(0.3);\n  -o-transform: scale(0.3);\n  -ms-transform: scale(0.3);\n  -webkit-transform: scale(0.3);\n  -moz-transform: scale(0.3);\n  border-radius: 19px;\n  -o-border-radius: 19px;\n  -ms-border-radius: 19px;\n  -webkit-border-radius: 19px;\n  -moz-border-radius: 19px; }\n\n#fountainG_1 {\n  left: 0;\n  animation-delay: 0.6s;\n  -o-animation-delay: 0.6s;\n  -ms-animation-delay: 0.6s;\n  -webkit-animation-delay: 0.6s;\n  -moz-animation-delay: 0.6s; }\n\n#fountainG_2 {\n  left: 29px;\n  animation-delay: 0.75s;\n  -o-animation-delay: 0.75s;\n  -ms-animation-delay: 0.75s;\n  -webkit-animation-delay: 0.75s;\n  -moz-animation-delay: 0.75s; }\n\n#fountainG_3 {\n  left: 58px;\n  animation-delay: 0.9s;\n  -o-animation-delay: 0.9s;\n  -ms-animation-delay: 0.9s;\n  -webkit-animation-delay: 0.9s;\n  -moz-animation-delay: 0.9s; }\n\n#fountainG_4 {\n  left: 88px;\n  animation-delay: 1.05s;\n  -o-animation-delay: 1.05s;\n  -ms-animation-delay: 1.05s;\n  -webkit-animation-delay: 1.05s;\n  -moz-animation-delay: 1.05s; }\n\n#fountainG_5 {\n  left: 117px;\n  animation-delay: 1.2s;\n  -o-animation-delay: 1.2s;\n  -ms-animation-delay: 1.2s;\n  -webkit-animation-delay: 1.2s;\n  -moz-animation-delay: 1.2s; }\n\n#fountainG_6 {\n  left: 146px;\n  animation-delay: 1.35s;\n  -o-animation-delay: 1.35s;\n  -ms-animation-delay: 1.35s;\n  -webkit-animation-delay: 1.35s;\n  -moz-animation-delay: 1.35s; }\n\n#fountainG_7 {\n  left: 175px;\n  animation-delay: 1.5s;\n  -o-animation-delay: 1.5s;\n  -ms-animation-delay: 1.5s;\n  -webkit-animation-delay: 1.5s;\n  -moz-animation-delay: 1.5s; }\n\n#fountainG_8 {\n  left: 205px;\n  animation-delay: 1.64s;\n  -o-animation-delay: 1.64s;\n  -ms-animation-delay: 1.64s;\n  -webkit-animation-delay: 1.64s;\n  -moz-animation-delay: 1.64s; }\n\n@keyframes bounce_fountainG {\n  0% {\n    transform: scale(1);\n    background-color: #777; }\n  100% {\n    transform: scale(0.3);\n    background-color: white; } }\n\n@-o-keyframes bounce_fountainG {\n  0% {\n    -o-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -o-transform: scale(0.3);\n    background-color: white; } }\n\n@-ms-keyframes bounce_fountainG {\n  0% {\n    -ms-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -ms-transform: scale(0.3);\n    background-color: white; } }\n\n@-webkit-keyframes bounce_fountainG {\n  0% {\n    -webkit-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -webkit-transform: scale(0.3);\n    background-color: white; } }\n\n@-moz-keyframes bounce_fountainG {\n  0% {\n    -moz-transform: scale(1);\n    background-color: #777; }\n  100% {\n    -moz-transform: scale(0.3);\n    background-color: white; } }\n\n.spot-on-map {\n  position: absolute;\n  width: 35px;\n  height: 35px;\n  left: -17px;\n  top: -35px;\n  cursor: pointer; }\n\n.wrapper {\n  background: transparent;\n  position: relative; }\n\n.wrapper .tooltip {\n  z-index: 1000;\n  text-align: center;\n  background: #1496bb;\n  bottom: 100%;\n  color: #fff;\n  display: block;\n  left: -55px;\n  margin-bottom: 15px;\n  opacity: 0;\n  padding: 20px;\n  pointer-events: none;\n  position: absolute;\n  min-width: 150px;\n  -webkit-transform: translateY(10px);\n  -moz-transform: translateY(10px);\n  -ms-transform: translateY(10px);\n  -o-transform: translateY(10px);\n  transform: translateY(10px);\n  -webkit-transition: all .25s ease-out;\n  -moz-transition: all .25s ease-out;\n  -ms-transition: all .25s ease-out;\n  -o-transition: all .25s ease-out;\n  transition: all .25s ease-out;\n  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);\n  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28); }\n\n/* CSS Triangles - see Trevor's post */\n.wrapper .tooltip:after {\n  border-left: solid transparent 10px;\n  border-right: solid transparent 10px;\n  border-top: solid #1496bb 10px;\n  bottom: -10px;\n  content: \" \";\n  height: 0;\n  left: 50%;\n  margin-left: -13px;\n  position: absolute;\n  width: 0; }\n\n.wrapper:hover .tooltip {\n  opacity: 1;\n  pointer-events: auto;\n  -webkit-transform: translateY(0px);\n  -moz-transform: translateY(0px);\n  -ms-transform: translateY(0px);\n  -o-transform: translateY(0px);\n  transform: translateY(0px); }\n\n/* IE can just show/hide with no transition */\n.lte8 .wrapper .tooltip {\n  display: none; }\n\n.lte8 .wrapper:hover .tooltip {\n  display: block; }\n\n.selected-spot {\n  opacity: 1 !important; }\n\n.display-selector {\n  text-align: right;\n  margin-bottom: 20px; }\n\n.display-selector .wrapper, .display-selector div {\n  display: inline-block; }\n\n.display-selector .wrapper {\n  margin-right: 10px; }\n\n.selector-button {\n  width: 44px;\n  height: 44px;\n  font-size: 24px;\n  color: #c6c6c6;\n  text-align: center;\n  line-height: 45px;\n  border: 1px solid #c6c6c6;\n  border-radius: 2px;\n  margin: 0 3px;\n  cursor: pointer; }\n\n.selector-button:hover, .display-selector .active {\n  color: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.display-selector select {\n  margin-left: 5px;\n  width: 200px;\n  padding: 12px 35px 5px 5px;\n  font-size: 16px;\n  border: 1px solid #ccc;\n  height: 44px;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n  background: url(\"/images/arrow.png\") 96%/15% no-repeat #fff; }\n\n.pagination-wrapper {\n  margin-left: 10px; }\n\n.navigator {\n  display: inline; }\n\n.pagination-custom {\n  margin-top: 0;\n  margin-right: 0; }\n\n.pagination-custom li > a, .pagination-custom li > a:focus, .pagination-custom li > a:hover {\n  color: #ff5a5f; }\n\n.pagination-custom > .active a, .pagination-custom > .active a:hover {\n  color: #fff;\n  background: #ff5a5f;\n  border-color: #ff5a5f; }\n\n.pagination-info {\n  font-size: 18px;\n  height: 30px;\n  line-height: 30px; }\n\n.auth-wrapper {\n  margin-top: 30px;\n  margin-bottom: 60px; }\n\n.auth {\n  margin-top: 30px;\n  margin-bottom: 20px;\n  color: #666;\n  border: 1px solid #ccc;\n  background: #fff; }\n\n.auth-form-wrapper, .social-wrapper {\n  padding: 30px; }\n\n@media (min-width: 992px) {\n  .auth-form-wrapper {\n    border-right: 1px solid #ccc; } }\n\n@media (max-width: 991px) {\n  .auth-form-wrapper {\n    border-bottom: 1px solid #ccc; } }\n\n.social-wrapper div {\n  margin-bottom: 15px; }\n\n.auth .form-control {\n  height: 37px; }\n\n.social-wrapper .fa {\n  display: inline-block;\n  margin-right: 5px;\n  padding: 5px;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: white; }\n\n.facebook {\n  background: #415aa7; }\n\n.twitter {\n  background: #4897e0; }\n\n.content {\n  height: 100%; }\n\nbody {\n  font-family: 'Arimo', sans-serif;\n  padding-bottom: 60px;\n  background-color: #f7f7f7; }\n\na {\n  color: #ff5a5f; }\n\n.no-padding {\n  padding: 0; }\n\n.btn-custom-danger {\n  color: #fff !important;\n  background-color: #ff5a5f; }\n\n.btn-custom-danger:hover {\n  background-color: #FF8689 !important; }\n\nh1, h2, h3 {\n  font-weight: normal; }\n", ""]);
 
 	// exports
 

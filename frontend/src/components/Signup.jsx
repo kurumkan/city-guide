@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router';
 import {reduxForm} from 'redux-form';
+
 import * as actions from 'Actions';
 import Alert from 'Alert';
+
+
 
 class Signup extends Component {
   
@@ -11,8 +14,10 @@ class Signup extends Component {
   }
 
   handleFormSubmit({username, email, password}){
+  	console.log('formsubmit')
     this.props.signupUser({username, email, password});    
   }
+
   
   render() {
     var {handleSubmit, fields:{username, email, password, passwordConfirm}} = this.props;   
@@ -20,8 +25,8 @@ class Signup extends Component {
     return (
       <div className="row auth-wrapper">
         <h1 className="text-center">Sign Up</h1>
-        <div className="col-sm-3 col-xs-2"></div>
-        <div className='col-sm-6 col-xs-8'>
+        <div className="col-md-3 col-sm-2"></div>
+        <div className='col-md-6 col-sm-8'>
           <div className='row auth'>
             <Alert/>
             <div className="col-md-6 auth-form-wrapper">    
@@ -62,25 +67,23 @@ class Signup extends Component {
               </form>
             </div>
             <div className="col-md-6 social-wrapper">
-              <div>
-                <button className='btn btn-default btn-block'>
-                  <i className="fa fa-facebook facebook social-icon" aria-hidden="true"></i>
-                  Sign up with Facebook
-                </button>
+              <div>          
+            	<a href='/auth/facebook' className='btn btn-default btn-block'>
+	                <i className="fa fa-facebook facebook" aria-hidden="true"></i>
+	                Sign up with Facebook
+              	</a>              
               </div>
-                <button className='btn btn-default btn-block'>
-                  <i className="fa fa-twitter twitter social-icon" aria-hidden="true"></i>
-                  Sign up with Twitter
-                </button>
-              <div>
-              </div>
+              <button className='btn btn-default btn-block'>
+	            <i className="fa fa-twitter twitter" aria-hidden="true"></i>
+	            Sign up with Twitter
+              </button>              
             </div>           
           </div> 
             <div>
               Already have an account? <Link to='signin'>Log in »</Link>                         
             </div>           
          </div> 
-        <div className="col-sm-3 col-xs-2"></div>
+        <div className="col-md-3 col-sm-2"></div>
       </div>      
     );
   }

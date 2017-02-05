@@ -30,6 +30,7 @@ if(token){
 	store.dispatch({type:'AUTH_USER', payload: {username, userid}});
 }
 
+
 ReactDOM.render(
 	<Provider store={store}>
 		<Router history={browserHistory}>

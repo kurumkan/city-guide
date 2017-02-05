@@ -38,7 +38,7 @@ class DisplaySelector extends Component{
 		var {displayType} = this.state; 	
 		return (			
 			<div className='display-selector'>
-				<div className='wrapper'>								
+				<div className='wrapper'>
 					<div 
 						className={'selector-button '+(displayType=='GRID'?'active':'')}
 						onClick={this.handleClick.bind(this, 'GRID')}
@@ -51,6 +51,7 @@ class DisplaySelector extends Component{
 					>
 						<span className='glyphicon glyphicon-th-list' aria-hidden='true'></span>
 					</div>
+				
 					<div>					
 						<select className="form-control" value={this.state.sort} onChange={this.handleChange.bind(this)}>
 							<option disabled value='null'>Sort By</option>						
