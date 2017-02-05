@@ -6,15 +6,13 @@ import * as actions from 'Actions';
 import Alert from 'Alert';
 
 
-
 class Signup extends Component {
   
   componentWillMount() {
     this.props.removeErroMessage();
   }
 
-  handleFormSubmit({username, email, password}){
-  	console.log('formsubmit')
+  handleFormSubmit({username, email, password}){  	
     this.props.signupUser({username, email, password});    
   }
 
@@ -73,14 +71,14 @@ class Signup extends Component {
 	                Sign up with Facebook
               	</a>              
               </div>
-              <button className='btn btn-default btn-block'>
-	            <i className="fa fa-twitter twitter" aria-hidden="true"></i>
-	            Sign up with Twitter
-              </button>              
+              <a href='/auth/vk' className='btn btn-default btn-block'>
+	            <i className="fa fa-vk vk" aria-hidden="true"></i>
+	            Sign up with Vk.com
+              </a>
             </div>           
           </div> 
             <div>
-              Already have an account? <Link to='signin'>Log in »</Link>                         
+              Already have an account? <Link to='signin'>Sign in »</Link>                         
             </div>           
          </div> 
         <div className="col-md-3 col-sm-2"></div>
@@ -90,10 +88,12 @@ class Signup extends Component {
 }
 
 //simple email validator
-function validateEmail(email) {
+function validateEmail (email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
-}
+};
+
+
 
 function validate(fromProps){  
   var errors = {}; 

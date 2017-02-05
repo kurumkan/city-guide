@@ -69,10 +69,22 @@ passport.use(localLogin);
 
 
 
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+         done(err, user);
+    });
+});
+
+
+
 var FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
-        clientID: config.clientID, 
-        clientSecret: config.clientSecret, 
+        clientID: config.fb_clientID, 
+        clientSecret: config.fb_clientSecret, 
         callbackURL: "http://localhost:5000/auth/facebook/callback",
         profileFields: ['id', 'emails', 'profileUrl', 'displayName']        
     },function(accessToken, refreshToken, profile, done) {
@@ -99,8 +111,7 @@ passport.use(new FacebookStrategy({
                     	user.facebook.profileUrl = profile.profileUrl;
                     if(profile.id)
                     	user.facebook.fbid = profile.id;
-
-                    user.facebook.token = accessToken;                                                            
+                                                                              
                     user.facebook.displayName = profile.displayName;                    
 
                     user.save(function (err) {
@@ -113,12 +124,42 @@ passport.use(new FacebookStrategy({
     }
 ));
 
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
 
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-         done(err, user);
-    });
-});
+const vkStrategy = require('passport-vkontakte').Strategy;
+passport.use(new vkStrategy({
+		clientID: config.vk_clientID, 
+		clientSecret: config.vk_clientSecret,
+		callbackURL: "http://localhost:5000/auth/vk/callback",
+		scope: ['email'],
+    	profileFields: ['id', 'email', 'profileUrl', 'displayName']
+	},
+	function myVerifyCallbackFn(accessToken, refreshToken, params, profile, done){		
+
+		process.nextTick(function () {        	       	
+
+            User.findOne({ 'vk.vkid': profile.id }, function (err, user) {
+                
+                if (err) 
+                	return done(err);
+                if (user) {
+                    done(null, user);
+                } else {
+                    var user = new User();                                        
+                    user.vk.profileUrl = profile.profileUrl;                    
+                    user.vk.vkid = profile.id;                    
+                    user.vk.displayName = profile.displayName;                    
+
+                    user.save(function (err) {
+                        if (err) return done(err);
+                        done(null, user);
+                    });
+                }
+            });
+        });		
+	}
+));
+
+
+
+
+

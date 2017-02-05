@@ -43,6 +43,18 @@ app.get('/auth/facebook/callback',
         res.redirect('/?token='+token+'&username='+user.facebook.displayName+'&userid='+user._id);     	
 });
 
+//twitter login
+app.get('/auth/vk', passport.authenticate('vkontakte'));
+
+app.get('/auth/vk/callback',
+    passport.authenticate('vkontakte', { failureRedirect: '/signin'}),
+    function(req, res) { 
+    	var user = req.user;
+    	var token=Auth.getToken(user); 
+        res.redirect('/?token='+token+'&username='+user.vk.displayName+'&userid='+user._id);     	        
+});
+
+
 //jwt login
 app.post('/auth/signup', Auth.signup);
 app.post('/auth/signin', requireSignin, Auth.signin);

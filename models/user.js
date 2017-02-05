@@ -8,10 +8,14 @@ var userSchema = new Schema({
 	email: {type: String, unique:true, lowercase: true, trim: true, sparse: true},
 	password: {type: String, trim: true},	
     facebook: {
-        fbid:{type: String, unique:true, trim: true, sparse: true},
-        token:{type: String, trim: true},
+        fbid:{type: String, unique:true, trim: true, sparse: true},        
         displayName:{type: String,  trim: true},        
         profileUrl:{type: String, unique:true, trim: true, sparse: true}
+    },
+    vk: {
+    	vkid: {type: String, unique:true, trim: true, sparse: true},        
+    	displayName:{type: String,  trim: true},
+    	profileUrl:{type: String, unique:true, trim: true, sparse: true}
     }
 });
 

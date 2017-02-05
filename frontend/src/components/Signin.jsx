@@ -54,10 +54,10 @@ class Signin extends Component {
                   Sign up with Facebook
                 </a>
               </div>
-                <button className='btn btn-default btn-block'>
-                  <i className="fa fa-twitter twitter social-icon" aria-hidden="true"></i>
+                <a href='/auth/vk' className='btn btn-default btn-block'>
+                  <i className="fa fa-vk vk" aria-hidden="true"></i>
                   Sign in with Twitter
-                </button>
+                </a>
               <div>
               </div>
             </div>             
