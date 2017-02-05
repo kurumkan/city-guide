@@ -30,25 +30,22 @@ var passport = require('passport');
 var requireAuth = passport.authenticate('jwt', {session: false});
 var requireSignin = passport.authenticate('local', {session: false});
 
+//auth routes
 
+//facebook login
 app.use(passport.initialize());
 app.get('/auth/facebook', passport.authenticate('facebook', {scope:['email']}));
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/signin' }),
     function(req, res) { 
-    	console.log('inside app.js',req.user)
     	var user = req.user;
     	var token=Auth.getToken(user); 
         res.redirect('/?token='+token+'&username='+user.facebook.displayName+'&userid='+user._id);     	
 });
 
-
-
-
-
-//auth routes
-app.post('/signup', Auth.signup);
-app.post('/signin', requireSignin, Auth.signin);
+//jwt login
+app.post('/auth/signup', Auth.signup);
+app.post('/auth/signin', requireSignin, Auth.signin);
 
 
 app.get("/api/spots", function(request, response){		

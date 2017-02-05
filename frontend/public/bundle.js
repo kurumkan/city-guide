@@ -31207,7 +31207,7 @@
 
 
 		return function (dispatch) {
-			_axios2.default.post('/signin', { login: login, password: password }).then(function (response) {
+			_axios2.default.post('/auth/signin', { login: login, password: password }).then(function (response) {
 				//-update state to indicate user is authenticated
 				var _response$data = response.data,
 				    username = _response$data.username,
@@ -31232,7 +31232,7 @@
 		//this function will immediately be called by redux thunk with dispatch method
 
 		return function (dispatch) {
-			_axios2.default.post('/signup', { username: username, email: email, password: password }).then(function (response) {
+			_axios2.default.post('/auth/signup', { username: username, email: email, password: password }).then(function (response) {
 				var _response$data2 = response.data,
 				    username = _response$data2.username,
 				    userid = _response$data2.userid,

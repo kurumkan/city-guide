@@ -120,7 +120,7 @@ export function removeErroMessage(){
 export function signinUser({login, password}){	
 	
 	return function(dispatch){		
-		axios.post('/signin', {login, password})
+		axios.post('/auth/signin', {login, password})
 			.then((response)=>{				
 				//-update state to indicate user is authenticated
 				var {username, userid, token} = response.data;
@@ -139,7 +139,7 @@ export function signupUser({username, email, password}){
 	//this function will immediately be called by redux thunk with dispatch method
 	
 	return function(dispatch){		
-		axios.post('/signup', {username, email, password})
+		axios.post('/auth/signup', {username, email, password})
 			.then((response)=>{			
 				var {username, userid, token} = response.data;					
 				dispatch(authUser(token, username, userid));	
