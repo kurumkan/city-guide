@@ -31129,19 +31129,14 @@
 	}
 
 	function changeVisitStatus(id) {
-		console.log(id, localStorage.getItem('token'));
 		return function (dispatch) {
-			// axios.put(ROOT_URL+id, null, {
-			// 	headers: {'authorization' : localStorage.getItem('token')}				
-			// })
-			// 	.then((response)=>{
-			// 		console.log(response)
-			// 		dispatch(removeErroMessage());
-			// 	})
-			// 	.catch((error)=>{				
-			// 		console.log(error)
-			// 		dispatch(setErrorMessage('Something went wrong. We are working on it.'));
-			// 	})
+			_axios2.default.put(ROOT_URL + id, null, {
+				headers: { 'authorization': localStorage.getItem('token') }
+			}).then(function (response) {
+				dispatch(removeErroMessage());
+			}).catch(function (error) {
+				dispatch(setErrorMessage('Something went wrong. We are working on it.'));
+			});
 		};
 	}
 

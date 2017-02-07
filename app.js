@@ -77,7 +77,7 @@ app.get("/api/spots", function(request, response){
 	};	
 	//making a request to Yelp api
 	requestYelp(params, function(error, res, body){
-		console.log('request!!')
+		
 		if(error){
 			handleError(response, error, 'YELP');
 		}else{
@@ -89,20 +89,12 @@ app.get("/api/spots", function(request, response){
 				handleError(response, error, 'YELP');
 			}else{
 				var businesses = body.businesses;
-				var ids = businesses.map((b)=>b.id);
-
-				// Spot.create({
-				// 		visitors: [mongoose.Types.ObjectId('5899e304c8641a431150c3b3')],
-				// 				   id: 'gordons-wine-bar-london-4'	
-				// 	}, function(error, spot){
-
-				// });				
+				var ids = businesses.map((b)=>b.id);			
 				
 				Spot.find({
 						'id':{$in: ids}
 					},
-					function(error, docs){
-						console.log('insidefunction')
+					function(error, docs){						
 						if(error)
 							handleError(request, error);
 						else{							
@@ -131,18 +123,38 @@ app.get("/api/spots", function(request, response){
 
 app.put('/api/spots/:id', requireAuth, function(request, response){
 	var id = request.params.id;
-	console.log(id)
 	
-	Spot.findOneAndUpdate({id:id}, {upsert: true},function(error, spot){
+	//response.json({status: 'ok'})	
+	Spot.findOne({id: id}, function(error, spot){
+		
 		if(error){								
 			handle500(response, error);		
 		}else{
 			var userId=request.user._id;
-			console.log(spot)
-			spot.visitors.push(userId);
-			spot.save();
-
-			response.json({id: spot.id});									
+			//spot with the id exist - update
+			if(spot){	
+				var indexOf = spot.visitors.indexOf(mongoose.Types.ObjectId(userId));
+				if(indexOf<0)
+					spot.visitors.push(userId);
+				else
+					spot.visitors.splice(indexOf,1);
+		
+				spot.save();	
+				response.json({id: spot.id});		
+			}else{
+				//create new spot
+				spot = {
+					id: id,
+					visitors:[userId]
+				}
+				Spot.create(spot, function(error, newSpot){
+					if(error)
+						handle500(response, error);		
+					else{						
+						response.json({id: spot.id});				
+					}
+				})
+			}							
 		}
 	});
 });

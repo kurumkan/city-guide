@@ -55,20 +55,17 @@ export function getSpots(term, offset, sort){
 	}	
 }
 
-export function changeVisitStatus(id){
-	console.log(id, localStorage.getItem('token'))
+export function changeVisitStatus(id){	
 	return function(dispatch){
-		// axios.put(ROOT_URL+id, null, {
-		// 	headers: {'authorization' : localStorage.getItem('token')}				
-		// })
-		// 	.then((response)=>{
-		// 		console.log(response)
-		// 		dispatch(removeErroMessage());
-		// 	})
-		// 	.catch((error)=>{				
-		// 		console.log(error)
-		// 		dispatch(setErrorMessage('Something went wrong. We are working on it.'));
-		// 	})
+		axios.put(ROOT_URL+id, null, {
+			headers: {'authorization' : localStorage.getItem('token')}				
+		})
+			.then((response)=>{				
+				dispatch(removeErroMessage());
+			})
+			.catch((error)=>{								
+				dispatch(setErrorMessage('Something went wrong. We are working on it.'));
+			})
 	}	
 }
 
