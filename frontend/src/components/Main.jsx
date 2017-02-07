@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import Nav from 'Nav';
 import Footer from 'Footer';
-import {authUser} from 'Actions';
 
-class Main extends Component{
-	componentWillMount() {		
-		var {token, username, userid} = this.props.location.query;
-		if(token&&username&&userid)
-			this.props.authUser(token, username, userid);	
-	}
-
+export default class Main extends Component{
 	render() {		
 		return (
 			<div className='container-fluid main'>
@@ -27,4 +19,4 @@ class Main extends Component{
 	}
 }
 
-export default connect(null, {authUser})(Main);
+

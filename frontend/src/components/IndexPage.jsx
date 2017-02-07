@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import {authUser} from 'Actions';
 import Searchbar from 'Searchbar';
 
-export default class IndexPage extends Component{		
+class IndexPage extends Component{		
+	
+	componentWillMount() {		
+		var {token, username, userid} = this.props.location.query;
+		if(token&&username&&userid)
+			this.props.authUser(token, username, userid);	
+	}
 
 	render() {		
 		return (			
@@ -20,4 +29,6 @@ export default class IndexPage extends Component{
 	}
 }
 
+
+export default connect(null, {authUser})(IndexPage);
 

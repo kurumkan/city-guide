@@ -30627,8 +30627,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(160);
-
 	var _Nav = __webpack_require__(314);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
@@ -30636,8 +30634,6 @@
 	var _Footer = __webpack_require__(343);
 
 	var _Footer2 = _interopRequireDefault(_Footer);
-
-	var _Actions = __webpack_require__(317);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30657,16 +30653,6 @@
 		}
 
 		_createClass(Main, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
-				var _props$location$query = this.props.location.query,
-				    token = _props$location$query.token,
-				    username = _props$location$query.username,
-				    userid = _props$location$query.userid;
-
-				if (token && username && userid) this.props.authUser(token, username, userid);
-			}
-		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -30690,7 +30676,7 @@
 		return Main;
 	}(_react.Component);
 
-	exports.default = (0, _reactRedux.connect)(null, { authUser: _Actions.authUser })(Main);
+	exports.default = Main;
 
 /***/ },
 /* 314 */
@@ -31070,6 +31056,7 @@
 		value: true
 	});
 	exports.getSpots = getSpots;
+	exports.changeVisitStatus = changeVisitStatus;
 	exports.selectSpot = selectSpot;
 	exports.setMapCenter = setMapCenter;
 	exports.setTerm = setTerm;
@@ -31141,6 +31128,23 @@
 		};
 	}
 
+	function changeVisitStatus(id) {
+		console.log(id, localStorage.getItem('token'));
+		return function (dispatch) {
+			// axios.put(ROOT_URL+id, null, {
+			// 	headers: {'authorization' : localStorage.getItem('token')}				
+			// })
+			// 	.then((response)=>{
+			// 		console.log(response)
+			// 		dispatch(removeErroMessage());
+			// 	})
+			// 	.catch((error)=>{				
+			// 		console.log(error)
+			// 		dispatch(setErrorMessage('Something went wrong. We are working on it.'));
+			// 	})
+		};
+	}
+
 	function selectSpot(id) {
 		return {
 			type: 'SELECT_SPOT',
@@ -31156,6 +31160,7 @@
 	}
 
 	function setTerm(term) {
+		localStorage.setItem('term', term);
 		return {
 			type: 'SET_TERM',
 			payload: term
@@ -31163,6 +31168,7 @@
 	}
 
 	function setSort(sort) {
+		localStorage.setItem('sort', sort);
 		return {
 			type: 'SET_SORT',
 			payload: sort
@@ -31170,6 +31176,7 @@
 	}
 
 	function setOffset(offset) {
+		localStorage.setItem('offset', offset);
 		return {
 			type: 'SET_OFFSET',
 			payload: offset
@@ -31227,9 +31234,6 @@
 		    email = _ref2.email,
 		    password = _ref2.password;
 
-		//by using redux-thunk we have direct access to dispatch method
-		//also action creator now returns a function, no an object
-		//this function will immediately be called by redux thunk with dispatch method
 
 		return function (dispatch) {
 			_axios2.default.post('/auth/signup', { username: username, email: email, password: password }).then(function (response) {
@@ -31248,7 +31252,6 @@
 
 	function authUser(token, username, userid) {
 		return function (dispatch) {
-			_reactRouter.browserHistory.push('/');
 			dispatch(removeErroMessage());
 
 			localStorage.setItem('token', token);
@@ -31262,6 +31265,12 @@
 					userid: userid
 				}
 			});
+
+			var term = localStorage.getItem('term');
+			var sort = localStorage.getItem('sort');
+			var offset = localStorage.getItem('offset');
+
+			if (term && sort && offset) dispatch(getSpots(term, offset, sort));else _reactRouter.browserHistory.push('/');
 		};
 	}
 
@@ -31269,6 +31278,10 @@
 		localStorage.removeItem('token');
 		localStorage.removeItem('username');
 		localStorage.removeItem('userid');
+
+		localStorage.removeItem('term');
+		localStorage.removeItem('sort');
+		localStorage.removeItem('offset');
 		_reactRouter.browserHistory.push('/');
 		return {
 			type: 'UNAUTH_USER'
@@ -32916,6 +32929,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRedux = __webpack_require__(160);
+
+	var _Actions = __webpack_require__(317);
+
 	var _Searchbar = __webpack_require__(316);
 
 	var _Searchbar2 = _interopRequireDefault(_Searchbar);
@@ -32938,6 +32955,16 @@
 		}
 
 		_createClass(IndexPage, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var _props$location$query = this.props.location.query,
+				    token = _props$location$query.token,
+				    username = _props$location$query.username,
+				    userid = _props$location$query.userid;
+
+				if (token && username && userid) this.props.authUser(token, username, userid);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -32961,7 +32988,7 @@
 		return IndexPage;
 	}(_react.Component);
 
-	exports.default = IndexPage;
+	exports.default = (0, _reactRedux.connect)(null, { authUser: _Actions.authUser })(IndexPage);
 
 /***/ },
 /* 346 */
@@ -33203,35 +33230,77 @@
 	var SpotsListItem = function (_Component) {
 		_inherits(SpotsListItem, _Component);
 
-		function SpotsListItem() {
+		function SpotsListItem(props) {
 			_classCallCheck(this, SpotsListItem);
 
-			return _possibleConstructorReturn(this, (SpotsListItem.__proto__ || Object.getPrototypeOf(SpotsListItem)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (SpotsListItem.__proto__ || Object.getPrototypeOf(SpotsListItem)).call(this, props));
+
+			_this.state = {
+				visitStatus: false,
+				numVisitors: 0
+			};
+			return _this;
 		}
 
 		_createClass(SpotsListItem, [{
-			key: 'handleClick',
-			value: function handleClick(e) {
-				var _props = this.props,
-				    spot = _props.spot,
-				    selectSpot = _props.selectSpot,
-				    setMapCenter = _props.setMapCenter;
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				var spot = this.props.spot;
 
-				selectSpot(spot.id);
-				setMapCenter({
-					lat: spot.location.coordinate.latitude,
-					lng: spot.location.coordinate.longitude
+				var userId = localStorage.getItem('userid');
+				if (userId && spot.visitors && spot.visitors.indexOf(userId) >= 0) this.setState({ visitStatus: true });
+
+				if (spot.visitors) this.setState({
+					numVisitors: spot.visitors.length
 				});
+			}
+		}, {
+			key: 'handleClick',
+			value: function handleClick(key) {
+				var spot = this.props.spot;
+
+				if (key == 'pin') {
+					var _props = this.props,
+					    selectSpot = _props.selectSpot,
+					    setMapCenter = _props.setMapCenter;
+
+					selectSpot(spot.id);
+					setMapCenter({
+						lat: spot.location.coordinate.latitude,
+						lng: spot.location.coordinate.longitude
+					});
+				} else {
+					var _state = this.state,
+					    visitStatus = _state.visitStatus,
+					    numVisitors = _state.numVisitors;
+
+					visitStatus = !visitStatus;
+
+					if (visitStatus) numVisitors++;else numVisitors--;
+
+					this.setState({ visitStatus: visitStatus, numVisitors: numVisitors });
+
+					this.props.changeVisitStatus(spot.id);
+				}
 			}
 		}, {
 			key: 'render',
 			value: function render() {
 				var _props2 = this.props,
 				    spot = _props2.spot,
-				    displayType = _props2.displayType;
+				    displayType = _props2.displayType,
+				    authenticated = _props2.authenticated;
 
 				var name = spot.name.substring(0, 25);
 				name = name.length == 25 ? name + '...' : name;
+
+				var _state2 = this.state,
+				    numVisitors = _state2.numVisitors,
+				    visitStatus = _state2.visitStatus;
+
+				var buttonClass = "glyphicon glyphicon-plus";
+
+				if (visitStatus) buttonClass = "glyphicon glyphicon-ok";
 
 				if (displayType == 'GRID') return _react2.default.createElement(
 					'div',
@@ -33269,9 +33338,10 @@
 								null,
 								_react2.default.createElement(
 									'button',
-									{ className: 'btn btn-go' },
-									_react2.default.createElement('span', { className: 'glyphicon glyphicon-plus', 'aria-hidden': 'true' }),
-									'0 going'
+									{ className: 'btn btn-go', disabled: !authenticated, onClick: this.handleClick.bind(this, 'iamgoing') },
+									_react2.default.createElement('span', { className: buttonClass, 'aria-hidden': 'true' }),
+									numVisitors,
+									' going'
 								)
 							),
 							_react2.default.createElement(
@@ -33279,7 +33349,7 @@
 								null,
 								_react2.default.createElement(
 									'button',
-									{ className: 'btn btn-go', onClick: this.handleClick.bind(this) },
+									{ className: 'btn btn-go', onClick: this.handleClick.bind(this, 'pin') },
 									_react2.default.createElement('span', { className: 'glyphicon glyphicon-pushpin', 'aria-hidden': 'true' }),
 									'Pinpoint'
 								)
@@ -33335,9 +33405,10 @@
 								null,
 								_react2.default.createElement(
 									'button',
-									{ className: 'btn btn-go' },
-									_react2.default.createElement('span', { className: 'glyphicon glyphicon-plus', 'aria-hidden': 'true' }),
-									'0 going'
+									{ className: 'btn btn-go', disabled: !authenticated, onClick: this.handleClick.bind(this, 'iamgoing') },
+									_react2.default.createElement('span', { className: buttonClass, 'aria-hidden': 'true' }),
+									numVisitors,
+									' going'
 								)
 							),
 							_react2.default.createElement(
@@ -33345,7 +33416,7 @@
 								null,
 								_react2.default.createElement(
 									'button',
-									{ className: 'btn btn-go', onClick: this.handleClick.bind(this) },
+									{ className: 'btn btn-go', onClick: this.handleClick.bind(this, 'pin') },
 									_react2.default.createElement('span', { className: 'glyphicon glyphicon-pushpin', 'aria-hidden': 'true' }),
 									'Pinpoint'
 								)
@@ -33386,13 +33457,15 @@
 
 	function mapStateToProps(state) {
 		var displayType = state.displayType;
+		var authenticated = state.auth.authenticated;
 
 		return {
-			displayType: displayType
+			displayType: displayType,
+			authenticated: authenticated
 		};
 	}
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot, setMapCenter: _Actions.setMapCenter })(SpotsListItem);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, { selectSpot: _Actions.selectSpot, setMapCenter: _Actions.setMapCenter, changeVisitStatus: _Actions.changeVisitStatus })(SpotsListItem);
 
 /***/ },
 /* 349 */
@@ -39418,7 +39491,7 @@
 	                'a',
 	                { href: '/auth/vk', className: 'btn btn-default btn-block' },
 	                _react2.default.createElement('i', { className: 'fa fa-vk vk', 'aria-hidden': 'true' }),
-	                'Sign in with Twitter'
+	                'Sign in with Vk.com'
 	              ),
 	              _react2.default.createElement('div', null)
 	            )

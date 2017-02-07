@@ -56,7 +56,7 @@ class Signin extends Component {
               </div>
                 <a href='/auth/vk' className='btn btn-default btn-block'>
                   <i className="fa fa-vk vk" aria-hidden="true"></i>
-                  Sign in with Twitter
+                  Sign in with Vk.com
                 </a>
               <div>
               </div>

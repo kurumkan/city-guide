@@ -9,6 +9,7 @@ var {handleError, requestYelp} = require("./util_helpers.js");
 
 mongoose.connect("mongodb://localhost/cityguide");
 var User = require('./models/user');
+var Spot = require('./models/spot');
 
 
 app.use(function(req, res, next){
@@ -60,6 +61,7 @@ app.post('/auth/signup', Auth.signup);
 app.post('/auth/signin', requireSignin, Auth.signin);
 
 
+
 app.get("/api/spots", function(request, response){		
 	var location = request.query.location,
 		offset = request.query.offset,
@@ -75,6 +77,7 @@ app.get("/api/spots", function(request, response){
 	};	
 	//making a request to Yelp api
 	requestYelp(params, function(error, res, body){
+		console.log('request!!')
 		if(error){
 			handleError(response, error, 'YELP');
 		}else{
@@ -82,18 +85,66 @@ app.get("/api/spots", function(request, response){
 			if(body.error){
 				var error = {
 					stack: body.error
-				}				
-				handleError(response, error, 'YELP');	
-			}else{			
-				response.json({
-					businesses: body.businesses,
-					latitude: body.region.center.latitude,
-					longitude: body.region.center.longitude,
-					total: body.total
-				});			
+				}
+				handleError(response, error, 'YELP');
+			}else{
+				var businesses = body.businesses;
+				var ids = businesses.map((b)=>b.id);
+
+				// Spot.create({
+				// 		visitors: [mongoose.Types.ObjectId('5899e304c8641a431150c3b3')],
+				// 				   id: 'gordons-wine-bar-london-4'	
+				// 	}, function(error, spot){
+
+				// });				
+				
+				Spot.find({
+						'id':{$in: ids}
+					},
+					function(error, docs){
+						console.log('insidefunction')
+						if(error)
+							handleError(request, error);
+						else{							
+							for(var i=0; i<businesses.length; i++){
+								for(j=0; j<docs.length; j++){
+									if(businesses[i].id==docs[j].id){
+										businesses[i].visitors = docs[j].visitors;
+										docs.splice(j,1);
+										break;
+									}
+								}								
+							}							
+						}
+						response.json({
+							businesses: businesses,
+							latitude: body.region.center.latitude,
+							longitude: body.region.center.longitude,
+							total: body.total
+						});			
+					}
+				);
 			}			
 		}
 	});	
+});
+
+app.put('/api/spots/:id', requireAuth, function(request, response){
+	var id = request.params.id;
+	console.log(id)
+	
+	Spot.findOneAndUpdate({id:id}, {upsert: true},function(error, spot){
+		if(error){								
+			handle500(response, error);		
+		}else{
+			var userId=request.user._id;
+			console.log(spot)
+			spot.visitors.push(userId);
+			spot.save();
+
+			response.json({id: spot.id});									
+		}
+	});
 });
 
 app.get('*', function (request, response){		

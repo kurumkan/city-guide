@@ -8,7 +8,7 @@ var configs = require('./config.js');
 
 module.exports = {	
 	//handle internal errors
-	handleError: function(response, error, type){
+	handleError: function(response, error, type=''){
 		console.log(error.stack);
 		
 		if(type=='YELP'){			

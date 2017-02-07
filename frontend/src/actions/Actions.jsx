@@ -55,6 +55,24 @@ export function getSpots(term, offset, sort){
 	}	
 }
 
+export function changeVisitStatus(id){
+	console.log(id, localStorage.getItem('token'))
+	return function(dispatch){
+		// axios.put(ROOT_URL+id, null, {
+		// 	headers: {'authorization' : localStorage.getItem('token')}				
+		// })
+		// 	.then((response)=>{
+		// 		console.log(response)
+		// 		dispatch(removeErroMessage());
+		// 	})
+		// 	.catch((error)=>{				
+		// 		console.log(error)
+		// 		dispatch(setErrorMessage('Something went wrong. We are working on it.'));
+		// 	})
+	}	
+}
+
+
 export function selectSpot(id){	
 	return {
 		type: 'SELECT_SPOT',
@@ -70,6 +88,7 @@ export function setMapCenter(coords){
 }
 
 export function setTerm(term){
+	localStorage.setItem('term', term);
 	return {
 		type: 'SET_TERM',
 		payload: term
@@ -77,6 +96,7 @@ export function setTerm(term){
 }
 
 export function setSort(sort){
+	localStorage.setItem('sort', sort);
 	return {
 		type: 'SET_SORT',
 		payload: sort
@@ -84,6 +104,7 @@ export function setSort(sort){
 }
 
 export function setOffset(offset){
+	localStorage.setItem('offset', offset);
 	return {
 		type: 'SET_OFFSET',
 		payload: offset
@@ -134,9 +155,6 @@ export function signinUser({login, password}){
 }
 
 export function signupUser({username, email, password}){
-	//by using redux-thunk we have direct access to dispatch method
-	//also action creator now returns a function, no an object
-	//this function will immediately be called by redux thunk with dispatch method
 	
 	return function(dispatch){		
 		axios.post('/auth/signup', {username, email, password})
@@ -152,8 +170,7 @@ export function signupUser({username, email, password}){
 }
 
 export function authUser(token, username, userid){	
-	return function(dispatch){
-		browserHistory.push('/');	
+	return function(dispatch){		
 		dispatch(removeErroMessage());
 				
 		localStorage.setItem('token', token);
@@ -167,6 +184,15 @@ export function authUser(token, username, userid){
 				userid
 			}
 		});
+		
+		var term = localStorage.getItem('term');
+		var sort = localStorage.getItem('sort');
+		var offset = localStorage.getItem('offset');
+
+		if(term&&sort&&offset)
+			dispatch(getSpots(term, offset, sort));
+		else
+			browserHistory.push('/');	
 	}	
 }
 
@@ -174,6 +200,10 @@ export function signoutUser(){
 	localStorage.removeItem('token');
 	localStorage.removeItem('username');
 	localStorage.removeItem('userid');
+
+	localStorage.removeItem('term');
+	localStorage.removeItem('sort');
+	localStorage.removeItem('offset');
 	browserHistory.push('/');	
 	return {
 		type: 'UNAUTH_USER'
