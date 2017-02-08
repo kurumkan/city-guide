@@ -68,7 +68,7 @@ passport.use(localLogin);
 
 
 
-
+//serializeUser and deserializeUser are required for social strategies(facebook, vk etc.)
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });

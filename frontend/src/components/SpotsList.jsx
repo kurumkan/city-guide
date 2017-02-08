@@ -17,8 +17,7 @@ class SpotsList extends Component{
 	}
 
 	render() {
-		var {spots, term, error, isLoading} = this.props;
-		console.log('spots', spots);		
+		var {spots, term, error, isLoading} = this.props;			
 		
 		if(isLoading){
 			return <Loader />;

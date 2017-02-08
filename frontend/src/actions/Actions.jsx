@@ -55,6 +55,7 @@ export function getSpots(term, offset, sort){
 	}	
 }
 
+//update visit status 
 export function changeVisitStatus(id){	
 	return function(dispatch){
 		axios.put(ROOT_URL+id, null, {
@@ -69,7 +70,7 @@ export function changeVisitStatus(id){
 	}	
 }
 
-
+//highlight a particular spot on a map
 export function selectSpot(id){	
 	return {
 		type: 'SELECT_SPOT',
@@ -77,6 +78,7 @@ export function selectSpot(id){
 	};
 }
 
+//set the map center with some coordinates
 export function setMapCenter(coords){
 	return {
 		type: 'SET_MAP_CENTER',
@@ -84,6 +86,7 @@ export function setMapCenter(coords){
 	};	
 }
 
+//set search term
 export function setTerm(term){
 	localStorage.setItem('term', term);
 	return {
@@ -92,6 +95,7 @@ export function setTerm(term){
 	}
 }
 
+//set sort param
 export function setSort(sort){
 	localStorage.setItem('sort', sort);
 	return {
@@ -100,6 +104,7 @@ export function setSort(sort){
 	}
 }
 
+//set offset param
 export function setOffset(offset){
 	localStorage.setItem('offset', offset);
 	return {
@@ -108,20 +113,20 @@ export function setOffset(offset){
 	}
 }
 
-
 export function changeLoadingStatus(){			
 	return {
 		type: 'CHANGE_LOADING_STATUS'
 	}
 }
 
+//change display type - GRID or LIST
 export function changeDisplayType(){	
 	return {
 		type: 'CHANGE_DISPLAY_TYPE'		
 	}
 }
 
-
+//set new error message
 export function setErrorMessage(error){
 	return {
 		type: 'SET_ERROR',
@@ -129,6 +134,7 @@ export function setErrorMessage(error){
 	}
 }
 
+//remove error message
 export function removeErroMessage(){		
 	return {
 		type: 'REMOVE_ERROR'
