@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import {browserHistory} from 'react-router';
 
 
-import {getSpots, setSort, setTerm, setOffset, setErrorMessage} from 'Actions';
-import SpotsList from 'SpotsList'
-import MapContainer from 'MapContainer';
-
-import Alert from 'Alert';
+import {getSpots, setSort, setTerm, setOffset, setErrorMessage} from 'actions/Actions';
+import SpotsList from 'components/SpotsList'
+import MapContainer from 'components/MapContainer';
+import Alert from 'components/Alert';
 
 class SearchPage extends Component{		
 

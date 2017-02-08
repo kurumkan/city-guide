@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 import {reduxForm} from 'redux-form';
 
-import {removeErroMessage, signinUser} from 'Actions';
-import Alert from 'Alert';
+import {removeErroMessage, signinUser} from 'actions/Actions';
+import Alert from 'components/Alert';
 
 
 class Signin extends Component {

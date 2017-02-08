@@ -11,9 +11,7 @@ module.exports = {
     root: __dirname,
     modulesDirectories: [
       'node_modules',
-      './frontend/src/components',
-      './frontend/src/actions',
-      './frontend/src/reducers',      
+      './frontend/src/'      
     ],
     alias: {
       applicationStyles: 'frontend/src/styles/app.scss',      

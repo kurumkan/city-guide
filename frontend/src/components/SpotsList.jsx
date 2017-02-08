@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
-import SpotsListItem from 'SpotsListItem';
-import Loader from 'Loader';
-import DisplaySelector from 'DisplaySelector';
-import Pagination from 'Pagination';
+
+import SpotsListItem from 'components/SpotsListItem';
+import Loader from 'components/Loader';
+import DisplaySelector from 'components/DisplaySelector';
+import Pagination from 'components/Pagination';
 
 class SpotsList extends Component{
 

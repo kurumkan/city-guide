@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
-import ReducerSpots from 'ReducerSpots';
-import ErrorReducer from 'ErrorReducer';
-import ReducerSearch from 'ReducerSearch';
-import ReducerLoader from 'ReducerLoader';
-import ReducerDisplayType from 'ReducerDisplayType';
-import AuthReducer from 'AuthReducer';
+
+import ReducerSpots from 'reducers/ReducerSpots';
+import ErrorReducer from 'reducers/ErrorReducer';
+import ReducerSearch from 'reducers/ReducerSearch';
+import ReducerLoader from 'reducers/ReducerLoader';
+import ReducerDisplayType from 'reducers/ReducerDisplayType';
+import AuthReducer from 'reducers/AuthReducer';
 import {reducer as form} from 'redux-form';
 
 

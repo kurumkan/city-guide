@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {selectSpot, setMapCenter, changeVisitStatus} from 'Actions';
+
+import {selectSpot, setMapCenter, changeVisitStatus} from 'actions/Actions';
 
 class SpotsListItem extends Component{
 

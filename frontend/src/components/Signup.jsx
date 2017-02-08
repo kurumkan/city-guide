@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 import {reduxForm} from 'redux-form';
 
-import * as actions from 'Actions';
-import Alert from 'Alert';
+import * as actions from 'actions/Actions';
+import Alert from 'components/Alert';
 
 
 class Signup extends Component {

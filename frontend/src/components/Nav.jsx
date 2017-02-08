@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {IndexLink, Link} from 'react-router';
 
-import NavLink from 'NavLink';
-import Searchbar from 'Searchbar';
-import {signoutUser} from 'Actions';
+import NavLink from 'components/NavLink';
+import Searchbar from 'components/Searchbar';
+import {signoutUser} from 'actions/Actions';
 
 class Nav extends Component{
 

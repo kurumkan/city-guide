@@ -2,7 +2,7 @@ import React, {PropTypes, Component} from 'react/addons';
 import { connect } from 'react-redux';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
-import {selectSpot} from 'Actions';
+import {selectSpot} from 'actions/Actions';
 
 
 class SpotOnMap extends Component {

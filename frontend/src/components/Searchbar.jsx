@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import {getSpots} from 'Actions';
+import {getSpots} from 'actions/Actions';
 
 class Searchbar extends Component{
 	constructor(props) {

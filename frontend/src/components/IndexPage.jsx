@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import {authUser} from 'Actions';
-import Searchbar from 'Searchbar';
+import {authUser} from 'actions/Actions';
+import Searchbar from 'components/Searchbar';
 
 class IndexPage extends Component{		
 	

@@ -8,16 +8,16 @@ import ReduxThunk from 'redux-thunk';
 // App css
 require('style!css!sass!applicationStyles');
 
-import RootReducer from 'RootReducer';
+import RootReducer from 'reducers/RootReducer';
 
-import Main from 'Main';
-import NotFound404 from 'NotFound404';
-import IndexPage from 'IndexPage';
-import SearchPage from 'SearchPage';
+import Main from 'components/Main';
+import NotFound404 from 'components/NotFound404';
+import IndexPage from 'components/IndexPage';
+import SearchPage from 'components/SearchPage';
 
 //auth components
-import Signin from 'Signin';
-import Signup from 'Signup';
+import Signin from 'components/Signin';
+import Signup from 'components/Signup';
 
 var createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 var store = createStoreWithMiddleware(RootReducer);

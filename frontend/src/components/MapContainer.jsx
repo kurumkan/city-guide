@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 import GoogleMap from 'google-map-react';
 
-import SpotOnMap from 'SpotOnMap'
+import SpotOnMap from 'components/SpotOnMap'
 const API_KEY = 'AIzaSyBnOUUxJEsZI_9aQ3-yIF22MTbysMsEFVw';
 
 class MapContainer extends Component {

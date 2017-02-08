@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router';
 
-import {getSpots} from 'Actions';
+import {getSpots} from 'actions/Actions';
 
 class Pagination extends Component{
 	range(end) {
