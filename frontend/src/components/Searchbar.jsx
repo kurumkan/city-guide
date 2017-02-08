@@ -6,9 +6,7 @@ import {getSpots} from 'Actions';
 class Searchbar extends Component{
 	constructor(props) {
 		super(props);		
-		this.state={term:''};		
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.state={term:''};				
 	}
 
 	handleChange(e){
@@ -26,10 +24,10 @@ class Searchbar extends Component{
 	}
 	render() {		
 		return (
-			<form className="searchbar" onSubmit={this.handleSubmit}>								
+			<form className="searchbar" onSubmit={this.handleSubmit.bind(this)}>
 				<div className="input-group">
 					<input type="text" className="form-control" placeholder="Type a location" 
-						onChange={this.handleChange}
+						onChange={this.handleChange.bind(this)}
 						value={this.state.term}
 					/>
 					<span className="input-group-btn">

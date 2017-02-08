@@ -6,7 +6,6 @@ var mongoose = require("mongoose");
 
 var {handleError, requestYelp} = require("./util_helpers.js");
 
-
 mongoose.connect("mongodb://localhost/cityguide");
 var User = require('./models/user');
 var Spot = require('./models/spot');
@@ -32,7 +31,6 @@ var requireAuth = passport.authenticate('jwt', {session: false});
 var requireSignin = passport.authenticate('local', {session: false});
 
 //auth routes
-
 //facebook login
 app.use(passport.initialize());
 app.get('/auth/facebook', passport.authenticate('facebook', {scope:['email']}));
@@ -44,7 +42,7 @@ app.get('/auth/facebook/callback',
         res.redirect('/?token='+token+'&username='+user.facebook.displayName+'&userid='+user._id);     	
 });
 
-//twitter login
+//vkontakte login
 app.get('/auth/vk', passport.authenticate('vkontakte'));
 
 app.get('/auth/vk/callback',
@@ -61,8 +59,9 @@ app.post('/auth/signup', Auth.signup);
 app.post('/auth/signin', requireSignin, Auth.signin);
 
 
-
+//index route
 app.get("/api/spots", function(request, response){		
+	
 	var location = request.query.location,
 		offset = request.query.offset,
 		sort = request.query.sort,
@@ -91,6 +90,7 @@ app.get("/api/spots", function(request, response){
 				var businesses = body.businesses;
 				var ids = businesses.map((b)=>b.id);			
 				
+				//injecting visitors array
 				Spot.find({
 						'id':{$in: ids}
 					},
@@ -121,10 +121,11 @@ app.get("/api/spots", function(request, response){
 	});	
 });
 
+
+//update route
 app.put('/api/spots/:id', requireAuth, function(request, response){
 	var id = request.params.id;
 	
-	//response.json({status: 'ok'})	
 	Spot.findOne({id: id}, function(error, spot){
 		
 		if(error){								
