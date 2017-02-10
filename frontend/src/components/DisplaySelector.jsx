@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import {getSpots, setSort, changeDisplayType} from 'actions/Actions';
 
-class DisplaySelector extends Component{
+export class DisplaySelector extends Component{
 	constructor(props) {
 		super(props);
 		this.state={
