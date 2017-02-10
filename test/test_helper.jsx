@@ -42,8 +42,5 @@ $.fn.simulate = function(eventName, value) {
   TestUtils.Simulate[eventName](this[0]);
 };
 
-$.fn.simulateSelect = function(value) {
-  TestUtils.Simulate.change(this, { target: { value: value } });
-};
 
 export {renderComponent, renderPlainComponent, expect};

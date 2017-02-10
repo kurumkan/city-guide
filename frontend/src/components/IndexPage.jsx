@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {authUser} from 'actions/Actions';
 import Searchbar from 'components/Searchbar';
 
-class IndexPage extends Component{		
+export class IndexPage extends Component{		
 	
 	componentWillMount() {		
 		var {token, username, userid} = this.props.location.query;
