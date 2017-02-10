@@ -35,6 +35,7 @@ function renderPlainComponent(ComponentClass, props = {}) {
   return $(ReactDOM.findDOMNode(componentInstance));
 }
 
+
 $.fn.simulate = function(eventName, value) {
   if (value) {
     this.val(value);

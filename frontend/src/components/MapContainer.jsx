@@ -6,7 +6,7 @@ import GoogleMap from 'google-map-react';
 import SpotOnMap from 'components/SpotOnMap'
 const API_KEY = 'AIzaSyBnOUUxJEsZI_9aQ3-yIF22MTbysMsEFVw';
 
-class MapContainer extends Component {
+export class MapContainer extends Component {
 	static defaultProps = {    
 		zoom: 14    
 	};  
