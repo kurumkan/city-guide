@@ -19,14 +19,19 @@ const $ = _$(window);
 chaiJquery(chai, chai.util, $);
 
 
-function renderComponent(ComponentClass, props = {}, state = {}) {  
-
+function renderComponent(ComponentClass, props = {}, state = {}) {   
   const componentInstance =  TestUtils.renderIntoDocument(
     <Provider store={applyMiddleware(ReduxThunk)(createStore)(reducers, state)}>
       <ComponentClass {...props} />
     </Provider>
-  );  
-  
+  );      
+  return $(ReactDOM.findDOMNode(componentInstance));
+}
+
+function renderPlainComponent(ComponentClass, props = {}) {   
+  const componentInstance =  TestUtils.renderIntoDocument(    
+    <ComponentClass {...props} />    
+  );      
   return $(ReactDOM.findDOMNode(componentInstance));
 }
 
@@ -37,4 +42,4 @@ $.fn.simulate = function(eventName, value) {
   TestUtils.Simulate[eventName](this[0]);
 };
 
-export {renderComponent, expect};
+export {renderComponent, renderPlainComponent, expect};

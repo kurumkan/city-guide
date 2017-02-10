@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {getSpots} from 'actions/Actions';
 
-class Searchbar extends Component{
+export class Searchbar extends Component{
 	constructor(props) {
 		super(props);		
 		this.state={term:''};				
