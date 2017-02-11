@@ -5,7 +5,7 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 import {selectSpot} from 'actions/Actions';
 
 
-class SpotOnMap extends Component {
+export class SpotOnMap extends Component {
   static propTypes = {
     text: PropTypes.string
   };
