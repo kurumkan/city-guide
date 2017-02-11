@@ -6,7 +6,7 @@ import Loader from 'components/Loader';
 import DisplaySelector from 'components/DisplaySelector';
 import Pagination from 'components/Pagination';
 
-class SpotsList extends Component{
+export class SpotsList extends Component{
 
 	renderSpots(spots){
 		return spots.map((spot, i)=>{
