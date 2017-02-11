@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import {selectSpot, setMapCenter, changeVisitStatus} from 'actions/Actions';
 
-class SpotsListItem extends Component{
+export class SpotsListItem extends Component{
 
 	constructor(props) {
 		super(props);
@@ -15,9 +15,10 @@ class SpotsListItem extends Component{
 	
 	componentWillMount() {
 		var {spot} = this.props;
-		var userId = localStorage.getItem('userid');					
+		var userId = localStorage.getItem('userid');
+
 		if(userId && spot.visitors &&spot.visitors.indexOf(userId)>=0)
-			this.setState({visitStatus: true});
+			this.setState({visitStatus: true});		
 
 		if(spot.visitors)
 			this.setState({

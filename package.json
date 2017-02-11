@@ -6,7 +6,7 @@
   "repository": "git@github.com/kurumkan/city-guide",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test": "NODE_PATH=./frontend/src mocha --compilers js:babel-core/register --require ./test/test_helper.jsx --recursive ./test",
+    "test": "NODE_PATH=./frontend/src mocha  -r mock-local-storage   --compilers js:babel-core/register --require ./test/test_helper.jsx --recursive ./test",
     "test:watch": "npm run test -- --watch"
   },
   "author": "kurumkan",
@@ -23,6 +23,7 @@
     "jquery": "^2.2.1",
     "jsdom": "^8.1.0",
     "mocha": "^2.4.5",
+    "mock-local-storage": "^1.0.2",
     "moxios": "^0.3.0",
     "node-sass": "^3.13.0",
     "react-addons-test-utils": "^0.14.7",
