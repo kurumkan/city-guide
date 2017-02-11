@@ -33003,6 +33003,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.SearchPage = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -33036,7 +33037,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var SearchPage = function (_Component) {
+	var SearchPage = exports.SearchPage = function (_Component) {
 		_inherits(SearchPage, _Component);
 
 		function SearchPage() {
@@ -33052,12 +33053,7 @@
 				    term = _props$location$query.term,
 				    offset = _props$location$query.offset,
 				    sort = _props$location$query.sort;
-				var _props = this.props,
-				    setSort = _props.setSort,
-				    setTerm = _props.setTerm,
-				    setOffset = _props.setOffset,
-				    getSpots = _props.getSpots,
-				    setErrorMessage = _props.setErrorMessage;
+				var getSpots = this.props.getSpots;
 
 				getSpots(term, offset, sort);
 			}
@@ -33085,16 +33081,7 @@
 		return SearchPage;
 	}(_react.Component);
 
-	function mapStateToProps(state) {
-		var _state$search = state.search,
-		    term = _state$search.term,
-		    sort = _state$search.sort,
-		    offset = _state$search.offset;
-
-		return { term: term, sort: sort, offset: offset };
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, { getSpots: _Actions.getSpots, setSort: _Actions.setSort, setTerm: _Actions.setTerm, setOffset: _Actions.setOffset, setErrorMessage: _Actions.setErrorMessage })(SearchPage);
+	exports.default = (0, _reactRedux.connect)(null, { getSpots: _Actions.getSpots })(SearchPage);
 
 /***/ },
 /* 347 */

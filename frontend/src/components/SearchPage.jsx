@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {browserHistory} from 'react-router';
 
-
-import {getSpots, setSort, setTerm, setOffset, setErrorMessage} from 'actions/Actions';
+import {getSpots} from 'actions/Actions';
 import SpotsList from 'components/SpotsList'
 import MapContainer from 'components/MapContainer';
 import Alert from 'components/Alert';
 
-class SearchPage extends Component{		
+export class SearchPage extends Component{		
 
 	componentWillMount() {		
 		var {term, offset, sort} = this.props.location.query;		
-		var {setSort, setTerm, setOffset, getSpots, setErrorMessage} = this.props;
+		var {getSpots} = this.props;		
 		getSpots(term, offset, sort);		
 	}
 
@@ -31,10 +30,4 @@ class SearchPage extends Component{
 	}
 }
 
-
-function mapStateToProps(state) {
-	var {term, sort,offset} = state.search;
-	return {term, sort, offset};		
-}
-
-export default connect(mapStateToProps, {getSpots, setSort, setTerm, setOffset, setErrorMessage})(SearchPage);
+export default connect(null, {getSpots})(SearchPage);
