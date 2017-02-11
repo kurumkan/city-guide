@@ -148,11 +148,13 @@ export function signinUser({login, password}){
 			.then((response)=>{				
 				//-update state to indicate user is authenticated
 				var {username, userid, token} = response.data;
-				dispatch(authUser(token, username, userid));
+				dispatch(authUser(token, username, userid));				
+				console.log(1)
 			})
 			.catch(()=>{
 				//- show error message
-				dispatch(setErrorMessage('Bad Login Info'));				
+				dispatch(setErrorMessage('Bad Login Info'));								
+				console.log(2)
 			});
 	}	
 }
