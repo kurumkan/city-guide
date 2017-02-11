@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 
 import {getSpots} from 'actions/Actions';
 
-class Pagination extends Component{
+export class Pagination extends Component{
 	range(end) {
 	    var result = [];	    	    
 	    var start = end>4?end-4:1;	    
