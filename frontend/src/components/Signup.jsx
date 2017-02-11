@@ -6,7 +6,7 @@ import * as actions from 'actions/Actions';
 import Alert from 'components/Alert';
 
 
-class Signup extends Component {
+export class Signup extends Component {
   
   componentWillMount() {
     this.props.removeErroMessage();

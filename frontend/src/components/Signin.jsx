@@ -6,7 +6,7 @@ import {removeErroMessage, signinUser} from 'actions/Actions';
 import Alert from 'components/Alert';
 
 
-class Signin extends Component {
+export class Signin extends Component {
   
   componentWillMount() {
     this.props.removeErroMessage();    
