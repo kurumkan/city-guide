@@ -1,6 +1,5 @@
 var passport = require('passport');
 var User = require('../models/user');
-var config = require('../config');
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 var LocalStrategy = require('passport-local');
@@ -38,7 +37,7 @@ var jwtOptions = {
 	//tell passport where to find token - in header 'authorization'
 	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
 	//what the secret? - to decode and get id
-	secretOrKey: config.secret
+	secretOrKey: process.env.secret
 };
 
 //Create JWT Strategy
@@ -83,8 +82,8 @@ passport.deserializeUser(function(id, done) {
 
 var FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
-        clientID: config.fb_clientID, 
-        clientSecret: config.fb_clientSecret, 
+        clientID: process.env.fb_clientID, 
+        clientSecret: process.env.fb_clientSecret, 
         callbackURL: "http://localhost:5000/auth/facebook/callback",
         profileFields: ['id', 'emails', 'profileUrl', 'displayName']        
     },function(accessToken, refreshToken, profile, done) {
@@ -127,8 +126,8 @@ passport.use(new FacebookStrategy({
 
 const vkStrategy = require('passport-vkontakte').Strategy;
 passport.use(new vkStrategy({
-		clientID: config.vk_clientID, 
-		clientSecret: config.vk_clientSecret,
+		clientID: process.env.vk_clientID, 
+		clientSecret: process.env.vk_clientSecret,
 		callbackURL: "http://localhost:5000/auth/vk/callback",
 		scope: ['email'],
     	profileFields: ['id', 'email', 'profileUrl', 'displayName']

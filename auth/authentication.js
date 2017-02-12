@@ -1,12 +1,11 @@
 var jwt = require('jwt-simple');
 
-var config = require('../config');
 var User = require('../models/user');
 var {validateEmail} = require("../util_helpers");
 
 var getToken = function(user){
 	var timestamp = new Date().getTime();	
-	return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+	return jwt.encode({ sub: user.id, iat: timestamp }, process.env.secret);
 }
 
 exports.getToken = getToken;

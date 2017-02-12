@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 
 var {handleError, requestYelp} = require("./util_helpers.js");
 
-mongoose.connect("mongodb://localhost/cityguide");
+mongoose.connect(process.env.MONGOLAB_URI);
 var User = require('./models/user');
 var Spot = require('./models/spot');
 
