@@ -23,26 +23,27 @@ export function getSpots(term, offset, sort){
 			browserHistory.push('/');
 		}else{
 			return axios.get(ROOT_URL+'?location='+term+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
-			.then((response)=>{
-				browserHistory.push('/search?term='+term+'&offset='+offset+'&sort='+sort);						
+			.then((response)=>{								
+				browserHistory.push('/search?term='+term+'&offset='+offset+'&sort='+sort);										
+				var {businesses, latitude, longitude, total} = response.data;
 				dispatch({
 					type: 'GET_SPOTS',
-					payload: response.data.businesses
+					payload: businesses
 				});				
 				dispatch(setMapCenter({
-						lat: response.data.latitude,
-						lng: response.data.longitude
+						lat: latitude,
+						lng: longitude
 					}));		
 				dispatch({
 						type: 'SET_SPOTS_COUNT',
-						payload: response.data.total
+						payload: total
 					});		
 				dispatch(changeLoadingStatus());
 				dispatch(setSort(sort));
 				dispatch(setTerm(term));
 				dispatch(setOffset(offset));				
 			})
-			.catch((error)=>{	
+			.catch((error)=>{			
 				var {status} = error.response;
 
 				if(status==400){					
@@ -59,13 +60,13 @@ export function getSpots(term, offset, sort){
 //update visit status 
 export function changeVisitStatus(id){	
 	return function(dispatch){
-		axios.put(ROOT_URL+id, null, {
+		return axios.put(ROOT_URL+id, null, {
 			headers: {'authorization' : localStorage.getItem('token')}				
 		})
 			.then((response)=>{				
 				dispatch(removeErroMessage());
 			})
-			.catch((error)=>{								
+			.catch((error)=>{				
 				dispatch(setErrorMessage('Something went wrong. We are working on it.'));
 			})
 	}	

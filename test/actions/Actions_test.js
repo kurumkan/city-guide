@@ -11,6 +11,7 @@ import thunk from 'redux-thunk';
 const mockStore = configureStore([thunk]);
 
 describe('Actions', ()=> {
+
 	describe('signinUser', ()=>{
 
 		var {signinUser} = actions;
@@ -253,6 +254,201 @@ describe('Actions', ()=> {
 		expect(browserHistoryPushStub.calledOnce).to.eql(true)
 
        	browserHistoryPushStub.restore();
+	});
+
+	describe('changeVisitStatus', ()=>{
+		var {changeVisitStatus} = actions;
+
+		var id = 'someid';
+		localStorage.setItem('token', 'sometoken')
+		
+		afterEach(function () {
+	     	nock.cleanAll()
+	    });
+
+	    it('should call setErrorMessage', ()=>{					
+	    	nock('http://localhost:80/api/spots/'+id+'/').put('')
+				.reply(400)			
+
+			var expectedActions = [
+				{
+					type: 'SET_ERROR',
+					payload: 'Something went wrong. We are working on it.'
+				}
+			];
+
+		    var store = mockStore({});
+		    return store.dispatch(changeVisitStatus(id))		    
+		    	.then(()=>{		    		
+		    		expect(store.getActions()).to.eql(expectedActions)
+		    	})
+		    
+	    });    			    
+
+	    it('should call removeErroMessage', ()=>{			    	
+	    	nock('http://localhost:80/api/spots/'+id+'/').put('')
+				.reply(200)			
+
+			var expectedActions = [
+				{
+					type: 'REMOVE_ERROR'					
+				}
+			];		
+
+		    var store = mockStore({});
+		    return store.dispatch(changeVisitStatus(id))		    
+		    	.then(()=>{		    		
+		    		expect(store.getActions()).to.eql(expectedActions)
+		    	})
+	    });    		
+	});
+
+	describe('getSpots', ()=>{
+		var {getSpots} = actions;
+
+		var term='london';
+		var offset=100;
+		var sort=2;
+
+		var businesses = ['id1','id2','id3'];
+    	var latitude = '100';
+    	var longitude ='200';
+    	var total = 80;
+		
+		afterEach(function () {
+	     	nock.cleanAll()
+	    });
+
+	    it('should call browserHistory.push(/)', ()=>{					
+	    	var term = '';
+	    	nock("http://localhost:80/api/spots/")
+	    	.filteringPath(function(path){
+		        return '/api/spots';
+		    })	    	
+	    	.get('')	    	
+			.reply(200, {businesses, latitude, longitude, total})		
+			
+
+			router.browserHistory = { push: (path)=>{} };
+			var browserHistoryPushStub = sinon.stub(router.browserHistory, 'push', (path) => {});
+
+			var store = mockStore({});		    
+			store.dispatch(getSpots(term,offset,sort));
+			expect(browserHistoryPushStub.calledWithMatch('/')).to.eql(true)
+
+	       	browserHistoryPushStub.restore();	
+	    });   
+	    it('should dispatch GET_SPOTS', ()=>{    	
+	    	
+	    	nock("http://localhost:80/api/spots/")
+	    	.filteringPath(function(path){
+		        return '/api/spots';
+		    })	    	
+	    	.get('')	    	
+			.reply(200, {businesses, latitude, longitude, total})	
+
+			router.browserHistory = { push: (path)=>{} };
+			var browserHistoryPushStub = sinon.stub(router.browserHistory, 'push', (path) => {});
+
+			var store = mockStore({});		    
+			var expectedActions = [
+				{
+					type: 'REMOVE_ERROR'					
+				},
+				{
+					type: 'CHANGE_LOADING_STATUS'
+				},
+				{
+					type: 'GET_SPOTS',
+					payload: businesses
+				},
+				{
+					type: 'SET_MAP_CENTER',
+					payload: {lat: latitude, lng: longitude}
+				},
+				{
+					type: 'SET_SPOTS_COUNT',
+					payload: total
+				},
+				{
+					type: 'CHANGE_LOADING_STATUS'
+				},
+				{
+					type: 'SET_SORT',
+					payload: sort
+				},
+				{
+					type: 'SET_TERM',
+					payload: term
+				},
+				{
+					type: 'SET_OFFSET',
+					payload: offset
+				}
+			];
+			return store.dispatch(getSpots(term,offset,sort))
+				.then(()=>{		    				  								
+					expect(store.getActions()).to.eql(expectedActions)						
+		    		expect(browserHistoryPushStub.calledOnce).to.eql(true)		    		
+		    		browserHistoryPushStub.restore();			    		
+		    	})	       	
+	    }) 			    
+
+	    it('should dispatch SET_ERROR', ()=>{    	
+	    	
+	    	nock("http://localhost:80/api/spots/")
+	    	.filteringPath(function(path){
+		        return '/api/spots';
+		    })	    	
+	    	.get('')	    	
+			.reply(400)				
+
+			var store = mockStore({});		    
+			var expectedActions = [		
+				{
+					type: 'REMOVE_ERROR'					
+				},
+				{
+					type: 'CHANGE_LOADING_STATUS'
+				},		
+				{					
+					type: 'SET_ERROR',
+					payload: 'Sorry! No results were found for the requested search. Try searching with some different keywords'
+				}
+			];
+			return store.dispatch(getSpots(term,offset,sort))
+				.then(()=>{		    				  								
+					expect(store.getActions()).to.eql(expectedActions)								    		
+		    	})	       	
+	    }) 			    
+
+	    it('should dispatch SET_ERROR', ()=>{    	
+	    	
+	    	nock("http://localhost:80/api/spots/")
+	    	.filteringPath(function(path){
+		        return '/api/spots';
+		    })	    	
+	    	.get('')	    	
+			.reply(500)				
+
+			var store = mockStore({});		    
+			var expectedActions = [		
+				{
+					type: 'REMOVE_ERROR'					
+				},
+				{
+					type: 'CHANGE_LOADING_STATUS'
+				},		
+				{					
+					type: 'SET_ERROR',
+					payload: 'Something went wrong. We are working on it.'
+				}
+			];
+			return store.dispatch(getSpots(term,offset,sort))
+				.then(()=>{		    				  								
+					expect(store.getActions()).to.eql(expectedActions)								    		
+		    	})	       	
+	    }) 			    
 	});
 
 	it('selectSpot', ()=>{			
