@@ -17,11 +17,12 @@ function validateParams(term,offset,sort){
 export function getSpots(term, offset, sort){
 	return function(dispatch){		
 		dispatch(removeErroMessage());						
-		dispatch(changeLoadingStatus());		
+		dispatch(changeLoadingStatus());
+
 		if(!validateParams(term,offset,sort)){
 			browserHistory.push('/');
 		}else{
-			axios.get(ROOT_URL+'?location='+term+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
+			return axios.get(ROOT_URL+'?location='+term+'&offset='+offset+'&sort='+sort+'&category_filter=bars')
 			.then((response)=>{
 				browserHistory.push('/search?term='+term+'&offset='+offset+'&sort='+sort);						
 				dispatch({
@@ -127,7 +128,7 @@ export function changeDisplayType(){
 }
 
 //set new error message
-export function setErrorMessage(error){
+export function setErrorMessage(error){	
 	return {
 		type: 'SET_ERROR',
 		payload: error
@@ -144,17 +145,15 @@ export function removeErroMessage(){
 export function signinUser({login, password}){	
 	
 	return function(dispatch){		
-		axios.post('/auth/signin', {login, password})
-			.then((response)=>{				
+		return axios.post('/auth/signin', {login, password})
+			.then((response)=>{							
 				//-update state to indicate user is authenticated
 				var {username, userid, token} = response.data;
-				dispatch(authUser(token, username, userid));				
-				console.log(1)
+				dispatch(authUser(token, username, userid));								
 			})
-			.catch(()=>{
+			.catch((error)=>{
 				//- show error message
-				dispatch(setErrorMessage('Bad Login Info'));								
-				console.log(2)
+				dispatch(setErrorMessage('Bad Login Info'));															
 			});
 	}	
 }
@@ -162,7 +161,7 @@ export function signinUser({login, password}){
 export function signupUser({username, email, password}){
 	
 	return function(dispatch){		
-		axios.post('/auth/signup', {username, email, password})
+		return axios.post('/auth/signup', {username, email, password})
 			.then((response)=>{			
 				var {username, userid, token} = response.data;					
 				dispatch(authUser(token, username, userid));	
@@ -193,11 +192,13 @@ export function authUser(token, username, userid){
 		var term = localStorage.getItem('term');
 		var sort = localStorage.getItem('sort');
 		var offset = localStorage.getItem('offset');
+		
 
 		if(term&&sort&&offset)
-			dispatch(getSpots(term, offset, sort));
-		else
-			browserHistory.push('/');	
+			dispatch(getSpots(term, offset, sort));					
+		else{		
+			browserHistory.push('/');				
+		}
 	}	
 }
 

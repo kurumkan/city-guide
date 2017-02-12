@@ -31198,6 +31198,7 @@
 
 	//set new error message
 	function setErrorMessage(error) {
+		console.log('setErrorMessage', error);
 		return {
 			type: 'SET_ERROR',
 			payload: error
@@ -31217,7 +31218,7 @@
 
 
 		return function (dispatch) {
-			_axios2.default.post('/auth/signin', { login: login, password: password }).then(function (response) {
+			return _axios2.default.post('/auth/signin', { login: login, password: password }).then(function (response) {
 				//-update state to indicate user is authenticated
 				var _response$data = response.data,
 				    username = _response$data.username,
@@ -31225,9 +31226,11 @@
 				    token = _response$data.token;
 
 				dispatch(authUser(token, username, userid));
+				console.log(1);
 			}).catch(function () {
 				//- show error message
 				dispatch(setErrorMessage('Bad Login Info'));
+				console.log(2);
 			});
 		};
 	}
