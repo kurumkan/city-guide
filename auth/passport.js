@@ -84,7 +84,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
         clientID: process.env.fb_clientID, 
         clientSecret: process.env.fb_clientSecret, 
-        callbackURL: "http://localhost:5000/auth/facebook/callback",
+        callbackURL: "/auth/facebook/callback",
         profileFields: ['id', 'emails', 'profileUrl', 'displayName']        
     },function(accessToken, refreshToken, profile, done) {
         process.nextTick(function () {        	
@@ -128,7 +128,7 @@ const vkStrategy = require('passport-vkontakte').Strategy;
 passport.use(new vkStrategy({
 		clientID: process.env.vk_clientID, 
 		clientSecret: process.env.vk_clientSecret,
-		callbackURL: "http://localhost:5000/auth/vk/callback",
+		callbackURL: "/auth/vk/callback",
 		scope: ['email'],
     	profileFields: ['id', 'email', 'profileUrl', 'displayName']
 	},
