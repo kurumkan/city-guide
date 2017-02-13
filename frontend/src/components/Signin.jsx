@@ -21,8 +21,8 @@ export class Signin extends Component {
     return (
       <div className="row auth-wrapper">
         <h1 className="text-center">Sign In</h1>
-        <div className="col-sm-3 col-xs-2"></div>
-        <div className='col-sm-6 col-xs-8'>
+        <div className="col-md-3 col-sm-2"></div>
+        <div className='col-md-6 col-sm-8'>
           <div className='row auth'>  
             <Alert />
             <div className="col-md-6 auth-form-wrapper">    
@@ -66,7 +66,7 @@ export class Signin extends Component {
               Need an account? <Link to='signup'>Sign Up »</Link>                         
             </div>           
         </div>
-        <div className="col-sm-3 col-xs-2"></div>
+        <div className="col-md-3 col-sm-2"></div>
       </div>            
     );
   }
