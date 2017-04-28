@@ -1,4 +1,4 @@
-import { renderPlainComponent , expect } from '../test_helper';
+import { renderPlainComponent, expect } from '../test_helper';
 import sinon from 'sinon';
 import {DisplaySelector} from 'components/DisplaySelector';
 

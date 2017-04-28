@@ -23,7 +23,6 @@ var createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 var store = createStoreWithMiddleware(RootReducer);
 
 var token = localStorage.getItem('token');
-
 if(token){	
 	var username = localStorage.getItem('username');
 	var userid = localStorage.getItem('userid');
