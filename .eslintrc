@@ -8,6 +8,7 @@
   "parser": "babel-eslint",
   "plugins": ["import"],
   "rules": {  
+    "jsx-a11y/href-no-hash": [0, "never"],  
   	"comma-dangle": [0, "never"],  
     // spacing
     "space-in-parens": [ 2, "always" ],

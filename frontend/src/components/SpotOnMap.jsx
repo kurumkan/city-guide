@@ -1,47 +1,52 @@
-import React, { PropTypes, Component } from 'react/addons';
-import { connect } from 'react-redux';
-import shouldPureComponentUpdate from 'react-pure-render/function';
+import React, { PropTypes, Component } from "react/addons";
+import { connect } from "react-redux";
+import shouldPureComponentUpdate from "react-pure-render/function";
 
-import { selectSpot } from 'actions/Actions';
-
+import { selectSpot } from "actions/Actions";
 
 export class SpotOnMap extends Component {
   static propTypes = {
-    text: PropTypes.string
+    text: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    selectedId: PropTypes.string.isRequired,
+    selectSpot: PropTypes.func.isRequired
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    text: ""
+  }
+
+  constructor( props ) {
+    super( props );
+    this.onMouseEnterHandler = this.onMouseEnterHandler.bind( this );
+  }
 
   shouldComponentUpdate = shouldPureComponentUpdate;
 
-  constructor(props) {
-    super(props);    
-  }
-
-  onMouseEnterHandler(e){
-    //remove tooltip from 'selectedSpot'
-    this.props.selectSpot(null);
+  onMouseEnterHandler() {
+    //  remove tooltip from "selectedSpot"
+    this.props.selectSpot( null );
   }
 
   render() {
-    var {text, id, selectedId} = this.props;
+    const { text, id, selectedId } = this.props;
     return (
-      <div className='spot-on-map' onMouseEnter={this.onMouseEnterHandler.bind(this)}>                        
-        <div className="wrapper">          
-          <img src='images/bar_icon.png'/>                                        
-          <div className={'tooltip '+(id===selectedId?'selected-spot':'')}>
+      <div className="spot-on-map" onMouseEnter={ this.onMouseEnterHandler }>
+        <div className="wrapper">
+          <img src="images/bar_icon.png" alt="" />
+          <div className={ `tooltip ${ id === selectedId && "selected-spot" }` }>
             {text}
           </div>
-        </div>        
+        </div>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) { 
-  return {    
+function mapStateToProps( state ) {
+  return {
     selectedId: state.spots.selectedSpot
   };
 }
 
-export default connect(mapStateToProps, {selectSpot})(SpotOnMap);
+export default connect( mapStateToProps, { selectSpot } )( SpotOnMap );
