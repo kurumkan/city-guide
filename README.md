@@ -1,4 +1,4 @@
-#FreeCodeCamp Challenge: Build a Nightlife Coordination App
+# FreeCodeCamp Challenge: Build a Nightlife Coordination App
 
 A NodeJS App that uses the Yelp API. The app allows for users to search for bars in their area and they can indicate if they are going to there.
 
