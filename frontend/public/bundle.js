@@ -51,7 +51,7 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var _react = __webpack_require__(2);
 
@@ -104,41 +104,41 @@
 	// App css
 	__webpack_require__(402);
 
-	//auth components
+	//  auth components
 
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
 	var store = createStoreWithMiddleware(_RootReducer2.default);
 
-	var token = localStorage.getItem('token');
+	var token = localStorage.getItem("token");
 	if (token) {
-		var username = localStorage.getItem('username');
-		var userid = localStorage.getItem('userid');
-		store.dispatch({ type: 'AUTH_USER', payload: { username: username, userid: userid } });
+	  var username = localStorage.getItem("username");
+	  var userid = localStorage.getItem("userid");
+	  store.dispatch({ type: "AUTH_USER", payload: { username: username, userid: userid } });
 	}
 
 	_reactDom2.default.render(_react2.default.createElement(
-		_reactRedux.Provider,
-		{ store: store },
-		_react2.default.createElement(
-			_reactRouter.Router,
-			{ history: _reactRouter.browserHistory },
-			_react2.default.createElement(
-				_reactRouter.Route,
-				{ path: '/', component: _Main2.default },
-				_react2.default.createElement(_reactRouter.IndexRoute, { component: _IndexPage2.default }),
-				_react2.default.createElement(
-					_reactRouter.Route,
-					{ path: 'search', component: _SearchPage2.default },
-					_react2.default.createElement(_reactRouter.Route, { path: '?term=:term&page=:page&sort=:sort', component: _SearchPage2.default })
-				),
-				_react2.default.createElement(_reactRouter.Route, { path: 'signup', component: _Signup2.default }),
-				_react2.default.createElement(_reactRouter.Route, { path: 'signin', component: _Signin2.default }),
-				_react2.default.createElement(_reactRouter.Route, { path: '404', component: _NotFound2.default }),
-				_react2.default.createElement(_reactRouter.Route, { path: '*', component: _NotFound2.default })
-			)
-		)
-	), document.querySelector('#app'));
+	  _reactRedux.Provider,
+	  { store: store },
+	  _react2.default.createElement(
+	    _reactRouter.Router,
+	    { history: _reactRouter.browserHistory },
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: "/", component: _Main2.default },
+	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _IndexPage2.default }),
+	      _react2.default.createElement(
+	        _reactRouter.Route,
+	        { path: "search", component: _SearchPage2.default },
+	        _react2.default.createElement(_reactRouter.Route, { path: "?term=:term&page=:page&sort=:sort", component: _SearchPage2.default })
+	      ),
+	      _react2.default.createElement(_reactRouter.Route, { path: "signup", component: _Signup2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: "signin", component: _Signin2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: "404", component: _NotFound2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: "*", component: _NotFound2.default })
+	    )
+	  )
+	), document.querySelector("#app"));
 
 /***/ },
 /* 2 */
@@ -27439,10 +27439,10 @@
 /* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _redux = __webpack_require__(167);
@@ -27476,13 +27476,13 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var RootReducer = (0, _redux.combineReducers)({
-		spots: _ReducerSpots2.default,
-		error: _ErrorReducer2.default,
-		search: _ReducerSearch2.default,
-		isLoading: _ReducerLoader2.default,
-		displayType: _ReducerDisplayType2.default,
-		form: _reduxForm.reducer,
-		auth: _AuthReducer2.default
+	  spots: _ReducerSpots2.default,
+	  error: _ErrorReducer2.default,
+	  search: _ReducerSearch2.default,
+	  isLoading: _ReducerLoader2.default,
+	  displayType: _ReducerDisplayType2.default,
+	  form: _reduxForm.reducer,
+	  auth: _AuthReducer2.default
 	});
 
 	exports.default = RootReducer;
@@ -27491,7 +27491,7 @@
 /* 263 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -27503,19 +27503,18 @@
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
 	  var action = arguments[1];
 
-
 	  switch (action.type) {
-	    case 'GET_SPOTS':
+	    case "GET_SPOTS":
 	      return _extends({}, state, {
 	        all: action.payload
 	      });
 
-	    case 'SELECT_SPOT':
+	    case "SELECT_SPOT":
 	      return _extends({}, state, {
 	        selectedSpot: action.payload
 	      });
 
-	    case 'SET_SPOTS_COUNT':
+	    case "SET_SPOTS_COUNT":
 	      return _extends({}, state, {
 	        spotsCount: action.payload
 	      });
@@ -27535,155 +27534,146 @@
 /* 264 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-		var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+	  var action = arguments[1];
 
+	  switch (action.type) {
 
-		switch (action.type) {
+	    case "SET_ERROR":
+	      return action.payload;
 
-			case 'SET_ERROR':
-				return action.payload;
+	    case "REMOVE_ERROR":
+	      return "";
 
-			case 'REMOVE_ERROR':
-				return '';
-
-			default:
-				return state;
-		}
+	    default:
+	      return state;
+	  }
 	};
 
 /***/ },
 /* 265 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
-		var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
+	  var action = arguments[1];
 
-
-		switch (action.type) {
-
-			case 'SET_TERM':
-				return _extends({}, state, {
-					term: action.payload
-				});
-			case 'SET_MAP_CENTER':
-				return _extends({}, state, {
-					location: action.payload
-				});
-			case 'SET_SORT':
-				return _extends({}, state, {
-					sort: action.payload
-				});
-			case 'SET_OFFSET':
-				return _extends({}, state, {
-					offset: action.payload
-				});
-			default:
-				return state;
-		}
+	  switch (action.type) {
+	    case "SET_TERM":
+	      return _extends({}, state, {
+	        term: action.payload
+	      });
+	    case "SET_MAP_CENTER":
+	      return _extends({}, state, {
+	        location: action.payload
+	      });
+	    case "SET_SORT":
+	      return _extends({}, state, {
+	        sort: action.payload
+	      });
+	    case "SET_OFFSET":
+	      return _extends({}, state, {
+	        offset: action.payload
+	      });
+	    default:
+	      return state;
+	  }
 	};
 
 	var INITIAL_STATE = {
-		term: 'London',
-		location: { lat: 51.509865, lng: -0.118092 },
-		sort: 0,
-		offset: 0
+	  term: "London",
+	  location: { lat: 51.509865, lng: -0.118092 },
+	  sort: 0,
+	  offset: 0
 	};
 
 /***/ },
 /* 266 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-		var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+	  var action = arguments[1];
 
-
-		switch (action.type) {
-
-			case 'CHANGE_LOADING_STATUS':
-				return !state;
-
-			default:
-				return state;
-		}
+	  switch (action.type) {
+	    case "CHANGE_LOADING_STATUS":
+	      return !state;
+	    default:
+	      return state;
+	  }
 	};
 
 /***/ },
 /* 267 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'LIST';
-		var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "LIST";
+	  var action = arguments[1];
 
-		switch (action.type) {
-
-			case 'CHANGE_DISPLAY_TYPE':
-				return state == 'LIST' ? 'GRID' : 'LIST';
-
-			default:
-				return state;
-		}
+	  switch (action.type) {
+	    case "CHANGE_DISPLAY_TYPE":
+	      return state === "LIST" ? "GRID" : "LIST";
+	    default:
+	      return state;
+	  }
 	};
 
 /***/ },
 /* 268 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-		var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var action = arguments[1];
 
+	  switch (action.type) {
+	    case "AUTH_USER":
+	      var _action$payload = action.payload,
+	          username = _action$payload.username,
+	          userid = _action$payload.userid;
 
-		switch (action.type) {
-			case 'AUTH_USER':
-				var _action$payload = action.payload,
-				    username = _action$payload.username,
-				    userid = _action$payload.userid;
-
-				return _extends({}, state, { authenticated: true, username: username, userid: userid });
-			case 'UNAUTH_USER':
-				return _extends({}, state, { authenticated: false, username: '', userid: null });
-			default:
-				return state;
-		}
+	      return _extends({}, state, { authenticated: true, username: username, userid: userid });
+	    case "UNAUTH_USER":
+	      return _extends({}, state, { authenticated: false, username: "", userid: null });
+	    default:
+	      return state;
+	  }
 	};
 
 /***/ },
@@ -30617,9 +30607,8 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
-	exports.default = Main;
 
 	var _react = __webpack_require__(2);
 
@@ -30635,23 +30624,29 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Main() {
-		return _react2.default.createElement(
-			"div",
-			{ className: "container-fluid main" },
-			_react2.default.createElement(_Nav2.default, null),
-			_react2.default.createElement(
-				"div",
-				{ className: "row" },
-				_react2.default.createElement(
-					"div",
-					{ className: "container-fluid content" },
-					this.props.children
-				)
-			),
-			_react2.default.createElement(_Footer2.default, null)
-		);
-	}
+	var Main = function Main(props) {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "container-fluid main" },
+	    _react2.default.createElement(_Nav2.default, null),
+	    _react2.default.createElement(
+	      "div",
+	      { className: "row" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "container-fluid content" },
+	        props.children
+	      )
+	    ),
+	    _react2.default.createElement(_Footer2.default, null)
+	  );
+	};
+
+	Main.propTypes = {
+	  children: _react.PropTypes.element.isRequired
+	};
+
+	exports.default = Main;
 
 /***/ },
 /* 314 */
@@ -30705,7 +30700,7 @@
 
 	  _createClass(Nav, [{
 	    key: "handleClick",
-	    value: function handleClick(e) {
+	    value: function handleClick() {
 	      this.props.signoutUser();
 	    }
 	  }, {
@@ -30715,62 +30710,65 @@
 	          authenticated = _props.authenticated,
 	          username = _props.username;
 
-	      if (!authenticated) return _react2.default.createElement(
-	        "nav",
-	        { className: "navbar navbar-custom" },
-	        _react2.default.createElement(
-	          "div",
-	          { className: "container-fluid" },
+	      if (!authenticated) {
+	        return _react2.default.createElement(
+	          "nav",
+	          { className: "navbar navbar-custom" },
 	          _react2.default.createElement(
 	            "div",
-	            { className: "navbar-header" },
+	            { className: "container-fluid" },
 	            _react2.default.createElement(
-	              "button",
-	              { type: "button", className: "navbar-toggle", "data-toggle": "collapse", "data-target": "#mynavbar" },
-	              _react2.default.createElement("span", { className: "icon-bar" }),
-	              _react2.default.createElement("span", { className: "icon-bar" }),
-	              _react2.default.createElement("span", { className: "icon-bar" })
-	            ),
-	            _react2.default.createElement(
-	              _reactRouter.IndexLink,
-	              { className: "navbar-brand", to: "/" },
-	              _react2.default.createElement("img", { alt: "Brand", src: "images/logo.png" })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "collapse navbar-collapse", id: "mynavbar" },
-	            _react2.default.createElement(
-	              "ul",
-	              { className: "nav navbar-nav" },
+	              "div",
+	              { className: "navbar-header" },
 	              _react2.default.createElement(
-	                _NavLink2.default,
-	                { to: "/" },
-	                "Home"
+	                "button",
+	                { type: "button", className: "navbar-toggle", "data-toggle": "collapse", "data-target": "#mynavbar" },
+	                _react2.default.createElement("span", { className: "icon-bar" }),
+	                _react2.default.createElement("span", { className: "icon-bar" }),
+	                _react2.default.createElement("span", { className: "icon-bar" })
+	              ),
+	              _react2.default.createElement(
+	                _reactRouter.IndexLink,
+	                { className: "navbar-brand", to: "/" },
+	                _react2.default.createElement("img", { alt: "Brand", src: "images/logo.png" })
 	              )
 	            ),
 	            _react2.default.createElement(
 	              "div",
-	              { className: "navbar-left" },
-	              _react2.default.createElement(_Searchbar2.default, null)
-	            ),
-	            _react2.default.createElement(
-	              "ul",
-	              { className: "nav navbar-nav navbar-right" },
+	              { className: "collapse navbar-collapse", id: "mynavbar" },
 	              _react2.default.createElement(
-	                _NavLink2.default,
-	                { to: "/signin" },
-	                "Sign In"
+	                "ul",
+	                { className: "nav navbar-nav" },
+	                _react2.default.createElement(
+	                  _NavLink2.default,
+	                  { to: "/" },
+	                  "Home"
+	                )
 	              ),
 	              _react2.default.createElement(
-	                _NavLink2.default,
-	                { to: "/signup" },
-	                "Sign Up"
+	                "div",
+	                { className: "navbar-left" },
+	                _react2.default.createElement(_Searchbar2.default, null)
+	              ),
+	              _react2.default.createElement(
+	                "ul",
+	                { className: "nav navbar-nav navbar-right" },
+	                _react2.default.createElement(
+	                  _NavLink2.default,
+	                  { to: "/signin" },
+	                  "Sign In"
+	                ),
+	                _react2.default.createElement(
+	                  _NavLink2.default,
+	                  { to: "/signup" },
+	                  "Sign Up"
+	                )
 	              )
 	            )
 	          )
-	        )
-	      );else return _react2.default.createElement(
+	        );
+	      }
+	      return _react2.default.createElement(
 	        "nav",
 	        { className: "navbar navbar-custom" },
 	        _react2.default.createElement(
@@ -30817,7 +30815,8 @@
 	                { className: "dropdown" },
 	                _react2.default.createElement(
 	                  "a",
-	                  { href: "#", className: "dropdown-toggle",
+	                  {
+	                    href: "#", className: "dropdown-toggle",
 	                    "data-toggle": "dropdown", role: "button",
 	                    "aria-haspopup": "true", "aria-expanded": "false"
 	                  },
@@ -30853,6 +30852,13 @@
 	  return Nav;
 	}(_react.Component);
 
+	Nav.propTypes = {
+	  signoutUser: _react.PropTypes.func.isRequired,
+	  authenticated: _react.PropTypes.bool.isRequired,
+	  username: _react.PropTypes.string.isRequired
+	};
+
+
 	function mapStateToProps(state) {
 	  var _state$auth = state.auth,
 	      username = _state$auth.username,
@@ -30870,7 +30876,7 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -30890,37 +30896,37 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var NavLink = function (_Component) {
-	    _inherits(NavLink, _Component);
+	  _inherits(NavLink, _Component);
 
-	    function NavLink() {
-	        _classCallCheck(this, NavLink);
+	  function NavLink() {
+	    _classCallCheck(this, NavLink);
 
-	        return _possibleConstructorReturn(this, (NavLink.__proto__ || Object.getPrototypeOf(NavLink)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (NavLink.__proto__ || Object.getPrototypeOf(NavLink)).apply(this, arguments));
+	  }
+
+	  _createClass(NavLink, [{
+	    key: "render",
+	    value: function render() {
+	      var isActive = this.context.router.isActive(this.props.to, true);
+	      var className = isActive ? "active" : "";
+
+	      return _react2.default.createElement(
+	        "li",
+	        { className: className },
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          this.props,
+	          this.props.children
+	        )
+	      );
 	    }
+	  }]);
 
-	    _createClass(NavLink, [{
-	        key: "render",
-	        value: function render() {
-	            var isActive = this.context.router.isActive(this.props.to, true);
-	            var className = isActive ? "active" : "";
-
-	            return _react2.default.createElement(
-	                "li",
-	                { className: className },
-	                _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    this.props,
-	                    this.props.children
-	                )
-	            );
-	        }
-	    }]);
-
-	    return NavLink;
+	  return NavLink;
 	}(_react.Component);
 
 	NavLink.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
+	  router: _react2.default.PropTypes.object.isRequired
 	};
 	exports.default = NavLink;
 
@@ -31017,12 +31023,8 @@
 	}(_react.Component);
 
 	Searchbar.propTypes = {
-	  sort: _react.PropTypes.number,
-	  getSpots: _react.PropTypes.func
-	};
-	Searchbar.defaultProps = {
-	  sort: 0,
-	  getSpots: function getSpots() {}
+	  sort: _react.PropTypes.number.isRequired,
+	  getSpots: _react.PropTypes.func.isRequired
 	};
 
 
@@ -31040,10 +31042,10 @@
 /* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	exports.getSpots = getSpots;
 	exports.changeVisitStatus = changeVisitStatus;
@@ -31069,226 +31071,222 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var ROOT_URL = '/api/spots/';
+	var ROOT_URL = "/api/spots/";
 
 	function validateParams(term, offset, sort) {
-		if (typeof term != 'string' || !term) return false;
-		if (offset === '' || isNaN(offset) || +offset < 0 || +offset >= 988) return false;
-		if (sort === '' || isNaN(sort) || +sort !== 0 && +sort != 2) return false;
-		return true;
+	  if (typeof term !== "string" || !term) return false;
+	  if (offset === "" || isNaN(offset) || +offset < 0 || +offset >= 988) return false;
+	  if (sort === "" || isNaN(sort) || +sort !== 0 && +sort !== 2) return false;
+	  return true;
 	}
 
-	//get list of polls
+	//  get list of polls
 	function getSpots(term, offset, sort) {
-		return function (dispatch) {
-			dispatch(removeErroMessage());
-			dispatch(changeLoadingStatus());
+	  return function (dispatch) {
+	    dispatch(removeErroMessage());
+	    dispatch(changeLoadingStatus());
 
-			if (!validateParams(term, offset, sort)) {
-				_reactRouter.browserHistory.push('/');
-			} else {
-				return _axios2.default.get(ROOT_URL + '?location=' + term + '&offset=' + offset + '&sort=' + sort + '&category_filter=bars').then(function (response) {
-					_reactRouter.browserHistory.push('/search?term=' + term + '&offset=' + offset + '&sort=' + sort);
-					var _response$data = response.data,
-					    businesses = _response$data.businesses,
-					    latitude = _response$data.latitude,
-					    longitude = _response$data.longitude,
-					    total = _response$data.total;
+	    if (!validateParams(term, offset, sort)) {
+	      _reactRouter.browserHistory.push("/");
+	    } else {
+	      return _axios2.default.get(ROOT_URL + "?location=" + term + "&offset=" + offset + "&sort=" + sort + "&category_filter=bars").then(function (response) {
+	        _reactRouter.browserHistory.push("/search?term=" + term + "&offset=" + offset + "&sort=" + sort);
+	        var _response$data = response.data,
+	            businesses = _response$data.businesses,
+	            latitude = _response$data.latitude,
+	            longitude = _response$data.longitude,
+	            total = _response$data.total;
 
-					dispatch({
-						type: 'GET_SPOTS',
-						payload: businesses
-					});
-					dispatch(setMapCenter({
-						lat: latitude,
-						lng: longitude
-					}));
-					dispatch({
-						type: 'SET_SPOTS_COUNT',
-						payload: total
-					});
-					dispatch(changeLoadingStatus());
-					dispatch(setSort(sort));
-					dispatch(setTerm(term));
-					dispatch(setOffset(offset));
-				}).catch(function (error) {
-					var status = error.response.status;
+	        dispatch({
+	          type: "GET_SPOTS",
+	          payload: businesses
+	        });
+	        dispatch(setMapCenter({
+	          lat: latitude,
+	          lng: longitude
+	        }));
+	        dispatch({
+	          type: "SET_SPOTS_COUNT",
+	          payload: total
+	        });
+	        dispatch(changeLoadingStatus());
+	        dispatch(setSort(sort));
+	        dispatch(setTerm(term));
+	        dispatch(setOffset(offset));
+	      }).catch(function (error) {
+	        var status = error.response.status;
 
 
-					if (status == 400) {
-						dispatch(setErrorMessage('Sorry! No results were found for the requested search. Try searching with some different keywords'));
-					} else {
-						dispatch(setErrorMessage('Something went wrong. We are working on it.'));
-					}
-				});
-			}
-		};
+	        if (+status === 400) {
+	          dispatch(setErrorMessage("Sorry! No results were found for the requested search. Try searching with some different keywords"));
+	        } else {
+	          dispatch(setErrorMessage("Something went wrong. We are working on it."));
+	        }
+	      });
+	    }
+	  };
 	}
 
-	//update visit status 
+	//  update visit status
 	function changeVisitStatus(id) {
-		return function (dispatch) {
-			return _axios2.default.put(ROOT_URL + id, null, {
-				headers: { 'authorization': localStorage.getItem('token') }
-			}).then(function (response) {
-				dispatch(removeErroMessage());
-			}).catch(function (error) {
-				dispatch(setErrorMessage('Something went wrong. We are working on it.'));
-			});
-		};
+	  return function (dispatch) {
+	    return _axios2.default.put(ROOT_URL + id, null, {
+	      headers: { authorization: localStorage.getItem("token") }
+	    }).then(function () {
+	      dispatch(removeErroMessage());
+	    }).catch(function () {
+	      dispatch(setErrorMessage("Something went wrong. We are working on it."));
+	    });
+	  };
 	}
 
-	//highlight a particular spot on a map
+	//  highlight a particular spot on a map
 	function selectSpot(id) {
-		return {
-			type: 'SELECT_SPOT',
-			payload: id
-		};
+	  return {
+	    type: "SELECT_SPOT",
+	    payload: id
+	  };
 	}
 
-	//set the map center with some coordinates
+	//  set the map center with some coordinates
 	function setMapCenter(coords) {
-		return {
-			type: 'SET_MAP_CENTER',
-			payload: coords
-		};
+	  return {
+	    type: "SET_MAP_CENTER",
+	    payload: coords
+	  };
 	}
 
-	//set search term
+	//  set search term
 	function setTerm(term) {
-		localStorage.setItem('term', term);
-		return {
-			type: 'SET_TERM',
-			payload: term
-		};
+	  localStorage.setItem("term", term);
+	  return {
+	    type: "SET_TERM",
+	    payload: term
+	  };
 	}
 
-	//set sort param
+	//  set sort param
 	function setSort(sort) {
-		localStorage.setItem('sort', sort);
-		return {
-			type: 'SET_SORT',
-			payload: sort
-		};
+	  localStorage.setItem("sort", sort);
+	  return {
+	    type: "SET_SORT",
+	    payload: sort
+	  };
 	}
 
-	//set offset param
+	//  set offset param
 	function setOffset(offset) {
-		localStorage.setItem('offset', offset);
-		return {
-			type: 'SET_OFFSET',
-			payload: offset
-		};
+	  localStorage.setItem("offset", offset);
+	  return {
+	    type: "SET_OFFSET",
+	    payload: offset
+	  };
 	}
 
 	function changeLoadingStatus() {
-		return {
-			type: 'CHANGE_LOADING_STATUS'
-		};
+	  return {
+	    type: "CHANGE_LOADING_STATUS"
+	  };
 	}
 
-	//change display type - GRID or LIST
+	//  change display type - GRID or LIST
 	function changeDisplayType() {
-		return {
-			type: 'CHANGE_DISPLAY_TYPE'
-		};
+	  return {
+	    type: "CHANGE_DISPLAY_TYPE"
+	  };
 	}
 
-	//set new error message
+	//  set new error message
 	function setErrorMessage(error) {
-		return {
-			type: 'SET_ERROR',
-			payload: error
-		};
+	  return {
+	    type: "SET_ERROR",
+	    payload: error
+	  };
 	}
 
-	//remove error message
+	//  remove error message
 	function removeErroMessage() {
-		return {
-			type: 'REMOVE_ERROR'
-		};
+	  return {
+	    type: "REMOVE_ERROR"
+	  };
 	}
 
 	function signinUser(_ref) {
-		var login = _ref.login,
-		    password = _ref.password;
+	  var login = _ref.login,
+	      password = _ref.password;
 
+	  return function (dispatch) {
+	    return _axios2.default.post("/auth/signin", { login: login, password: password }).then(function (response) {
+	      //  update state to indicate user is authenticated
+	      var _response$data2 = response.data,
+	          username = _response$data2.username,
+	          userid = _response$data2.userid,
+	          token = _response$data2.token;
 
-		return function (dispatch) {
-			return _axios2.default.post('/auth/signin', { login: login, password: password }).then(function (response) {
-				//-update state to indicate user is authenticated
-				var _response$data2 = response.data,
-				    username = _response$data2.username,
-				    userid = _response$data2.userid,
-				    token = _response$data2.token;
-
-				dispatch(authUser(token, username, userid));
-			}).catch(function (error) {
-				//- show error message
-				dispatch(setErrorMessage('Bad Login Info'));
-			});
-		};
+	      dispatch(authUser(token, username, userid));
+	    }).catch(function () {
+	      //  show error message
+	      dispatch(setErrorMessage("Bad Login Info"));
+	    });
+	  };
 	}
 
 	function signupUser(_ref2) {
-		var username = _ref2.username,
-		    email = _ref2.email,
-		    password = _ref2.password;
+	  var username = _ref2.username,
+	      email = _ref2.email,
+	      password = _ref2.password;
 
+	  return function (dispatch) {
+	    return _axios2.default.post("/auth/signup", { username: username, email: email, password: password }).then(function (response) {
+	      var _response$data3 = response.data,
+	          userid = _response$data3.userid,
+	          token = _response$data3.token;
 
-		return function (dispatch) {
-			return _axios2.default.post('/auth/signup', { username: username, email: email, password: password }).then(function (response) {
-				var _response$data3 = response.data,
-				    username = _response$data3.username,
-				    userid = _response$data3.userid,
-				    token = _response$data3.token;
-
-				dispatch(authUser(token, username, userid));
-			}).catch(function (e) {
-				//- show error message
-				dispatch(setErrorMessage('This email or username is already in use'));
-			});
-		};
+	      var receivedUsername = response.data.username;
+	      dispatch(authUser(token, receivedUsername, userid));
+	    }).catch(function () {
+	      //  show error message
+	      dispatch(setErrorMessage("This email or username is already in use"));
+	    });
+	  };
 	}
 
 	function authUser(token, username, userid) {
-		return function (dispatch) {
-			dispatch(removeErroMessage());
+	  return function (dispatch) {
+	    dispatch(removeErroMessage());
 
-			localStorage.setItem('token', token);
-			localStorage.setItem('username', username);
-			localStorage.setItem('userid', userid);
+	    localStorage.setItem("token", token);
+	    localStorage.setItem("username", username);
+	    localStorage.setItem("userid", userid);
 
-			dispatch({
-				type: 'AUTH_USER',
-				payload: {
-					username: username,
-					userid: userid
-				}
-			});
+	    dispatch({
+	      type: "AUTH_USER",
+	      payload: {
+	        username: username,
+	        userid: userid
+	      }
+	    });
 
-			var term = localStorage.getItem('term');
-			var sort = localStorage.getItem('sort');
-			var offset = localStorage.getItem('offset');
+	    var term = localStorage.getItem("term");
+	    var sort = localStorage.getItem("sort");
+	    var offset = localStorage.getItem("offset");
 
-			if (term && sort && offset) dispatch(getSpots(term, offset, sort));else {
-				_reactRouter.browserHistory.push('/');
-			}
-		};
+	    if (term && sort && offset) dispatch(getSpots(term, offset, sort));else _reactRouter.browserHistory.push("/");
+	  };
 	}
 
 	function signoutUser() {
-		localStorage.removeItem('token');
-		localStorage.removeItem('username');
-		localStorage.removeItem('userid');
+	  localStorage.removeItem("token");
+	  localStorage.removeItem("username");
+	  localStorage.removeItem("userid");
 
-		localStorage.removeItem('term');
-		localStorage.removeItem('sort');
-		localStorage.removeItem('offset');
-		_reactRouter.browserHistory.push('/');
-		return {
-			type: 'UNAUTH_USER'
-		};
+	  localStorage.removeItem("term");
+	  localStorage.removeItem("sort");
+	  localStorage.removeItem("offset");
+	  _reactRouter.browserHistory.push("/");
+	  return {
+	    type: "UNAUTH_USER"
+	  };
 	}
 
 /***/ },
@@ -32945,8 +32943,17 @@
 	}(_react.Component);
 
 	IndexPage.propTypes = {
-	  location: _react.PropTypes.object.isRequired,
+	  location: _react.PropTypes.shape({
+	    query: _react.PropTypes.shape({
+	      token: _react.PropTypes.string,
+	      username: _react.PropTypes.string,
+	      userid: _react.PropTypes.string
+	    })
+	  }),
 	  authUser: _react.PropTypes.func.isRequired
+	};
+	IndexPage.defaultProps = {
+	  location: {}
 	};
 	exports.default = (0, _reactRedux.connect)(null, { authUser: _Actions.authUser })(IndexPage);
 
@@ -32968,8 +32975,6 @@
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRedux = __webpack_require__(160);
-
-	var _reactRouter = __webpack_require__(200);
 
 	var _Actions = __webpack_require__(317);
 
@@ -33009,9 +33014,8 @@
 	          term = _props$location$query.term,
 	          offset = _props$location$query.offset,
 	          sort = _props$location$query.sort;
-	      var getSpots = this.props.getSpots;
 
-	      getSpots(term, offset, sort);
+	      this.props.getSpots(term, offset, sort);
 	    }
 	  }, {
 	    key: "render",
@@ -33037,6 +33041,25 @@
 	  return SearchPage;
 	}(_react.Component);
 
+	SearchPage.propTypes = {
+	  location: _react.PropTypes.shape({
+	    query: _react.PropTypes.shape({
+	      term: _react.PropTypes.string,
+	      offset: _react.PropTypes.number,
+	      sort: _react.PropTypes.number
+	    })
+	  }),
+	  getSpots: _react.PropTypes.func.isRequired
+	};
+	SearchPage.defaultProps = {
+	  location: {
+	    query: {
+	      term: "",
+	      sort: 0,
+	      offset: 0
+	    }
+	  }
+	};
 	exports.default = (0, _reactRedux.connect)(null, { getSpots: _Actions.getSpots })(SearchPage);
 
 /***/ },
@@ -33094,8 +33117,8 @@
 	  _createClass(SpotsList, [{
 	    key: "renderSpots",
 	    value: function renderSpots(spots) {
-	      return spots.map(function (spot, i) {
-	        return _react2.default.createElement(_SpotsListItem2.default, { spot: spot, key: i });
+	      return spots.map(function (spot) {
+	        return _react2.default.createElement(_SpotsListItem2.default, { spot: spot, key: spot.id });
 	      });
 	    }
 	  }, {
@@ -33107,12 +33130,12 @@
 	          error = _props.error,
 	          isLoading = _props.isLoading;
 
-
 	      if (isLoading) {
 	        return _react2.default.createElement(_Loader2.default, null);
 	      }
 
-	      if (error) return _react2.default.createElement("div", { className: "spots-list" });else return _react2.default.createElement(
+	      if (error) return _react2.default.createElement("div", { className: "spots-list" });
+	      return _react2.default.createElement(
 	        "div",
 	        { className: "spots-list" },
 	        _react2.default.createElement(
@@ -33135,6 +33158,28 @@
 	  return SpotsList;
 	}(_react.Component);
 
+	SpotsList.propTypes = {
+	  spots: _react.PropTypes.arrayOf({
+	    visitors: _react.PropTypes.array,
+	    id: _react.PropTypes.string,
+	    location: _react.PropTypes.object,
+	    name: _react.PropTypes.string,
+	    url: _react.PropTypes.string,
+	    image_url: _react.PropTypes.string,
+	    display_phone: _react.PropTypes.string,
+	    snippet_text: _react.PropTypes.string,
+	    review_count: _react.PropTypes.number
+	  }).isRequired,
+	  term: _react.PropTypes.string.isRequired,
+	  error: _react.PropTypes.string,
+	  isLoading: _react.PropTypes.boolean
+	};
+	SpotsList.defaultProps = {
+	  isLoading: false,
+	  error: ""
+	};
+
+
 	function mapStateToProps(state) {
 	  return {
 	    spots: state.spots.all,
@@ -33143,7 +33188,7 @@
 	    isLoading: state.isLoading
 	  };
 	}
-	asdasd;
+
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(SpotsList);
 
 /***/ },
@@ -33195,28 +33240,30 @@
 	    value: function componentWillMount() {
 	      var spot = this.props.spot;
 
-	      var userId = localStorage.getItem('userid');
+	      var userId = localStorage.getItem("userid");
 
 	      if (userId && spot.visitors && spot.visitors.indexOf(userId) >= 0) {
 	        this.setState({ visitStatus: true });
 	      }
 
-	      if (spot.visitors) this.setState({
-	        numVisitors: spot.visitors.length
-	      });
+	      if (spot.visitors) {
+	        this.setState({
+	          numVisitors: spot.visitors.length
+	        });
+	      }
 	    }
 	  }, {
 	    key: "handleClick",
 	    value: function handleClick(key) {
 	      var spot = this.props.spot;
 
-	      if (key == 'pin') {
+	      if (key === "pin") {
 	        var _props = this.props,
-	            selectSpot = _props.selectSpot,
-	            setMapCenter = _props.setMapCenter;
+	            _selectSpot = _props.selectSpot,
+	            _setMapCenter = _props.setMapCenter;
 
-	        selectSpot(spot.id);
-	        setMapCenter({
+	        _selectSpot(spot.id);
+	        _setMapCenter({
 	          lat: spot.location.coordinate.latitude,
 	          lng: spot.location.coordinate.longitude
 	        });
@@ -33230,7 +33277,6 @@
 	        if (visitStatus) numVisitors++;else numVisitors--;
 
 	        this.setState({ visitStatus: visitStatus, numVisitors: numVisitors });
-
 	        this.props.changeVisitStatus(spot.id);
 	      }
 	    }
@@ -33243,7 +33289,7 @@
 	          authenticated = _props2.authenticated;
 
 	      var name = spot.name.substring(0, 25);
-	      name = name.length == 25 ? name + "..." : name;
+	      name = name.length === 25 ? name + "..." : name;
 
 	      var _state2 = this.state,
 	          numVisitors = _state2.numVisitors,
@@ -33253,70 +33299,73 @@
 
 	      if (visitStatus) buttonClass = "glyphicon glyphicon-ok";
 
-	      if (displayType == 'GRID') return _react2.default.createElement(
-	        "div",
-	        { className: "col-sm-6 col-md-4 spots-list-item" },
-	        _react2.default.createElement(
+	      if (displayType === "GRID") {
+	        return _react2.default.createElement(
 	          "div",
-	          { className: "thumbnail" },
-	          _react2.default.createElement(
-	            "a",
-	            { href: spot.url, target: "_blank" },
-	            _react2.default.createElement("image", { className: "img-responsive", src: spot.image_url })
-	          ),
+	          { className: "col-sm-6 col-md-4 spots-list-item" },
 	          _react2.default.createElement(
 	            "div",
-	            { className: "caption" },
+	            { className: "thumbnail" },
 	            _react2.default.createElement(
-	              "h3",
-	              null,
-	              name
+	              "a",
+	              { href: spot.url, target: "_blank", rel: "noopener noreferrer" },
+	              _react2.default.createElement("image", { className: "img-responsive", src: spot.image_url })
 	            ),
 	            _react2.default.createElement(
 	              "div",
-	              null,
-	              _react2.default.createElement("span", { className: "glyphicon glyphicon-earphone", "aria-hidden": "true" }),
-	              spot.display_phone
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              null,
-	              _react2.default.createElement("span", { className: "glyphicon glyphicon-map-marker", "aria-hidden": "true" }),
-	              spot.location.address[0]
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              null,
+	              { className: "caption" },
 	              _react2.default.createElement(
-	                "button",
-	                { className: "btn btn-go", disabled: !authenticated, onClick: this.handleClick.bind(this, 'iamgoing') },
-	                _react2.default.createElement("span", { className: buttonClass, "aria-hidden": "true" }),
-	                numVisitors,
-	                " going"
-	              )
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              null,
+	                "h3",
+	                null,
+	                name
+	              ),
 	              _react2.default.createElement(
-	                "button",
-	                { className: "btn btn-go", onClick: this.handleClick.bind(this, 'pin') },
-	                _react2.default.createElement("span", { className: "glyphicon glyphicon-pushpin", "aria-hidden": "true" }),
-	                "Pinpoint"
-	              )
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              null,
+	                "div",
+	                null,
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-earphone", "aria-hidden": "true" }),
+	                spot.display_phone
+	              ),
 	              _react2.default.createElement(
-	                "span",
-	                { className: "stars-container stars-" + Math.round(spot.rating * 20) },
-	                "\u2605\u2605\u2605\u2605\u2605"
+	                "div",
+	                null,
+	                _react2.default.createElement("span", { className: "glyphicon glyphicon-map-marker", "aria-hidden": "true" }),
+	                spot.location.address[0]
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                  "button",
+	                  { className: "btn btn-go", disabled: !authenticated, onClick: this.handleClick.bind(this, "iamgoing") },
+	                  _react2.default.createElement("span", { className: buttonClass, "aria-hidden": "true" }),
+	                  numVisitors,
+	                  " going"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                  "button",
+	                  { className: "btn btn-go", onClick: this.handleClick.bind(this, "pin") },
+	                  _react2.default.createElement("span", { className: "glyphicon glyphicon-pushpin", "aria-hidden": "true" }),
+	                  "Pinpoint"
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "stars-container stars-" + Math.round(spot.rating * 20) },
+	                  "\u2605\u2605\u2605\u2605\u2605"
+	                )
 	              )
 	            )
 	          )
-	        )
-	      );else return _react2.default.createElement(
+	        );
+	      }
+	      return _react2.default.createElement(
 	        "div",
 	        { className: "panel panel-default spots-list-item" },
 	        _react2.default.createElement(
@@ -33327,7 +33376,7 @@
 	            { className: "col-sm-3" },
 	            _react2.default.createElement(
 	              "a",
-	              { href: spot.url, target: "_blank" },
+	              { href: spot.url, target: "_blank", rel: "noopener noreferrer" },
 	              _react2.default.createElement("image", { className: "img-responsive", src: spot.image_url })
 	            )
 	          ),
@@ -33356,7 +33405,7 @@
 	              null,
 	              _react2.default.createElement(
 	                "button",
-	                { className: "btn btn-go", disabled: !authenticated, onClick: this.handleClick.bind(this, 'iamgoing') },
+	                { className: "btn btn-go", disabled: !authenticated, onClick: this.handleClick.bind(this, "iamgoing") },
 	                _react2.default.createElement("span", { className: buttonClass, "aria-hidden": "true" }),
 	                numVisitors,
 	                " going"
@@ -33367,7 +33416,7 @@
 	              null,
 	              _react2.default.createElement(
 	                "button",
-	                { className: "btn btn-go", onClick: this.handleClick.bind(this, 'pin') },
+	                { className: "btn btn-go", onClick: this.handleClick.bind(this, "pin") },
 	                _react2.default.createElement("span", { className: "glyphicon glyphicon-pushpin", "aria-hidden": "true" }),
 	                "Pinpoint"
 	              )
@@ -33391,7 +33440,7 @@
 	              null,
 	              _react2.default.createElement(
 	                "a",
-	                { href: spot.url, target: "_blank" },
+	                { href: spot.url, target: "_blank", rel: "noopener noreferrer" },
 	                "See ",
 	                spot.review_count,
 	                " more feedbacks"
@@ -33405,6 +33454,26 @@
 
 	  return SpotsListItem;
 	}(_react.Component);
+
+	SpotsListItem.propTypes = {
+	  spot: _react.PropTypes.shape({
+	    visitors: _react.PropTypes.array,
+	    id: _react.PropTypes.string,
+	    location: _react.PropTypes.object,
+	    name: _react.PropTypes.string,
+	    url: _react.PropTypes.string,
+	    image_url: _react.PropTypes.string,
+	    display_phone: _react.PropTypes.string,
+	    snippet_text: _react.PropTypes.string,
+	    review_count: _react.PropTypes.number
+	  }).isRequired,
+	  selectSpot: _react.PropTypes.func.isRequired,
+	  setMapCenter: _react.PropTypes.func.isRequired,
+	  changeVisitStatus: _react.PropTypes.func.isRequired,
+	  displayType: _react.PropTypes.string.isRequired,
+	  authenticated: _react.PropTypes.bool.isRequired
+	};
+
 
 	function mapStateToProps(state) {
 	  var displayType = state.displayType;
@@ -33541,16 +33610,18 @@
 	          _react2.default.createElement(
 	            "div",
 	            {
-	              className: "selector-button " + (displayType == "GRID" && "active"),
-	              onClick: this.handleClick.bind(this, 'GRID')
+	              className: "selector-button " + (displayType === "GRID" && "active"),
+	              onClick: this.handleClick.bind(this, "GRID"),
+	              role: "button"
 	            },
 	            _react2.default.createElement("span", { className: "glyphicon glyphicon-th", "aria-hidden": "true" })
 	          ),
 	          _react2.default.createElement(
 	            "div",
 	            {
-	              className: "selector-button " + (displayType == "LIST" && "active"),
-	              onClick: this.handleClick.bind(this, "LIST")
+	              className: "selector-button " + (displayType === "LIST" && "active"),
+	              onClick: this.handleClick.bind(this, "LIST"),
+	              role: "button"
 	            },
 	            _react2.default.createElement("span", { className: "glyphicon glyphicon-th-list", "aria-hidden": "true" })
 	          ),
@@ -33584,6 +33655,16 @@
 
 	  return DisplaySelector;
 	}(_react.Component);
+
+	DisplaySelector.propTypes = {
+	  sort: _react.PropTypes.number.isRequired,
+	  displayType: _react.PropTypes.string.isRequired,
+	  term: _react.PropTypes.string.isRequired,
+	  setSort: _react.PropTypes.func.isRequired,
+	  getSpots: _react.PropTypes.func.isRequired,
+	  changeDisplayType: _react.PropTypes.func.isRequired
+	};
+
 
 	function mapStateToProps(state) {
 	  var _state$search = state.search,
@@ -33656,9 +33737,9 @@
 	        var _props = this.props,
 	            term = _props.term,
 	            sort = _props.sort,
-	            getSpots = _props.getSpots;
+	            _getSpots = _props.getSpots;
 
-	        this.props.getSpots(term, newOffset, sort);
+	        _getSpots(term, newOffset, sort);
 	      }
 	    }
 	  }, {
@@ -33688,7 +33769,7 @@
 	        var newOffset = (n - 1) * 12;
 	        return _react2.default.createElement(
 	          "li",
-	          { key: n, onClick: _this2.handleClick.bind(_this2, newOffset), className: pageNumber === n ? 'active' : '' },
+	          { key: n, onClick: _this2.handleClick.bind(_this2, newOffset), className: pageNumber === n ? "active" : "", role: "button" },
 	          _react2.default.createElement(
 	            _reactRouter.Link,
 	            { to: baseUrl + newOffset },
@@ -33722,7 +33803,7 @@
 	              { className: "pagination pagination-custom" },
 	              _react2.default.createElement(
 	                "li",
-	                { onClick: this.handleClick.bind(this, offset - 12), className: prev > 0 ? '' : 'disabled' },
+	                { onClick: this.handleClick.bind(this, offset - 12), className: prev > 0 ? "" : "disabled", role: "button" },
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
 	                  { to: baseUrl + (offset - 12), "aria-label": "Previous" },
@@ -33736,7 +33817,7 @@
 	              renderPageLinks,
 	              _react2.default.createElement(
 	                "li",
-	                { onClick: this.handleClick.bind(this, offset + 12), className: next > total ? "disabled" : "" },
+	                { onClick: this.handleClick.bind(this, offset + 12), className: next > total ? "disabled" : "", role: "button" },
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
 	                  { to: baseUrl + (offset + 12), "aria-label": "Next" },
@@ -33756,6 +33837,15 @@
 
 	  return Pagination;
 	}(_react.Component);
+
+	Pagination.propTypes = {
+	  spotsCount: _react.PropTypes.number.isRequired,
+	  term: _react.PropTypes.string.isRequired,
+	  sort: _react.PropTypes.number.isRequired,
+	  offset: _react.PropTypes.number.isRequired,
+	  getSpots: _react.PropTypes.func.isRequired
+	};
+
 
 	function mapStateToProps(state) {
 	  var _state$search = state.search,
@@ -33820,7 +33910,7 @@
 
 	    _this.shouldComponentUpdate = _function2.default;
 
-	    _this._onChildClick = function (key, childProps) {
+	    _this.onChildClick = function (key, childProps) {
 	      var center = { lat: childProps.lat, lng: childProps.lng };
 	      _this.setState({ center: center });
 	    };
@@ -33869,32 +33959,44 @@
 	      var center = this.state.center;
 
 
-	      if (error) {
-	        return _react2.default.createElement("div", { className: "map-container" });
-	      } else {
-	        return _react2.default.createElement(
-	          "div",
-	          { className: "map-container" },
-	          _react2.default.createElement(
-	            _googleMapReact2.default,
-	            {
-	              center: center,
-	              zoom: zoom,
-	              bootstrapURLKeys: { key: API_KEY },
-	              options: this.createMapOptions,
-	              onChildClick: this._onChildClick
-	            },
-	            this.renderSpots()
-	          )
-	        );
-	      }
+	      if (error) return _react2.default.createElement("div", { className: "map-container" });
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "map-container" },
+	        _react2.default.createElement(
+	          _googleMapReact2.default,
+	          {
+	            center: center,
+	            zoom: zoom,
+	            bootstrapURLKeys: { key: API_KEY },
+	            options: this.createMapOptions,
+	            onChildClick: this.onChildClick
+	          },
+	          this.renderSpots()
+	        )
+	      );
 	    }
 	  }]);
 
 	  return MapContainer;
 	}(_react.Component);
 
-	MapContainer.defaultProps = { zoom: 14 };
+	MapContainer.propTypes = {
+	  spots: _react.PropTypes.arrayOf({
+	    name: _react.PropTypes.string,
+	    id: _react.PropTypes.string,
+	    location: _react.PropTypes.object
+	  }),
+	  error: _react.PropTypes.string,
+	  zoom: _react.PropTypes.number,
+	  center: _react.PropTypes.shape({})
+	};
+	MapContainer.defaultProps = {
+	  zoom: 14,
+	  spots: {},
+	  error: "",
+	  center: {}
+	};
 
 
 	function mapStateToProps(state) {
@@ -39465,6 +39567,17 @@
 	  return Signin;
 	}(_react.Component);
 
+	Signin.propTypes = {
+	  removeErroMessage: _react.PropTypes.func.isRequired,
+	  signinUser: _react.PropTypes.func.isRequired,
+	  handleSubmit: _react.PropTypes.func.isRequired,
+	  fields: _react.PropTypes.shape({
+	    login: _react.PropTypes.string,
+	    password: _react.PropTypes.string
+	  }).isRequired
+	};
+
+
 	function validate(fromProps) {
 	  var errors = {};
 
@@ -39489,7 +39602,7 @@
 /* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -39536,12 +39649,12 @@
 	  }
 
 	  _createClass(Signup, [{
-	    key: 'componentWillMount',
+	    key: "componentWillMount",
 	    value: function componentWillMount() {
 	      this.props.removeErroMessage();
 	    }
 	  }, {
-	    key: 'handleFormSubmit',
+	    key: "handleFormSubmit",
 	    value: function handleFormSubmit(_ref) {
 	      var username = _ref.username,
 	          email = _ref.email,
@@ -39550,7 +39663,7 @@
 	      this.props.signupUser({ username: username, email: email, password: password });
 	    }
 	  }, {
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      var _props = this.props,
 	          handleSubmit = _props.handleSubmit,
@@ -39562,119 +39675,119 @@
 
 
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'row auth-wrapper' },
+	        "div",
+	        { className: "row auth-wrapper" },
 	        _react2.default.createElement(
-	          'h1',
-	          { className: 'text-center' },
-	          'Sign Up'
+	          "h1",
+	          { className: "text-center" },
+	          "Sign Up"
 	        ),
-	        _react2.default.createElement('div', { className: 'col-md-3 col-sm-2' }),
+	        _react2.default.createElement("div", { className: "col-md-3 col-sm-2" }),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-md-6 col-sm-8' },
+	          "div",
+	          { className: "col-md-6 col-sm-8" },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'row auth' },
+	            "div",
+	            { className: "row auth" },
 	            _react2.default.createElement(_Alert2.default, null),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-md-6 auth-form-wrapper' },
+	              "div",
+	              { className: "col-md-6 auth-form-wrapper" },
 	              _react2.default.createElement(
-	                'form',
+	                "form",
 	                { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
 	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'form-group' },
-	                  _react2.default.createElement('input', _extends({
-	                    id: 'username',
-	                    className: 'form-control', placeholder: 'Username'
+	                  "div",
+	                  { className: "form-group" },
+	                  _react2.default.createElement("input", _extends({
+	                    id: "username",
+	                    className: "form-control", placeholder: "Username"
 	                  }, username)),
 	                  username.error && username.touched && _react2.default.createElement(
-	                    'div',
-	                    { className: 'text-danger' },
+	                    "div",
+	                    { className: "text-danger" },
 	                    username.error
 	                  )
 	                ),
 	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'form-group' },
-	                  _react2.default.createElement('input', _extends({
-	                    id: 'email',
-	                    className: 'form-control', placeholder: 'Email'
+	                  "div",
+	                  { className: "form-group" },
+	                  _react2.default.createElement("input", _extends({
+	                    id: "email",
+	                    className: "form-control", placeholder: "Email"
 	                  }, email)),
 	                  email.error && email.touched && _react2.default.createElement(
-	                    'div',
-	                    { className: 'text-danger' },
+	                    "div",
+	                    { className: "text-danger" },
 	                    email.error
 	                  )
 	                ),
 	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'form-group' },
-	                  _react2.default.createElement('input', _extends({
-	                    id: 'password',
-	                    className: 'form-control', type: 'password', placeholder: 'Password'
+	                  "div",
+	                  { className: "form-group" },
+	                  _react2.default.createElement("input", _extends({
+	                    id: "password",
+	                    className: "form-control", type: "password", placeholder: "Password"
 	                  }, password)),
 	                  password.error && password.touched && _react2.default.createElement(
-	                    'div',
-	                    { className: 'text-danger' },
+	                    "div",
+	                    { className: "text-danger" },
 	                    password.error
 	                  )
 	                ),
 	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'form-group' },
-	                  _react2.default.createElement('input', _extends({
-	                    id: 'passwordConfirm',
-	                    className: 'form-control', type: 'password', placeholder: 'Password Confirm'
+	                  "div",
+	                  { className: "form-group" },
+	                  _react2.default.createElement("input", _extends({
+	                    id: "passwordConfirm",
+	                    className: "form-control", type: "password", placeholder: "Password Confirm"
 	                  }, passwordConfirm)),
 	                  passwordConfirm.error && passwordConfirm.touched && _react2.default.createElement(
-	                    'div',
-	                    { className: 'text-danger' },
+	                    "div",
+	                    { className: "text-danger" },
 	                    passwordConfirm.error
 	                  )
 	                ),
 	                _react2.default.createElement(
-	                  'button',
-	                  { type: 'submit', className: 'btn btn-custom-danger btn-block' },
-	                  'Sign up'
+	                  "button",
+	                  { type: "submit", className: "btn btn-custom-danger btn-block" },
+	                  "Sign up"
 	                )
 	              )
 	            ),
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-md-6 social-wrapper' },
+	              "div",
+	              { className: "col-md-6 social-wrapper" },
 	              _react2.default.createElement(
-	                'div',
+	                "div",
 	                null,
 	                _react2.default.createElement(
-	                  'a',
-	                  { href: '/auth/facebook', className: 'btn btn-default btn-block' },
-	                  _react2.default.createElement('i', { className: 'fa fa-facebook facebook', 'aria-hidden': 'true' }),
-	                  'Sign up with Facebook'
+	                  "a",
+	                  { href: "/auth/facebook", className: "btn btn-default btn-block" },
+	                  _react2.default.createElement("i", { className: "fa fa-facebook facebook", "aria-hidden": "true" }),
+	                  "Sign up with Facebook"
 	                )
 	              ),
 	              _react2.default.createElement(
-	                'a',
-	                { href: '/auth/vk', className: 'btn btn-default btn-block' },
-	                _react2.default.createElement('i', { className: 'fa fa-vk vk', 'aria-hidden': 'true' }),
-	                'Sign up with Vk.com'
+	                "a",
+	                { href: "/auth/vk", className: "btn btn-default btn-block" },
+	                _react2.default.createElement("i", { className: "fa fa-vk vk", "aria-hidden": "true" }),
+	                "Sign up with Vk.com"
 	              )
 	            )
 	          ),
 	          _react2.default.createElement(
-	            'div',
+	            "div",
 	            null,
-	            'Already have an account? ',
+	            "Already have an account? ",
 	            _react2.default.createElement(
 	              _reactRouter.Link,
-	              { to: 'signin' },
-	              'Sign in \xBB'
+	              { to: "signin" },
+	              "Sign in \xBB"
 	            )
 	          )
 	        ),
-	        _react2.default.createElement('div', { className: 'col-md-3 col-sm-2' })
+	        _react2.default.createElement("div", { className: "col-md-3 col-sm-2" })
 	      );
 	    }
 	  }]);
@@ -39682,23 +39795,34 @@
 	  return Signup;
 	}(_react.Component);
 
-	//simple email validator
+	//  simple email validator
 
 
+	Signup.propTypes = {
+	  removeErroMessage: _react.PropTypes.func.isRequired,
+	  handleSubmit: _react.PropTypes.func.isRequired,
+	  signupUser: _react.PropTypes.func.isRequired,
+	  fields: _react.PropTypes.shape({
+	    username: _react.PropTypes.string,
+	    email: _react.PropTypes.string,
+	    password: _react.PropTypes.string,
+	    passwordConfirm: _react.PropTypes.string
+	  }).isRequired
+	};
 	function validateEmail(email) {
 	  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	  return re.test(email);
-	};
+	}
 
 	function validate(fromProps) {
 	  var errors = {};
 
 	  if (!fromProps.username) {
-	    errors.username = 'Please enter an username';
+	    errors.username = "Please enter an username";
 	  }
 
 	  if (!fromProps.email) {
-	    errors.email = 'Please enter an email';
+	    errors.email = "Please enter an email";
 	  }
 
 	  if (!validateEmail(fromProps.email)) {
@@ -39706,23 +39830,23 @@
 	  }
 
 	  if (!fromProps.password) {
-	    errors.password = 'Please enter a password';
+	    errors.password = "Please enter a password";
 	  }
 
 	  if (!fromProps.passwordConfirm) {
-	    errors.passwordConfirm = 'Please enter a password confirmation';
+	    errors.passwordConfirm = "Please enter a password confirmation";
 	  }
 
 	  if (fromProps.password !== fromProps.passwordConfirm) {
-	    errors.password = 'Passwords must match!';
+	    errors.password = "Passwords must match!";
 	  }
 
 	  return errors;
 	}
 
 	exports.default = (0, _reduxForm.reduxForm)({
-	  form: 'signup',
-	  fields: ['username', 'email', 'password', 'passwordConfirm'],
+	  form: "signup",
+	  fields: ["username", "email", "password", "passwordConfirm"],
 	  validate: validate
 	}, null, actions)(Signup);
 

@@ -1,11 +1,21 @@
-import React, { Component } from "react";
+import React, { Component, PropTypes } from "react";
 import { Link } from "react-router";
 import { reduxForm } from "redux-form";
 
 import { removeErroMessage, signinUser } from "actions/Actions";
 import Alert from "components/Alert";
 
-export class Signin extends Component {  
+export class Signin extends Component {
+  static propTypes = {
+    removeErroMessage: PropTypes.func.isRequired,
+    signinUser: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    fields: PropTypes.shape( {
+      login: PropTypes.string,
+      password: PropTypes.string
+    } ).isRequired
+  };
+
   componentWillMount() {
     this.props.removeErroMessage();
   }
@@ -29,9 +39,9 @@ export class Signin extends Component {
                   <input
                     id="login"
                     className="form-control" placeholder="Email or Username"
-                    {...login}
+                    { ...login }
                   />
-                  { (login.error && login.touched) && <div className="text-danger">{ login.error }</div> }
+                  { ( login.error && login.touched ) && <div className="text-danger">{ login.error }</div> }
                 </div>
                 <div className="form-group">
                   <input
@@ -52,16 +62,16 @@ export class Signin extends Component {
                   Sign up with Facebook
                 </a>
               </div>
-                <a href="/auth/vk" className="btn btn-default btn-block">
-                  <i className="fa fa-vk vk" aria-hidden="true" />
-                  Sign in with Vk.com
-                </a>
-              <div />              
+              <a href="/auth/vk" className="btn btn-default btn-block">
+                <i className="fa fa-vk vk" aria-hidden="true" />
+                Sign in with Vk.com
+              </a>
+              <div />
             </div>
-           </div>
-           <div>
-              Need an account? <Link to='signup'>Sign Up »</Link>
-            </div>
+          </div>
+          <div>
+            Need an account? <Link to="signup">Sign Up »</Link>
+          </div>
         </div>
         <div className="col-md-3 col-sm-2" />
       </div>
@@ -69,7 +79,7 @@ export class Signin extends Component {
   }
 }
 
-function validate( fromProps ) {  
+function validate( fromProps ) {
   const errors = {};
 
   if ( !fromProps.login ) {

@@ -7,8 +7,18 @@ import Searchbar from "components/Searchbar";
 export class IndexPage extends Component {
 
   static propTypes = {
-    location: PropTypes.object.isRequired,
+    location: PropTypes.shape( {
+      query: PropTypes.shape( {
+        token: PropTypes.string,
+        username: PropTypes.string,
+        userid: PropTypes.string
+      } )
+    } ),
     authUser: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    location: {}
   };
 
   componentWillMount() {

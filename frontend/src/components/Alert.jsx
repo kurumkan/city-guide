@@ -8,7 +8,7 @@ class Alert extends Component {
 
   static defaultProps = {
     errorMessage: ""
-  }
+  };
 
   render() {
     const { errorMessage } = this.props;

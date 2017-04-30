@@ -5,13 +5,8 @@ import { getSpots } from "actions/Actions";
 
 export class Searchbar extends Component {
   static propTypes = {
-    sort: PropTypes.number,
-    getSpots: PropTypes.func
-  };
-
-  static defaultProps = {
-    sort: 0,
-    getSpots: () => {}
+    sort: PropTypes.number.isRequired,
+    getSpots: PropTypes.func.isRequired
   };
 
   constructor( props ) {

@@ -12,9 +12,9 @@ var Spot = require('./models/spot');
 
 
 app.use(function(req, res, next){
-	if(req.headers["x-forwarded-proto"] === "https"){		
+	if(req.headers["x-forwarded-proto"] === "https"){
 		res.redirect("http://"+req.hostname+req.url);
-	}else{		
+	}else{
 		next();
 	}
 });
@@ -36,10 +36,10 @@ app.use(passport.initialize());
 app.get('/auth/facebook', passport.authenticate('facebook', {scope:['email']}));
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/signin' }),
-    function(req, res) { 
+    function(req, res) {
     	var user = req.user;
-    	var token=Auth.getToken(user); 
-        res.redirect('/?token='+token+'&username='+user.facebook.displayName+'&userid='+user._id);     	
+    	var token=Auth.getToken(user);
+        res.redirect('/?token='+token+'&username='+user.facebook.displayName+'&userid='+user._id);
 });
 
 //vkontakte login
@@ -47,10 +47,10 @@ app.get('/auth/vk', passport.authenticate('vkontakte'));
 
 app.get('/auth/vk/callback',
     passport.authenticate('vkontakte', { failureRedirect: '/signin'}),
-    function(req, res) { 
+    function(req, res) {
     	var user = req.user;
-    	var token=Auth.getToken(user); 
-        res.redirect('/?token='+token+'&username='+user.vk.displayName+'&userid='+user._id);     	        
+    	var token=Auth.getToken(user);
+        res.redirect('/?token='+token+'&username='+user.vk.displayName+'&userid='+user._id);
 });
 
 
@@ -60,27 +60,27 @@ app.post('/auth/signin', requireSignin, Auth.signin);
 
 
 //index route
-app.get("/api/spots", function(request, response){		
-	
+app.get("/api/spots", function(request, response){
+
 	var location = request.query.location,
 		offset = request.query.offset,
 		sort = request.query.sort,
-		category_filter = request.query.category_filter;			
+		category_filter = request.query.category_filter;
 
 	var params = {
 		location: location||'London',
 		limit: 12,
-		offset: offset||0,		
+		offset: offset||0,
 		sort: !sort||sort==0?sort:2,
 		category_filter: category_filter||'bars'
-	};	
+	};
 	//making a request to Yelp api
 	requestYelp(params, function(error, res, body){
-		
+
 		if(error){
 			handleError(response, error, 'YELP');
 		}else{
-			body = JSON.parse(body);	
+			body = JSON.parse(body);
 			if(body.error){
 				var error = {
 					stack: body.error
@@ -88,16 +88,16 @@ app.get("/api/spots", function(request, response){
 				handleError(response, error, 'YELP');
 			}else{
 				var businesses = body.businesses;
-				var ids = businesses.map((b)=>b.id);			
-				
+				var ids = businesses.map((b)=>b.id);
+
 				//injecting visitors array
 				Spot.find({
 						'id':{$in: ids}
 					},
-					function(error, docs){						
+					function(error, docs){
 						if(error)
 							handleError(request, error);
-						else{							
+						else{
 							for(var i=0; i<businesses.length; i++){
 								for(j=0; j<docs.length; j++){
 									if(businesses[i].id==docs[j].id){
@@ -105,43 +105,43 @@ app.get("/api/spots", function(request, response){
 										docs.splice(j,1);
 										break;
 									}
-								}								
-							}							
+								}
+							}
 						}
 						response.json({
 							businesses: businesses,
 							latitude: body.region.center.latitude,
 							longitude: body.region.center.longitude,
 							total: body.total
-						});			
+						});
 					}
 				);
-			}			
+			}
 		}
-	});	
+	});
 });
 
 
 //update route
 app.put('/api/spots/:id', requireAuth, function(request, response){
 	var id = request.params.id;
-	
+
 	Spot.findOne({id: id}, function(error, spot){
-		
-		if(error){								
-			handle500(response, error);		
+
+		if(error){
+			handle500(response, error);
 		}else{
 			var userId=request.user._id;
 			//spot with the id exist - update
-			if(spot){	
+			if(spot){
 				var indexOf = spot.visitors.indexOf(mongoose.Types.ObjectId(userId));
 				if(indexOf<0)
 					spot.visitors.push(userId);
 				else
 					spot.visitors.splice(indexOf,1);
-		
-				spot.save();	
-				response.json({id: spot.id});		
+
+				spot.save();
+				response.json({id: spot.id});
 			}else{
 				//create new spot
 				spot = {
@@ -150,17 +150,17 @@ app.put('/api/spots/:id', requireAuth, function(request, response){
 				}
 				Spot.create(spot, function(error, newSpot){
 					if(error)
-						handle500(response, error);		
-					else{						
-						response.json({id: spot.id});				
+						handle500(response, error);
+					else{
+						response.json({id: spot.id});
 					}
 				})
-			}							
+			}
 		}
 	});
 });
 
-app.get('*', function (request, response){		
+app.get('*', function (request, response){
 	response.sendFile(path.resolve(__dirname, './frontend/public', 'index.html'))
 });
 

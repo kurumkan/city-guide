@@ -11,7 +11,7 @@ module.exports = {
 
 
   // plugins: [
- 
+
   //   new ExtractTextPlugin("bundle.css", {allChunks: false}),
   //   new webpack.optimize.AggressiveMergingPlugin(),
   //   new webpack.optimize.OccurrenceOrderPlugin(),
@@ -39,7 +39,7 @@ module.exports = {
   //     },
   //     exclude: [/\.min\.js$/gi] // skip pre-minified libs
   //   }),
-  //   new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]), 
+  //   new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
   //   new CompressionPlugin({
   //     asset: "[path].gz[query]",
   //     algorithm: "gzip",
@@ -49,14 +49,14 @@ module.exports = {
   //   }),
 
   //   new webpack.DefinePlugin({
-  //   "process.env": { 
-  //      NODE_ENV: JSON.stringify("production") 
+  //   "process.env": {
+  //      NODE_ENV: JSON.stringify("production")
   //     }
   //   })
   // ],
 
   output: {
-    path: __dirname,    
+    path: __dirname,
     filename: './frontend/public/bundle.js'
   },
 
@@ -64,17 +64,17 @@ module.exports = {
     root: __dirname,
     modulesDirectories: [
       'node_modules',
-      './frontend/src/'      
+      './frontend/src/'
     ],
     alias: {
-      applicationStyles: 'frontend/src/styles/app.scss',      
+      applicationStyles: 'frontend/src/styles/app.scss',
     },
     extensions: ['', '.js', '.jsx']
   },
 
   module: {
     loaders: [
-      {      
+      {
         loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'stage-1']
@@ -86,9 +86,9 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: "eslint-loader"
-      }         
+      }
     ]
-  }, 
+  },
   devServer: {
     historyApiFallback: true,
     contentBase: './'

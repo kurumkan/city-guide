@@ -1,15 +1,26 @@
-{	
+{
   "env": {
-    "browser": true,    
+    "browser": true,
     "es6": true,
     "node": true,
   },
   "extends": "airbnb",
   "parser": "babel-eslint",
   "plugins": ["import"],
-  "rules": {  
-    "jsx-a11y/href-no-hash": [0, "never"],  
-  	"comma-dangle": [0, "never"],  
+  "rules": {
+    //redefine default jsx-a11y properties
+    "jsx-a11y/href-no-hash": [0, "never"],
+    "jsx-a11y/no-static-element-interactions": [1],
+
+    "import/no-named-as-default": [0, "never"],
+    "no-plusplus": [0, "never"],
+    "no-shadow": [1],
+    "no-useless-escape": [1],
+    "class-methods-use-this": [0, "never"],
+
+    "react/jsx-no-bind": [0, "never"],
+
+  	"comma-dangle": [0, "never"],
     // spacing
     "space-in-parens": [ 2, "always" ],
     "template-curly-spacing": [ 2, "always" ],
@@ -23,21 +34,21 @@
 
     // code arrangement matter
     "no-use-before-define": [ 2, { "functions": false } ],
-    
+
     // make it meaningful
     "prefer-const": 1,
-    
+
     // keep it simple
     "complexity": [ 1, 5 ],
-    
+
     // react
-    "react/prefer-es6-class": 0,    
+    "react/prefer-es6-class": 0,
     "react/jsx-curly-spacing": [ 2, "always" ],
     "react/jsx-indent": [ 2, 2 ],
     "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
 
     //skip sass styles loading
-    "import/no-webpack-loader-syntax": [0],    
+    "import/no-webpack-loader-syntax": [0],
 	},
 	"settings": {
 		"import/resolver": {
