@@ -82,11 +82,11 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/
       },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader"
-      }
+      // {
+      //   test: /\.jsx?$/,
+      //   exclude: /node_modules/,
+      //   loader: "eslint-loader"
+      // }
     ]
   },
   devServer: {
